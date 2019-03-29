@@ -27,19 +27,31 @@
 
 <div class="cineme-hall">
     <div class="form-group">
-        <div class="cineme-hall-actions hidden">
-            <button class="btn btn-default remove-places">
+        <div class="cineme-hall-actions">
+            <button class="btn btn-default join-places hidden">
+                Об'єднати
+            </button>
+            <button class="btn btn-default remove-places hidden">
                 Вилучити
             </button>
         </div>
     </div>
     <div class="cinema-hall-places">
-        @for (var i = 0; i < @ViewBag.maxRow; i++) {
-            <div class="cinema-hall-row">
-                @for (var j = 0; j < @ViewBag.maxCell; j++) {
-                    <div class="cinema-hall-cell @if (ViewBag.cinemaHallRows[i, j] == 0) { @Html.Raw("removed") } "></div>
+        @for (var i = 0; i < @ViewBag.maxRow; i++)
+        {
+        <div class="cinema-hall-row">
+            @for (var j = 0; j < @ViewBag.maxCell; j++)
+            {
+                if (ViewBag.cinemaHallRows[i, j] == null)
+                {
+                    <div class="cinema-hall-cell removed"></div>
                 }
-            </div>
+                else
+                {
+                    <div class="cinema-hall-cell" data-rows="@ViewBag.cinemaHallRows[i, j].Rows" data-cells="@ViewBag.cinemaHallRows[i, j].Cells"></div>
+                }
+            }
+        </div>
         }
     </div>
 </div>

@@ -50,14 +50,10 @@ namespace OnlineCinema.Controllers
                 }
             }
 
-            //List<List<int>> cinemaHallRows = new List<List<int>>(maxRow);
-            //HashSet<int> cinemaHallRows = new HashSet<int>();
-            int[,] cinemaHallRows = new int[maxRow, maxCell];
+            CinemaHallPlace[,] cinemaHallRows = new CinemaHallPlace[maxRow, maxCell];
             foreach (CinemaHallPlace cinemaHallPlace in cinemaHallPlaces)
             {
-                //cinemaHallRows[cinemaHallPlace.Row - 1].Insert(cinemaHallPlace.Cell - 1, cinemaHallPlace.Row + cinemaHallPlace.Cell);
-                //cinemaHallRows[cinemaHallPlace.Row - 1];
-                cinemaHallRows[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] = cinemaHallPlace.Row + cinemaHallPlace.Cell;
+                cinemaHallRows[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] = cinemaHallPlace;
             }
 
             ViewBag.CinemaHallID = id;
@@ -89,7 +85,7 @@ namespace OnlineCinema.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Save(int id, List<List<int>> places)
+        public ActionResult Save(int id, List<CinemaHallPlace> places)
         {
             var cinemaHallPlaces = from chp in db.CinemaHallPlaces
                                    select chp;
@@ -103,12 +99,12 @@ namespace OnlineCinema.Controllers
                 existedPlaces.Add(existedPlace);
             }
 
-            foreach (List<int> place in places)
+            foreach (CinemaHallPlace place in places)
             {
                 bool isPlaceExisted = false;
                 foreach (List<int> existedPlace in existedPlaces)
                 {
-                    if (existedPlace[0] == place[0] && existedPlace[1] == place[1])
+                    if (existedPlace[0] == place.Row && existedPlace[1] == place.Cell)
                     {
                         isPlaceExisted = true;
                         break;
@@ -120,10 +116,10 @@ namespace OnlineCinema.Controllers
                     CinemaHallPlace cinemaHallPlace = new CinemaHallPlace()
                     {
                         CinemaHallID = id,
-                        Row = place[0],
-                        Cell = place[1],
-                        Rows = 1,
-                        Cells = 1,
+                        Row = place.Row,
+                        Cell = place.Cell,
+                        Rows = place.Rows,
+                        Cells = place.Cells,
                     };
                     db.CinemaHallPlaces.Add(cinemaHallPlace);
                     db.SaveChanges();
@@ -133,9 +129,9 @@ namespace OnlineCinema.Controllers
             foreach (List<int> existedPlace in existedPlaces)
             {
                 bool isPlaceExisted = false;
-                foreach (List<int> place in places)
+                foreach (CinemaHallPlace place in places)
                 {
-                    if (existedPlace[0] == place[0] && existedPlace[1] == place[1])
+                    if (existedPlace[0] == place.Row && existedPlace[1] == place.Cell)
                     {
                         isPlaceExisted = true;
                         break;

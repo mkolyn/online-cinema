@@ -16,6 +16,10 @@
     opacity: 0.5;
 }
 
+.cinema-hall-cell.joined {
+    background-color: blue;
+}
+
 .cineme-hall {
     text-align: center;
 }
