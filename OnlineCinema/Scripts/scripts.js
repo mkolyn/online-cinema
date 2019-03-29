@@ -28,8 +28,10 @@
         var places = [];
 
         for (var i = 0; i < $('.cinema-hall-row').length; i++) {
-            for (var j = 0; j < $('.cinema-hall-row').eq(i).find('.cinema-hall-cell').not('.removed').length; j++) {
-                places.push([i + 1, j + 1]);
+            for (var j = 0; j < $('.cinema-hall-row').eq(i).find('.cinema-hall-cell').length; j++) {
+                if (!$('.cinema-hall-row').eq(i).find('.cinema-hall-cell').eq(j).hasClass('removed')) {
+                    places.push([i + 1, j + 1]);
+                }
             }
         }
 
