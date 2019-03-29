@@ -1,0 +1,58 @@
+﻿@model OnlineCinema.Models.CinemaHallPlace
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CinemaHallPlace</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CinemaHallID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CinemaHallID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Row)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Row)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cell)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cell)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rows)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rows)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cells)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cells)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

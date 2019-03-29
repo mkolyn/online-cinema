@@ -1,0 +1,45 @@
+﻿@model IEnumerable<OnlineCinema.Models.CinemaHallPlace>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Cinema hall places</h2>
+
+<input type="hidden" class="cinema-hall-id" value="@ViewBag.CinemaHallID" />
+
+<div class="form-group">
+    <label class="control-label col-md-2">Рядів</label>
+    <input type="text" class="form-control text-box single-line valid cinema-hall-rows" />
+</div>
+<div class="form-group">
+    <label class="control-label col-md-2">Місць</label>
+    <input type="text" class="form-control text-box single-line valid cinema-hall-cells" />
+</div>
+<div class="form-group">
+    <button class="btn btn-default generate-places">
+        Згенерувати місця
+    </button>
+    <button class="btn btn-default save-places">
+        Зберегти місця
+    </button>
+</div>
+
+<div class="cineme-hall">
+    <div class="form-group">
+        <div class="cineme-hall-actions hidden">
+            <button class="btn btn-default remove-places">
+                Вилучити
+            </button>
+        </div>
+    </div>
+    <div class="cinema-hall-places">
+        @for (var i = 0; i < @ViewBag.maxRow; i++) {
+            <div class="cinema-hall-row">
+                @for (var j = 0; j < @ViewBag.maxCell; j++) {
+                    <div class="cinema-hall-cell @if (ViewBag.cinemaHallRows[i, j] == 0) { @Html.Raw("removed") } "></div>
+                }
+            </div>
+        }
+    </div>
+</div>
