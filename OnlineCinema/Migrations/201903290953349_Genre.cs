@@ -3,27 +3,23 @@ namespace OnlineCinema.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CinemaHallPlaces : DbMigration
+    public partial class Genre : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.CinemaHallPlaces",
+                "dbo.Genres",
                 c => new
                 {
                     ID = c.Int(nullable: false, identity: true),
-                    CinemaHallID = c.Int(nullable: false),
-                    row = c.Int(nullable: false),
-                    cell = c.Int(nullable: false),
-                    rows = c.Int(),
-                    cells = c.Int(),
+                    Name = c.String(),
                 })
                 .PrimaryKey(t => t.ID);
         }
         
         public override void Down()
         {
-            DropTable("dbo.CinemaHallPlaces");
+            DropTable("dbo.Genres");
         }
     }
 }

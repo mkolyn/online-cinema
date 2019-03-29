@@ -7,13 +7,13 @@ namespace OnlineCinema.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class CinemaHallPlaces : IMigrationMetadata
+    public sealed partial class Genre : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CinemaHallPlaces));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Genre));
         
         string IMigrationMetadata.Id
         {
-            get { return "201903231013151_CinemaHallPlaces"; }
+            get { return "201903290953349_Genre"; }
         }
         
         string IMigrationMetadata.Source
