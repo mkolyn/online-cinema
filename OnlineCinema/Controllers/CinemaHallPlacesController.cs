@@ -51,8 +51,23 @@ namespace OnlineCinema.Controllers
             }
 
             CinemaHallPlace[,] cinemaHallRows = new CinemaHallPlace[maxRow, maxCell];
+            bool[,] cinemaHallIsJoinedPlaces = new bool[maxRow, maxCell];
             foreach (CinemaHallPlace cinemaHallPlace in cinemaHallPlaces)
             {
+                if (cinemaHallPlace.Rows > 1 || cinemaHallPlace.Cells > 1)
+                {
+                    for (var i = cinemaHallPlace.Row - 1; i < cinemaHallPlace.Row - 1 + cinemaHallPlace.Rows; i++)
+                    {
+                        for (var j = cinemaHallPlace.Cell - 1; j < cinemaHallPlace.Cell - 1 + cinemaHallPlace.Cells; j++)
+                        {
+                            cinemaHallIsJoinedPlaces[i, j] = true;
+                        }
+                    }
+                }
+                if (cinemaHallIsJoinedPlaces[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] == true)
+                {
+                    cinemaHallPlace.SetIsJoined(true);
+                }
                 cinemaHallRows[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] = cinemaHallPlace;
             }
 
