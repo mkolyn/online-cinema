@@ -20,6 +20,18 @@ namespace OnlineCinema.Models
         public int Rows { get; set; }
         // cinema cell cells
         public int Cells { get; set; }
+        // is joined place
+        private bool IsJoined { get; set; }
+
+        public bool GetIsJoined()
+        {
+            return IsJoined;
+        }
+
+        public void SetIsJoined(bool IsJoined)
+        {
+            this.IsJoined = IsJoined;
+        }
     }
 
     public class CinemaHallPlaceContext : DbContext
