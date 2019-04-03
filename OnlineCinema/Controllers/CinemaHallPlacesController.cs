@@ -137,9 +137,27 @@ namespace OnlineCinema.Controllers
                         Cells = place.Cells,
                     };
                     db.CinemaHallPlaces.Add(cinemaHallPlace);
-                    db.SaveChanges();
+                }
+                else
+                {
+                    cinemaHallPlaces = from chp in db.CinemaHallPlaces
+                                       select chp;
+
+                    cinemaHallPlaces = cinemaHallPlaces.Where(s => s.CinemaHallID == id)
+                        .Where(s => s.Row == place.Row)
+                        .Where(s => s.Cell == place.Cell);
+
+                    IEnumerator<CinemaHallPlace> cinemaHallPlaceEnum = cinemaHallPlaces.GetEnumerator();
+                    cinemaHallPlaceEnum.MoveNext();
+                    CinemaHallPlace cinemaHallPlace = cinemaHallPlaceEnum.Current;
+                    cinemaHallPlace.Rows = place.Rows;
+                    cinemaHallPlace.Cells = place.Cells;
+                    db.Entry(cinemaHallPlace).State = EntityState.Modified;
+                    cinemaHallPlaceEnum.Dispose();
                 }
             }
+
+            db.SaveChanges();
 
             foreach (List<int> existedPlace in existedPlaces)
             {
