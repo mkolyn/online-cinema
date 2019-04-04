@@ -39,7 +39,7 @@
             for (var j = 0; j < $('.cinema-hall-row').eq(i).find('.cinema-hall-cell').length; j++) {
                 var cell = $('.cinema-hall-row').eq(i).find('.cinema-hall-cell').eq(j);
                 if (!cell.hasClass('removed')) {
-                    places.push({ row: i + 1, cell: j + 1, rows: cell.data('rows'), cells: cell.data('cells') });
+                    places.push({ row: i + 1, cell: j + 1, rows: cell.attr('data-rows'), cells: cell.attr('data-cells') });
                 }
             }
         }
@@ -66,6 +66,34 @@
         } else {
             $('.join-places').addClass('hidden');
             $('.remove-places').addClass('hidden');
+        }
+    });
+
+    $('.cinema-hall-cell').each(function () {
+        var rows = parseInt($(this).attr('data-rows'));
+        var cells = parseInt($(this).attr('data-cells'));
+        if (rows > 1 || cells > 1) {
+            var firstRow = $(this).closest('.cinema-hall-row').index();
+            var lastRow = firstRow + rows - 1;
+            var firstCell = $(this).index();
+            var lastCell = firstCell + cells - 1;
+            for (var i = firstRow; i <= lastRow; i++) {
+                for (var j = firstCell; j <= lastCell; j++) {
+                    var cell = $('.cinema-hall-row').eq(i).find('.cinema-hall-cell').eq(j);
+                    if (i == firstRow) {
+                        cell.addClass('border-top');
+                    }
+                    if (i == lastRow) {
+                        cell.addClass('border-bottom');
+                    }
+                    if (j == firstCell) {
+                        cell.addClass('border-left');
+                    }
+                    if (j == lastCell) {
+                        cell.addClass('border-right');
+                    }
+                }
+            }
         }
     });
 });
