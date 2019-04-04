@@ -30,18 +30,18 @@
     text-align: center;
 }
 
-.border-top {
+.joined.border-top {
     border-top: 2px solid #000000;
 }
 
-.border-bottom {
+.joined.border-bottom {
     border-bottom: 2px solid #000000;
 }
 
-.border-left {
+.joined.border-left {
     border-left: 2px solid #000000;
 }
 
-.border-right {
+.joined.border-right {
     border-right: 2px solid #000000;
 }
