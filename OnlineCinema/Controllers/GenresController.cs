@@ -14,15 +14,25 @@ namespace OnlineCinema.Controllers
     {
         private GenreContext db = new GenreContext();
 
+        public void LoginIfNotAuthorized()
+        {
+            if (Session["UserID"] == null || Session["UserID"].ToString() == "")
+            {
+                Response.Redirect("Home");
+            }
+        }
+
         // GET: Genres
         public ActionResult Index()
         {
+            LoginIfNotAuthorized();
             return View(db.Genres.ToList());
         }
 
         // GET: Genres/Details/5
         public ActionResult Details(int? id)
         {
+            LoginIfNotAuthorized();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -38,6 +48,7 @@ namespace OnlineCinema.Controllers
         // GET: Genres/Create
         public ActionResult Create()
         {
+            LoginIfNotAuthorized();
             return View();
         }
 
@@ -48,6 +59,7 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Name")] Genre genre)
         {
+            LoginIfNotAuthorized();
             if (ModelState.IsValid)
             {
                 db.Genres.Add(genre);
@@ -61,6 +73,7 @@ namespace OnlineCinema.Controllers
         // GET: Genres/Edit/5
         public ActionResult Edit(int? id)
         {
+            LoginIfNotAuthorized();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -80,6 +93,7 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Name")] Genre genre)
         {
+            LoginIfNotAuthorized();
             if (ModelState.IsValid)
             {
                 db.Entry(genre).State = EntityState.Modified;
@@ -92,6 +106,7 @@ namespace OnlineCinema.Controllers
         // GET: Genres/Delete/5
         public ActionResult Delete(int? id)
         {
+            LoginIfNotAuthorized();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -109,6 +124,7 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            LoginIfNotAuthorized();
             Genre genre = db.Genres.Find(id);
             db.Genres.Remove(genre);
             db.SaveChanges();

@@ -16,9 +16,18 @@ namespace OnlineCinema.Controllers
     {
         private CinemaHallPlaceContext db = new CinemaHallPlaceContext();
 
+        public void LoginIfNotAuthorized()
+        {
+            if (Session["UserID"] == null || Session["UserID"].ToString() == "")
+            {
+                Response.Redirect("Home");
+            }
+        }
+
         // GET: CinemaHallPlaces/5
         public ActionResult Index(int? id)
         {
+            LoginIfNotAuthorized();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -77,23 +86,6 @@ namespace OnlineCinema.Controllers
             ViewBag.cinemaHallRows = cinemaHallRows;
 
             return View();
-        }
-
-        // POST: CinemaHallPlaces/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,CinemaHallID,Row,Cell,Rows,Cells")] CinemaHallPlace cinemaHallPlace)
-        {
-            if (ModelState.IsValid)
-            {
-                db.CinemaHallPlaces.Add(cinemaHallPlace);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(cinemaHallPlace);
         }
 
         // POST: CinemaHallPlaces/Save/5

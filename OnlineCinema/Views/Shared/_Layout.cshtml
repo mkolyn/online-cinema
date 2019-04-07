@@ -19,13 +19,16 @@
                 </button>
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Cinemas", "Index", "Cinemas")</li>
-                    <li>@Html.ActionLink("Genres", "Index", "Genres")</li>
-                    <li>@Html.ActionLink("Movies", "Index", "Movies")</li>
-                </ul>
-            </div>
+            @if (Session["UserID"] != null && Session["UserID"].ToString() != "")
+            {
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Cinemas", "Index", "Cinemas")</li>
+                        <li>@Html.ActionLink("Genres", "Index", "Genres")</li>
+                        <li>@Html.ActionLink("Movies", "Index", "Movies")</li>
+                    </ul>
+                </div>
+            }
         </div>
     </div>
     <div class="container body-content">

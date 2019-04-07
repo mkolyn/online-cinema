@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineCinema.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -10,21 +11,11 @@ namespace OnlineCinema.Controllers
 {
     public class HomeController : Controller
     {
+        private UserContext userDb = new UserContext();
+
         public ActionResult Index()
         {
-            //DataContext db = new D("Data Source=MKOLYN\MSSQLSERVER3;Initial Catalog=onlinecinema;Integrated Security=False;User ID=mkolyn;Password=111111;Connect Timeout=5;");
-            //DataContext db = new D("Data Source=MKOLYN\MSSQLSERVER3;Initial Catalog=onlinecinema;Integrated Security=False;User ID=mkolyn;Password=111111;Connect Timeout=5;");
-            /*SqlConnection c = new SqlConnection("Data Source=MKOLYN\\MSSQLSERVER3;Initial Catalog=onlinecinema;Integrated Security=False;User ID=mkolyn;Password=111111;Connect Timeout=5;");
-            c.Open();
-            SqlCommand sql = c.CreateCommand();
-            sql.CommandText = "SELECT * FROM movies";
-            int a = sql.ExecuteNonQuery();
-            Console.WriteLine(a);*/
-            //ConfigurationManager.ConnectionStrings["DefaultConnection"];
-            //string connectionString = System.Configuration.Setting;
-            //CloudConfigurationManager.GetSetting(CONNECTION_STRING_KEY, false);
-
-            ViewBag.Message = ConfigurationManager.ConnectionStrings;
+            ViewBag.UserId = Session["UserID"] != null ? Session["UserID"].ToString() : "";
 
             return View();
         }
@@ -55,6 +46,24 @@ namespace OnlineCinema.Controllers
             ViewBag.Message = ID;
 
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                var currentUser = this.userDb.Users.Where(a => a.Login.Equals(user.Login) && a.Password.Equals(user.Password)).FirstOrDefault();
+                if (currentUser != null)
+                {
+                    Session["UserID"] = currentUser.ID.ToString();
+                    Session["UserFirstName"] = currentUser.FirstName.ToString();
+                    Session["UserLastName"] = currentUser.LastName.ToString();
+                }
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }
