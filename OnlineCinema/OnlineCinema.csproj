@@ -294,6 +294,7 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\CinemaHallSchedule\Index.cshtml" />
+    <Content Include="Views\CinemaHallSchedule\Movie.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

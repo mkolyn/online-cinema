@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+    var SCHEDULE_HOUR_HEIGHT = 25;
+
     $('.generate-places').click(function () {
         $('.cinema-hall-places').html('');
 
@@ -111,6 +113,17 @@
     });
 
     $('.cinema-hall-movie').autocomplete({
-        source: '/Movies/Find'
+        source: '/Movies/Find',
+        select: function (event, ui) {
+            $.ajax({
+                url: '/CinemaHallSchedule/GetMovieItemHtml',
+                method: "POST",
+                data: { id: ui.item.value },
+                success: function (data) {
+                    $('.schedule-movies').append(data);
+                    $('.schedule-movie:last').draggable();
+                }
+            });
+        },
     });
 });
