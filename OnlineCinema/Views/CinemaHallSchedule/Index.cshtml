@@ -2,13 +2,43 @@
 
 @{
     ViewBag.Title = "Index";
+    var hour = "";
 }
 
-<h2>Cinema hall schedule: @ViewBag.cinemaHallName</h2>
+<h2>Cinema hall schedule: @ViewBag.CinemaHallName</h2>
 
 <input type="hidden" class="cinema-hall-id" value="@ViewBag.CinemaHallID" />
 
 <div class="form-group">
     <label class="control-label col-md-2">Пошук фільму</label>
     <input type="text" class="form-control text-box single-line valid cinema-hall-movie" />
+</div>
+
+<div class="schedule-movies"></div>
+
+<div class="schedule">
+    <div class="schedule-title">
+        @ViewBag.Day.@ViewBag.Month.@ViewBag.Year
+    </div>
+    <div class="prev-day">
+        Попередній день
+        <div class="prev-day-title">@ViewBag.PrevDay.@ViewBag.PrevMonth.@ViewBag.PrevYear</div>
+    </div>
+    <div class="next-day">
+        Наступний день
+        <div class="next-day-title">@ViewBag.NextDay.@ViewBag.NextMonth.@ViewBag.NextYear</div>
+    </div>
+    <div class="schedule-table">
+        <div class="schedule-table-hours">
+            @for (var i = 0; i < 24; i++)
+            {
+                hour = i < 10 ? "0" + i.ToString() : i.ToString();
+                <div class="schedule-table-hour">
+                    <div class="schedule-table-hour-title">
+                        @(hour):00
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>
