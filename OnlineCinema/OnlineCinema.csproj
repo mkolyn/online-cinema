@@ -168,6 +168,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CinemaHallScheduleController.cs" />
     <Compile Include="Controllers\CinemaHallPlacesController.cs" />
     <Compile Include="Controllers\CinemaHallsController.cs" />
     <Compile Include="Controllers\CinemasController.cs" />
@@ -202,7 +203,12 @@
     <Compile Include="Migrations\201904071230200_User.Designer.cs">
       <DependentUpon>201904071230200_User.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904080954121_CinemaHallMovie.cs" />
+    <Compile Include="Migrations\201904080954121_CinemaHallMovie.Designer.cs">
+      <DependentUpon>201904080954121_CinemaHallMovie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CinemaHallMovie.cs" />
     <Compile Include="Models\CinemaHallPlace.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Movie.cs" />
@@ -216,6 +222,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -232,6 +239,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -285,6 +293,7 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\CinemaHallSchedule\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -320,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904071230200_User.resx">
       <DependentUpon>201904071230200_User.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904080954121_CinemaHallMovie.resx">
+      <DependentUpon>201904080954121_CinemaHallMovie.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
