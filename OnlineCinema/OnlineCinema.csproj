@@ -193,9 +193,9 @@
     <Compile Include="Migrations\201903191756571_CinemaHallPlace.Designer.cs">
       <DependentUpon>201903191756571_CinemaHallPlace.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201903231013151_CinemaHallPlaces.cs" />
-    <Compile Include="Migrations\201903231013151_CinemaHallPlaces.Designer.cs">
-      <DependentUpon>201903231013151_CinemaHallPlaces.cs</DependentUpon>
+    <Compile Include="Migrations\201903290953349_Genre.cs" />
+    <Compile Include="Migrations\201903290953349_Genre.Designer.cs">
+      <DependentUpon>201903290953349_Genre.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaHallPlace.cs" />
@@ -273,10 +273,6 @@
     <Content Include="Views\Genres\Details.cshtml" />
     <Content Include="Views\Genres\Edit.cshtml" />
     <Content Include="Views\Genres\Index.cshtml" />
-    <Content Include="Views\CinemaHallPlaces\Create.cshtml" />
-    <Content Include="Views\CinemaHallPlaces\Delete.cshtml" />
-    <Content Include="Views\CinemaHallPlaces\Details.cshtml" />
-    <Content Include="Views\CinemaHallPlaces\Edit.cshtml" />
     <Content Include="Views\CinemaHallPlaces\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -308,8 +304,8 @@
     <EmbeddedResource Include="Migrations\201903191756571_CinemaHallPlace.resx">
       <DependentUpon>201903191756571_CinemaHallPlace.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903231013151_CinemaHallPlaces.resx">
-      <DependentUpon>201903231013151_CinemaHallPlaces.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201903290953349_Genre.resx">
+      <DependentUpon>201903290953349_Genre.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
