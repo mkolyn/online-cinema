@@ -15,6 +15,7 @@ namespace OnlineCinema.Controllers
     public class CinemaHallScheduleController : Controller
     {
         private CinemaHallPlaceContext db = new CinemaHallPlaceContext();
+        private MovieContext movieDb = new MovieContext();
 
         public void LoginIfNotAuthorized()
         {
@@ -84,7 +85,23 @@ namespace OnlineCinema.Controllers
             ViewBag.maxRow = maxRow;
             ViewBag.maxCell = maxCell;
             ViewBag.cinemaHallRows = cinemaHallRows;*/
-            ViewBag.cinemaHallName = cinemaHall.Name;
+            ViewBag.CinemaHallName = cinemaHall.Name;
+
+            DateTime date = DateTime.Now;
+            DateTime prevDate = date.AddDays(-1).Date;
+            DateTime nextDate = date.AddDays(1).Date;
+
+            ViewBag.Year = date.Year;
+            ViewBag.Month = date.Month;
+            ViewBag.Day = date.Day;
+
+            ViewBag.PrevYear = prevDate.Year;
+            ViewBag.PrevMonth = prevDate.Month;
+            ViewBag.PrevDay = prevDate.Day;
+
+            ViewBag.NextYear = nextDate.Year;
+            ViewBag.NextMonth = nextDate.Month;
+            ViewBag.NextDay = nextDate.Day;
 
             return View();
         }
@@ -186,6 +203,14 @@ namespace OnlineCinema.Controllers
             }
 
             return Json(existedPlaces);
+        }
+
+        public ActionResult GetMovieItemHtml(int id)
+        {
+            Movie movie = movieDb.Movies.Find(id);
+            ViewBag.Movie = movie;
+            ViewBag.ItemHeight = movie.Duration / 60 * 25;
+            return PartialView("Movie");
         }
 
         protected override void Dispose(bool disposing)
