@@ -54,6 +54,7 @@
     padding: 5px;
     cursor: pointer;
     text-align: center;
+    z-index: 2;
 }
 
 .schedule {
@@ -91,9 +92,15 @@
 }
 
 .schedule-table-hours {
-    width: 100px;
+    width: 100%;
+    position: relative;
 }
 
 .schedule-table-hour {
+    width: 100%;
     height: 25px;
+}
+
+.schedule-table-hour-title {
+    width: 100px;
 }

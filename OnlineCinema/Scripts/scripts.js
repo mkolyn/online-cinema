@@ -121,7 +121,20 @@
                 data: { id: ui.item.value },
                 success: function (data) {
                     $('.schedule-movies').append(data);
-                    $('.schedule-movie:last').draggable();
+                    $('.schedule-movie:last').draggable({
+                        stop: function (event, ui) {
+                            var currentHourIndex = 0;
+                            var currentOffsetDifference = 0;
+                            for (var i = 0; i < $('.schedule-table-hour').length; i++) {
+                                var offsetDifference = ui.offset.top - $('.schedule-table-hour').eq(i).offset().top;
+                                if (offsetDifference > 0 && offsetDifference < currentOffsetDifference || currentOffsetDifference == 0) {
+                                    currentHourIndex = i;
+                                    currentOffsetDifference = offsetDifference;
+                                }
+                            }
+                            $(event.target).css('top', $('.schedule-table-hour').eq(currentHourIndex).offset().top - $('.schedule-movies').offset().top);
+                        }
+                    });
                 }
             });
         },
