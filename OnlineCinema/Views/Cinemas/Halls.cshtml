@@ -33,7 +33,8 @@
             @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
             @Html.ActionLink("Details", "Details", new { id = item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
-            @Html.RouteLink("Places", new { controller = "CinemaHallPlaces", action = "Index", id = item.ID })
+            @Html.RouteLink("Places", new { controller = "CinemaHallPlaces", action = "Index", id = item.ID }) |
+            @Html.RouteLink("Schedule", new { controller = "CinemaHallSchedule", action = "Index", id = item.ID })
         </td>
     </tr>
 }

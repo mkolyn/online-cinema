@@ -109,4 +109,8 @@
             }
         }
     });
+
+    $('.cinema-hall-movie').autocomplete({
+        source: '/Movies/Find'
+    });
 });
