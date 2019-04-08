@@ -28,4 +28,10 @@ namespace OnlineCinema.Models
 
         public DbSet<Movie> Movies { get; set; }
     }
+
+    public class MovieAutocomplete
+    {
+        public string label { get; set; }
+        public string value { get; set; }
+    }
 }

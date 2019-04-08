@@ -134,6 +134,30 @@ namespace OnlineCinema.Controllers
             return RedirectToAction("Index");
         }
 
+        // POST: Movies/Find
+        [HttpGet]
+        public ActionResult Find(string term)
+        {
+            LoginIfNotAuthorized();
+
+            var movies = from m in db.Movies
+                                   select m;
+
+            movies = movies.Where(s => s.Name.ToString().Contains(term));
+
+            List<MovieAutocomplete> movieItems = new List<MovieAutocomplete>();
+
+            foreach (var movie in movies)
+            {
+                MovieAutocomplete movieItem = new MovieAutocomplete();
+                movieItem.label = movie.Name;
+                movieItem.value = movie.ID.ToString();
+                movieItems.Add(movieItem);
+            }
+
+            return Json(movieItems, JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
