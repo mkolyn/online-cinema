@@ -24,6 +24,14 @@ namespace OnlineCinema.Models
         {
         }
 
-        public DbSet<CinemaHall> CinemaHallMovies { get; set; }
+        public DbSet<CinemaHallMovie> CinemaHallMovies { get; set; }
+    }
+
+    public class CinemaHallScheduleMovie
+    {
+        // movie ID
+        public int ID { get; set; }
+        // start minute
+        public int StartMinute { get; set; }
     }
 }

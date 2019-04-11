@@ -16,6 +16,7 @@ namespace OnlineCinema.Controllers
     {
         private CinemaHallPlaceContext db = new CinemaHallPlaceContext();
         private MovieContext movieDb = new MovieContext();
+        private CinemaHallMovieContext cinemaHallMovieDb = new CinemaHallMovieContext();
 
         public void LoginIfNotAuthorized()
         {
@@ -85,6 +86,7 @@ namespace OnlineCinema.Controllers
             ViewBag.maxRow = maxRow;
             ViewBag.maxCell = maxCell;
             ViewBag.cinemaHallRows = cinemaHallRows;*/
+            ViewBag.CinemaHallID = id;
             ViewBag.CinemaHallName = cinemaHall.Name;
 
             DateTime date = DateTime.Now;
@@ -110,9 +112,9 @@ namespace OnlineCinema.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Save(int id, List<CinemaHallPlace> places)
+        public ActionResult Save(int id, int year, int month, int day, List<CinemaHallScheduleMovie> scheduleMovies)
         {
-            var cinemaHallPlaces = from chp in db.CinemaHallPlaces
+            /*var cinemaHallPlaces = from chp in db.CinemaHallPlaces
                                    select chp;
 
             cinemaHallPlaces = cinemaHallPlaces.Where(s => s.CinemaHallID == id);
@@ -200,9 +202,26 @@ namespace OnlineCinema.Controllers
 
                     db.SaveChanges();
                 }
+            }*/
+            foreach (CinemaHallScheduleMovie scheduleMovie in scheduleMovies)
+            {
+                Movie movie = movieDb.Movies.Find(scheduleMovie.ID);
+                int hour = scheduleMovie.StartMinute / 60;
+                int minute = scheduleMovie.StartMinute - hour * 60;
+                DateTime date = new DateTime(year, month, day, hour, minute, 0);
+
+                CinemaHallMovie cinemaHallMovie = new CinemaHallMovie
+                {
+                    CinemaHallID = id,
+                    MovieID = movie.ID,
+                    Date = date,
+                };
+
+                cinemaHallMovieDb.CinemaHallMovies.Add(cinemaHallMovie);
+                cinemaHallMovieDb.SaveChanges();
             }
 
-            return Json(existedPlaces);
+            return Json("ok");
         }
 
         public ActionResult GetMovieItemHtml(int id)

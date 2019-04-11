@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
-    var SCHEDULE_HOUR_HEIGHT = 25;
+    var SCHEDULE_HOUR_HEIGHT = 24;
+
+    var scheduleMovieChooseMinute = $('.schedule-movie-choose-minute');
 
     $('.generate-places').click(function () {
         $('.cinema-hall-places').html('');
@@ -91,6 +93,7 @@
             var lastRow = firstRow + rows - 1;
             var firstCell = $(this).index();
             var lastCell = firstCell + cells - 1;
+
             for (var i = firstRow; i <= lastRow; i++) {
                 for (var j = firstCell; j <= lastCell; j++) {
                     var cell = $('.cinema-hall-row').eq(i).find('.cinema-hall-cell').eq(j);
@@ -125,6 +128,7 @@
                         stop: function (event, ui) {
                             var currentHourIndex = 0;
                             var currentOffsetDifference = 0;
+
                             for (var i = 0; i < $('.schedule-table-hour').length; i++) {
                                 var offsetDifference = ui.offset.top - $('.schedule-table-hour').eq(i).offset().top;
                                 if (offsetDifference > 0 && offsetDifference < currentOffsetDifference || currentOffsetDifference == 0) {
@@ -132,11 +136,84 @@
                                     currentOffsetDifference = offsetDifference;
                                 }
                             }
-                            $(event.target).css('top', $('.schedule-table-hour').eq(currentHourIndex).offset().top - $('.schedule-movies').offset().top);
+
+                            var scheduleHour = $('.schedule-table-hour').eq(currentHourIndex);
+                            var scheduleMovie = $(event.target);
+                            var duration = parseInt(scheduleMovie.attr('data-duration'));
+                            var startMinute = parseInt(scheduleHour.attr('data-hour')) * 60;
+                            var endMinute = startMinute + duration;
+
+                            $('.schedule-movie').each(function () {
+                                if ($(this).index() != scheduleMovie.index()) {
+                                    var movieStartMinute = parseInt($(this).attr('data-start-minute'));
+                                    var movieEndMinute = parseInt($(this).attr('data-end-minute'));
+                                    if (movieStartMinute < endMinute && movieEndMinute > startMinute) {
+                                        startMinute = movieEndMinute + 5;
+                                        endMinute = startMinute + duration;
+                                        scheduleHour = $('.schedule-table-hour[data-hour="' + parseInt(startMinute / 60) + '"]');
+                                    }
+                                }
+                            });
+
+                            var minute = startMinute - parseInt(startMinute / 60) * 60;
+                            scheduleMovie.css('top', scheduleHour.offset().top - $('.schedule-movies').offset().top + minute / 5 * 2);
+                            scheduleMovie.attr('data-start-minute', startMinute);
+                            scheduleMovie.attr('data-end-minute', endMinute);
                         }
+                    });
+
+                    $('.schedule-movie:last .schedule-movie-edit').click(function () {
+                        var scheduleMovie = $(this).closest('.schedule-movie');
+                        var startMinute = parseInt(scheduleMovie.attr('data-start-minute'));
+                        var minute = startMinute - parseInt(startMinute / 60) * 60;
+                        console.log(minute);
+
+                        scheduleMovieChooseMinute.removeClass('hidden');
+                        scheduleMovieChooseMinute.css('top', scheduleMovie.offset().top + 'px');
+                        scheduleMovieChooseMinute.css('left', scheduleMovie.offset().left + scheduleMovie.width() + 25 + 'px');
+                        scheduleMovieChooseMinute.attr('data-schedule-movie', scheduleMovie.index());
+                        scheduleMovieChooseMinute.find('select').find('option').prop('selected', false);
+                        scheduleMovieChooseMinute.find('select').find('option[value="' + minute + '"]').prop('selected', true);
                     });
                 }
             });
         },
+    });
+
+    scheduleMovieChooseMinute.find('select').change(function () {
+        var scheduleMovie = $('.schedule-movie').eq(parseInt(scheduleMovieChooseMinute.attr('data-schedule-movie')));
+        var duration = parseInt(scheduleMovie.attr('data-duration'));
+        var minute = parseInt($(this).val());
+        var startHour = parseInt(parseInt(scheduleMovie.attr('data-start-minute')) / 60);
+        var startMinute = startHour * 60 + minute;
+        var endMinute = startMinute + duration;
+
+        var scheduleHour = $('.schedule-table-hour[data-hour="' + parseInt(startMinute / 60) + '"]');
+        scheduleMovie.css('top', scheduleHour.offset().top - $('.schedule-movies').offset().top + minute / 5 * 2);
+
+        scheduleMovie.attr('data-start-minute', startMinute);
+        scheduleMovie.attr('data-end-minute', endMinute);
+        scheduleMovieChooseMinute.addClass('hidden');
+    });
+
+    $('.save-schedule').click(function () {
+        var movies = [];
+        $('.schedule-movie').each(function () {
+            movies.push({ id: $(this).attr('data-id'), startMinute: $(this).attr('data-start-minute') });
+        });
+
+        $.ajax({
+            url: '/CinemaHallSchedule/Save',
+            method: "POST",
+            data: {
+                id: $('.cinema-hall-id').val(),
+                year: $('.year').val(),
+                month: $('.month').val(),
+                day: $('.day').val(),
+                movies: movies,
+            },
+            success: function () {
+            }
+        });
     });
 });
