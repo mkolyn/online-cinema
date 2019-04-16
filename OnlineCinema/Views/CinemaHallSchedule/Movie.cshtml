@@ -1,4 +1,10 @@
-﻿<div class="schedule-movie" data-id="@ViewBag.Movie.ID" data-duration="@ViewBag.Movie.Duration" style="height: @{@ViewBag.ItemHeight}px">
+﻿<div class="schedule-movie"
+     data-cinema-hall-movie-id="@ViewData["CinemaHallMovieID"]"
+     data-movie-id="@ViewData["MovieID"]"
+     data-start-minute="@ViewData["StartMinute"]"
+     data-duration="@ViewData["Duration"]"
+     style="height: @{@ViewData["ItemHeight"]}px">
+    <div class="schedule-movie-remove">x</div>
     <div class="schedule-movie-edit">i</div>
-    <div>@ViewBag.Movie.Name</div>
+    <div>@ViewData["MovieName"]</div>
 </div>

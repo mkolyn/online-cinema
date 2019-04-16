@@ -57,12 +57,19 @@
     z-index: 2;
 }
 
-.schedule-movie-edit {
+.schedule-movie-edit, .schedule-movie-remove {
     position: absolute;
-    top: 2px;
-    right: 2px;
+    top: 0;
     cursor: pointer;
     font-weight: bold;
+}
+
+.schedule-movie-edit {
+    right: 2px;
+}
+
+.schedule-movie-remove {
+    right: 12px;
 }
 
 .schedule {
@@ -110,7 +117,7 @@
 }
 
 .schedule-table-hour-title {
-    width: 100px;
+    width: 50px;
 }
 
 .schedule-movie-choose-minute {

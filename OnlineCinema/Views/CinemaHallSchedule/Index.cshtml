@@ -1,6 +1,4 @@
-﻿@model IEnumerable<OnlineCinema.Models.CinemaHallPlace>
-
-@{
+﻿@{
     ViewBag.Title = "Index";
     var hour = "";
     var minute = "";
@@ -18,7 +16,9 @@
     <input type="text" class="form-control text-box single-line valid cinema-hall-movie" />
 </div>
 
-<div class="schedule-movies"></div>
+<div class="schedule-movies">
+    @Html.Raw(ViewBag.CinemaHallMoviesHtml)
+</div>
 
 <div class="schedule">
     <div class="schedule-title">

@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using OnlineCinema.Models;
+using System.IO;
 
 namespace OnlineCinema.Controllers
 {
@@ -42,50 +43,6 @@ namespace OnlineCinema.Controllers
                 return HttpNotFound();
             }
 
-            /*var cinemaHallPlaces = from chp in db.CinemaHallPlaces
-                              select chp;
-
-            cinemaHallPlaces = cinemaHallPlaces.Where(s => s.CinemaHallID == id);
-
-            int maxRow = 0;
-            int maxCell = 0;
-            foreach (CinemaHallPlace cinemaHallPlace in cinemaHallPlaces)
-            {
-                if (cinemaHallPlace.Row > maxRow)
-                {
-                    maxRow = cinemaHallPlace.Row;
-                }
-                if (cinemaHallPlace.Cell > maxCell)
-                {
-                    maxCell = cinemaHallPlace.Cell;
-                }
-            }
-
-            CinemaHallPlace[,] cinemaHallRows = new CinemaHallPlace[maxRow, maxCell];
-            bool[,] cinemaHallIsJoinedPlaces = new bool[maxRow, maxCell];
-            foreach (CinemaHallPlace cinemaHallPlace in cinemaHallPlaces)
-            {
-                if (cinemaHallPlace.Rows > 1 || cinemaHallPlace.Cells > 1)
-                {
-                    for (var i = cinemaHallPlace.Row - 1; i < cinemaHallPlace.Row - 1 + cinemaHallPlace.Rows; i++)
-                    {
-                        for (var j = cinemaHallPlace.Cell - 1; j < cinemaHallPlace.Cell - 1 + cinemaHallPlace.Cells; j++)
-                        {
-                            cinemaHallIsJoinedPlaces[i, j] = true;
-                        }
-                    }
-                }
-                if (cinemaHallIsJoinedPlaces[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] == true)
-                {
-                    cinemaHallPlace.SetIsJoined(true);
-                }
-                cinemaHallRows[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] = cinemaHallPlace;
-            }
-
-            ViewBag.CinemaHallID = id;
-            ViewBag.maxRow = maxRow;
-            ViewBag.maxCell = maxCell;
-            ViewBag.cinemaHallRows = cinemaHallRows;*/
             ViewBag.CinemaHallID = id;
             ViewBag.CinemaHallName = cinemaHall.Name;
 
@@ -105,120 +62,77 @@ namespace OnlineCinema.Controllers
             ViewBag.NextMonth = nextDate.Month;
             ViewBag.NextDay = nextDate.Day;
 
+            var cinemaHallMovies = from chm in cinemaHallMovieDb.CinemaHallMovies
+                                   join m in cinemaHallMovieDb.Movies on chm.MovieID equals m.ID
+                                   orderby chm.Date
+                                   select new CinemaHallScheduleMovie
+                                   {
+                                       CinemaHallMovieID = chm.ID,
+                                       MovieID = m.ID,
+                                       MovieName = m.Name,
+                                       Duration = m.Duration,
+                                       Date = chm.Date,
+                                   };
+
+            string cinemaHallMoviesHtml = "";
+            foreach (CinemaHallScheduleMovie cinemaHallMovie in cinemaHallMovies)
+            {
+                cinemaHallMoviesHtml += GetSchedulteMovieItemHtml(cinemaHallMovie);
+            }
+            ViewBag.CinemaHallMoviesHtml = cinemaHallMoviesHtml;
+
             return View();
         }
 
-        // POST: CinemaHallPlaces/Save/5
+        // POST: CinemaHallSchedule/Save
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Save(int id, int year, int month, int day, List<CinemaHallScheduleMovie> scheduleMovies)
+        public ActionResult Save(int id, int year, int month, int day, List<CinemaHallScheduleMovie> movies)
         {
-            /*var cinemaHallPlaces = from chp in db.CinemaHallPlaces
-                                   select chp;
-
-            cinemaHallPlaces = cinemaHallPlaces.Where(s => s.CinemaHallID == id);
-
-            List<List<int>> existedPlaces = new List<List<int>>();
-            foreach (CinemaHallPlace cinemaHallPlace in cinemaHallPlaces)
+            foreach (CinemaHallScheduleMovie scheduleMovie in movies)
             {
-                List<int> existedPlace = new List<int> { cinemaHallPlace.Row, cinemaHallPlace.Cell };
-                existedPlaces.Add(existedPlace);
-            }
+                var cinemaHallMovies = from chm in cinemaHallMovieDb.CinemaHallMovies
+                                       select chm;
 
-            foreach (CinemaHallPlace place in places)
-            {
-                bool isPlaceExisted = false;
-                foreach (List<int> existedPlace in existedPlaces)
-                {
-                    if (existedPlace[0] == place.Row && existedPlace[1] == place.Cell)
-                    {
-                        isPlaceExisted = true;
-                        break;
-                    }
-                }
+                cinemaHallMovies = cinemaHallMovies.Where(s => s.CinemaHallID == id);
 
-                if (!isPlaceExisted)
-                {
-                    CinemaHallPlace cinemaHallPlace = new CinemaHallPlace()
-                    {
-                        CinemaHallID = id,
-                        Row = place.Row,
-                        Cell = place.Cell,
-                        Rows = place.Rows,
-                        Cells = place.Cells,
-                    };
-                    db.CinemaHallPlaces.Add(cinemaHallPlace);
-                }
-                else
-                {
-                    cinemaHallPlaces = from chp in db.CinemaHallPlaces
-                                       select chp;
-
-                    cinemaHallPlaces = cinemaHallPlaces.Where(s => s.CinemaHallID == id)
-                        .Where(s => s.Row == place.Row)
-                        .Where(s => s.Cell == place.Cell);
-
-                    IEnumerator<CinemaHallPlace> cinemaHallPlaceEnum = cinemaHallPlaces.GetEnumerator();
-                    cinemaHallPlaceEnum.MoveNext();
-                    CinemaHallPlace cinemaHallPlace = cinemaHallPlaceEnum.Current;
-                    cinemaHallPlace.Rows = place.Rows;
-                    cinemaHallPlace.Cells = place.Cells;
-                    db.Entry(cinemaHallPlace).State = EntityState.Modified;
-                    cinemaHallPlaceEnum.Dispose();
-                }
-            }
-
-            db.SaveChanges();
-
-            foreach (List<int> existedPlace in existedPlaces)
-            {
-                bool isPlaceExisted = false;
-                foreach (CinemaHallPlace place in places)
-                {
-                    if (existedPlace[0] == place.Row && existedPlace[1] == place.Cell)
-                    {
-                        isPlaceExisted = true;
-                        break;
-                    }
-                }
-
-                if (!isPlaceExisted)
-                {
-                    cinemaHallPlaces = from chp in db.CinemaHallPlaces
-                                           select chp;
-
-                    int row = existedPlace[0];
-                    int cell = existedPlace[1];
-
-                    cinemaHallPlaces = cinemaHallPlaces.Where(s => s.CinemaHallID == id)
-                        .Where(s => s.Row == row)
-                        .Where(s => s.Cell == cell);
-
-                    foreach (CinemaHallPlace cinemaHallPlace in cinemaHallPlaces)
-                    {
-                        db.CinemaHallPlaces.Remove(cinemaHallPlace);
-                    }
-
-                    db.SaveChanges();
-                }
-            }*/
-            foreach (CinemaHallScheduleMovie scheduleMovie in scheduleMovies)
-            {
-                Movie movie = movieDb.Movies.Find(scheduleMovie.ID);
+                Movie movie = movieDb.Movies.Find(scheduleMovie.MovieID);
                 int hour = scheduleMovie.StartMinute / 60;
                 int minute = scheduleMovie.StartMinute - hour * 60;
                 DateTime date = new DateTime(year, month, day, hour, minute, 0);
 
-                CinemaHallMovie cinemaHallMovie = new CinemaHallMovie
+                if (scheduleMovie.CinemaHallMovieID > 0)
                 {
-                    CinemaHallID = id,
-                    MovieID = movie.ID,
-                    Date = date,
-                };
+                    CinemaHallMovie cinemaHallMovie = cinemaHallMovieDb.CinemaHallMovies.Find(scheduleMovie.CinemaHallMovieID);
+                    if (scheduleMovie.IsRemoved)
+                    {
+                        cinemaHallMovieDb.CinemaHallMovies.Remove(cinemaHallMovie);
+                    }
+                    else
+                    {
+                        cinemaHallMovie.Date = date;
+                    }
+                    cinemaHallMovieDb.SaveChanges();
+                }
+                else
+                {
+                    cinemaHallMovies = cinemaHallMovies.Where(s => s.MovieID == movie.ID)
+                        .Where(s => s.Date == date);
 
-                cinemaHallMovieDb.CinemaHallMovies.Add(cinemaHallMovie);
-                cinemaHallMovieDb.SaveChanges();
+                    if (cinemaHallMovies.FirstOrDefault() == null)
+                    {
+                        CinemaHallMovie cinemaHallMovie = new CinemaHallMovie
+                        {
+                            CinemaHallID = id,
+                            MovieID = movie.ID,
+                            Date = date,
+                        };
+
+                        cinemaHallMovieDb.CinemaHallMovies.Add(cinemaHallMovie);
+                        cinemaHallMovieDb.SaveChanges();
+                    }
+                }
             }
 
             return Json("ok");
@@ -227,9 +141,89 @@ namespace OnlineCinema.Controllers
         public ActionResult GetMovieItemHtml(int id)
         {
             Movie movie = movieDb.Movies.Find(id);
-            ViewBag.Movie = movie;
-            ViewBag.ItemHeight = movie.Duration / 60 * 25;
+            ViewData["CinemaHallMovieID"] = 0;
+            ViewData["MovieID"] = movie.ID;
+            ViewData["MovieName"] = movie.Name;
+            ViewData["Duration"] = movie.Duration;
+            ViewData["ItemHeight"] = movie.Duration / 60 * 25;
             return PartialView("Movie");
+        }
+
+        public string GetSchedulteMovieItemHtml(CinemaHallScheduleMovie cinemaHallMovie)
+        {
+            string html = "";
+            DateTime cinemaHallMovieDate = cinemaHallMovie.Date;
+            int startMinute = cinemaHallMovieDate.Hour * 60 + cinemaHallMovieDate.Minute;
+
+            ControllerContext context = ControllerContext;
+
+            ViewEngineResult viewEngineResult = ViewEngines.Engines.FindPartialView(context, "Movie");
+            var view = viewEngineResult.View;
+            ViewDataDictionary viewData = new ViewDataDictionary
+                {
+                    { "CinemaHallMovieID", cinemaHallMovie.CinemaHallMovieID },
+                    { "MovieID", cinemaHallMovie.MovieID },
+                    { "MovieName", cinemaHallMovie.MovieName },
+                    { "StartMinute", startMinute },
+                    { "Duration", cinemaHallMovie.Duration },
+                    { "ItemHeight", cinemaHallMovie.Duration / 60 * 25 },
+                };
+
+            using (var sw = new StringWriter())
+            {
+                var ctx = new ViewContext(context, view, viewData, context.Controller.TempData, sw);
+                view.Render(ctx, sw);
+                html = sw.ToString();
+            }
+
+            return html;
+        }
+
+        public ActionResult ChangeDate(int cinemaHallId, int year, int month, int day, int days, int direction)
+        {
+            DateTime date = new DateTime(year, month, day);
+            if (direction != 1)
+            {
+                days = -days;
+            }
+            date = date.AddDays(days);
+
+            DateTime prevDate = date.AddDays(-1);
+            DateTime nextDate = date.AddDays(1);
+
+            var cinemaHallMovies = from chm in cinemaHallMovieDb.CinemaHallMovies
+                                   join m in cinemaHallMovieDb.Movies on chm.MovieID equals m.ID
+                                   orderby chm.Date
+                                   select new CinemaHallScheduleMovie
+                                   {
+                                       CinemaHallMovieID = chm.ID,
+                                       CinemaHallID = chm.CinemaHallID,
+                                       MovieID = m.ID,
+                                       MovieName = m.Name,
+                                       Duration = m.Duration,
+                                       Date = chm.Date
+                                   };
+
+            cinemaHallMovies = cinemaHallMovies.Where(s => s.CinemaHallID == cinemaHallId)
+                .Where(s => s.Date.Year == date.Year)
+                .Where(s => s.Date.Month == date.Month)
+                .Where(s => s.Date.Day == date.Day);
+
+            string html = "";
+            foreach (CinemaHallScheduleMovie cinemaHallMovie in cinemaHallMovies)
+            {
+                html += GetSchedulteMovieItemHtml(cinemaHallMovie);
+            }
+
+            return Json(new {
+                year = date.Year,
+                month = date.Month,
+                day = date.Day,
+                date = date.Day + "." + date.Month + "." + date.Year,
+                prevDate = prevDate.Day + "." + prevDate.Month + "." + prevDate.Year,
+                nextDate = nextDate.Day + "." + nextDate.Month + "." + nextDate.Year,
+                html,
+            });
         }
 
         protected override void Dispose(bool disposing)
