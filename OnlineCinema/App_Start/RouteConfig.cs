@@ -16,6 +16,13 @@ namespace OnlineCinema
             namespaces[0] = "OnlineCinema";
 
             routes.MapRoute(
+                name: "Administrator",
+                url: "administrator/{controller}/{action}/{id}",
+                defaults: new { controller = "Administrator", action = "Index", id = UrlParameter.Optional },
+                namespaces: namespaces
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },

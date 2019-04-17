@@ -47,23 +47,5 @@ namespace OnlineCinema.Controllers
 
             return View();
         }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(User user)
-        {
-            if (ModelState.IsValid)
-            {
-                var currentUser = this.userDb.Users.Where(a => a.Login.Equals(user.Login) && a.Password.Equals(user.Password)).FirstOrDefault();
-                if (currentUser != null)
-                {
-                    Session["UserID"] = currentUser.ID.ToString();
-                    Session["UserFirstName"] = currentUser.FirstName.ToString();
-                    Session["UserLastName"] = currentUser.LastName.ToString();
-                }
-            }
-
-            return RedirectToAction("Index");
-        }
     }
 }

@@ -33,15 +33,18 @@ namespace OnlineCinema.Controllers
         public ActionResult Details(int? id)
         {
             LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             CinemaHall cinemaHall = db.CinemaHalls.Find(id);
             if (cinemaHall == null)
             {
                 return HttpNotFound();
             }
+
             return View(cinemaHall);
         }
 
@@ -49,10 +52,12 @@ namespace OnlineCinema.Controllers
         public ActionResult Create(int? id)
         {
             LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             CinemaContext cinemaDb = new CinemaContext();
             Cinema cinema = cinemaDb.Cinemas.Find(id);
             if (cinema == null)
@@ -60,6 +65,7 @@ namespace OnlineCinema.Controllers
                 return HttpNotFound();
             }
             ViewBag.CinemaId = id;
+
             return View();
         }
 
@@ -71,6 +77,7 @@ namespace OnlineCinema.Controllers
         public ActionResult Create([Bind(Include = "ID,CinemaID,Name")] CinemaHall cinemaHall)
         {
             LoginIfNotAuthorized();
+
             if (ModelState.IsValid)
             {
                 db.CinemaHalls.Add(cinemaHall);
@@ -85,15 +92,18 @@ namespace OnlineCinema.Controllers
         public ActionResult Edit(int? id)
         {
             LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             CinemaHall cinemaHall = db.CinemaHalls.Find(id);
             if (cinemaHall == null)
             {
                 return HttpNotFound();
             }
+
             return View(cinemaHall);
         }
 
@@ -105,12 +115,14 @@ namespace OnlineCinema.Controllers
         public ActionResult Edit([Bind(Include = "ID,CinemaID,Name")] CinemaHall cinemaHall)
         {
             LoginIfNotAuthorized();
+
             if (ModelState.IsValid)
             {
                 db.Entry(cinemaHall).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(cinemaHall);
         }
 
@@ -118,15 +130,18 @@ namespace OnlineCinema.Controllers
         public ActionResult Delete(int? id)
         {
             LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             CinemaHall cinemaHall = db.CinemaHalls.Find(id);
             if (cinemaHall == null)
             {
                 return HttpNotFound();
             }
+
             return View(cinemaHall);
         }
 

@@ -173,6 +173,7 @@
     <Compile Include="Controllers\CinemaHallsController.cs" />
     <Compile Include="Controllers\CinemasController.cs" />
     <Compile Include="Controllers\GenresController.cs" />
+    <Compile Include="Controllers\AdministratorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -295,6 +296,7 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\CinemaHallSchedule\Index.cshtml" />
     <Content Include="Views\CinemaHallSchedule\Movie.cshtml" />
+    <Content Include="Views\Administrator\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -18,7 +18,7 @@ namespace OnlineCinema.Controllers
         {
             if (Session["UserID"] == null || Session["UserID"].ToString() == "")
             {
-                Response.Redirect("Home");
+                Response.Redirect("administrator/Home");
             }
         }
 
@@ -33,15 +33,18 @@ namespace OnlineCinema.Controllers
         public ActionResult Details(int? id)
         {
             LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Genre genre = db.Genres.Find(id);
             if (genre == null)
             {
                 return HttpNotFound();
             }
+
             return View(genre);
         }
 
@@ -60,6 +63,7 @@ namespace OnlineCinema.Controllers
         public ActionResult Create([Bind(Include = "ID,Name")] Genre genre)
         {
             LoginIfNotAuthorized();
+
             if (ModelState.IsValid)
             {
                 db.Genres.Add(genre);
@@ -74,15 +78,18 @@ namespace OnlineCinema.Controllers
         public ActionResult Edit(int? id)
         {
             LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Genre genre = db.Genres.Find(id);
             if (genre == null)
             {
                 return HttpNotFound();
             }
+
             return View(genre);
         }
 
@@ -94,12 +101,14 @@ namespace OnlineCinema.Controllers
         public ActionResult Edit([Bind(Include = "ID,Name")] Genre genre)
         {
             LoginIfNotAuthorized();
+
             if (ModelState.IsValid)
             {
                 db.Entry(genre).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(genre);
         }
 
@@ -107,15 +116,18 @@ namespace OnlineCinema.Controllers
         public ActionResult Delete(int? id)
         {
             LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Genre genre = db.Genres.Find(id);
             if (genre == null)
             {
                 return HttpNotFound();
             }
+
             return View(genre);
         }
 

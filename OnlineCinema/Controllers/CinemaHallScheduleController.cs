@@ -31,6 +31,7 @@ namespace OnlineCinema.Controllers
         public ActionResult Index(int? id)
         {
             LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -54,13 +55,10 @@ namespace OnlineCinema.Controllers
             ViewBag.Month = date.Month;
             ViewBag.Day = date.Day;
 
-            ViewBag.PrevYear = prevDate.Year;
-            ViewBag.PrevMonth = prevDate.Month;
-            ViewBag.PrevDay = prevDate.Day;
-
-            ViewBag.NextYear = nextDate.Year;
-            ViewBag.NextMonth = nextDate.Month;
-            ViewBag.NextDay = nextDate.Day;
+            ViewBag.PrevDay = date.AddDays(-1).Date;
+            ViewBag.NextDay = date.AddDays(1).Date;
+            ViewBag.PrevWeek = date.AddDays(-7).Date;
+            ViewBag.NextWeek = date.AddDays(7).Date;
 
             var cinemaHallMovies = from chm in cinemaHallMovieDb.CinemaHallMovies
                                    join m in cinemaHallMovieDb.Movies on chm.MovieID equals m.ID
@@ -68,11 +66,17 @@ namespace OnlineCinema.Controllers
                                    select new CinemaHallScheduleMovie
                                    {
                                        CinemaHallMovieID = chm.ID,
+                                       CinemaHallID = chm.CinemaHallID,
                                        MovieID = m.ID,
                                        MovieName = m.Name,
                                        Duration = m.Duration,
                                        Date = chm.Date,
                                    };
+
+            cinemaHallMovies = cinemaHallMovies.Where(s => s.CinemaHallID == id)
+                .Where(s => s.Date.Year == date.Year)
+                .Where(s => s.Date.Month == date.Month)
+                .Where(s => s.Date.Day == date.Day);
 
             string cinemaHallMoviesHtml = "";
             foreach (CinemaHallScheduleMovie cinemaHallMovie in cinemaHallMovies)
@@ -90,6 +94,8 @@ namespace OnlineCinema.Controllers
         [HttpPost]
         public ActionResult Save(int id, int year, int month, int day, List<CinemaHallScheduleMovie> movies)
         {
+            LoginIfNotAuthorized();
+
             foreach (CinemaHallScheduleMovie scheduleMovie in movies)
             {
                 var cinemaHallMovies = from chm in cinemaHallMovieDb.CinemaHallMovies
@@ -181,6 +187,8 @@ namespace OnlineCinema.Controllers
 
         public ActionResult ChangeDate(int cinemaHallId, int year, int month, int day, int days, int direction)
         {
+            LoginIfNotAuthorized();
+
             DateTime date = new DateTime(year, month, day);
             if (direction != 1)
             {
@@ -188,8 +196,10 @@ namespace OnlineCinema.Controllers
             }
             date = date.AddDays(days);
 
-            DateTime prevDate = date.AddDays(-1);
-            DateTime nextDate = date.AddDays(1);
+            DateTime prevDay = date.AddDays(-1);
+            DateTime nextDay = date.AddDays(1);
+            DateTime prevWeek = date.AddDays(-7);
+            DateTime nextWeek = date.AddDays(7);
 
             var cinemaHallMovies = from chm in cinemaHallMovieDb.CinemaHallMovies
                                    join m in cinemaHallMovieDb.Movies on chm.MovieID equals m.ID
@@ -220,8 +230,10 @@ namespace OnlineCinema.Controllers
                 month = date.Month,
                 day = date.Day,
                 date = date.Day + "." + date.Month + "." + date.Year,
-                prevDate = prevDate.Day + "." + prevDate.Month + "." + prevDate.Year,
-                nextDate = nextDate.Day + "." + nextDate.Month + "." + nextDate.Year,
+                prevDay = prevDay.Day + "." + prevDay.Month + "." + prevDay.Year,
+                nextDay = nextDay.Day + "." + nextDay.Month + "." + nextDay.Year,
+                prevWeek = prevWeek.Day + "." + prevWeek.Month + "." + prevWeek.Year,
+                nextWeek = nextWeek.Day + "." + nextWeek.Month + "." + nextWeek.Year,
                 html,
             });
         }

@@ -28,6 +28,7 @@ namespace OnlineCinema.Controllers
         public ActionResult Index(int? id)
         {
             LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -94,6 +95,8 @@ namespace OnlineCinema.Controllers
         [HttpPost]
         public ActionResult Save(int id, List<CinemaHallPlace> places)
         {
+            LoginIfNotAuthorized();
+
             var cinemaHallPlaces = from chp in db.CinemaHallPlaces
                                    select chp;
 

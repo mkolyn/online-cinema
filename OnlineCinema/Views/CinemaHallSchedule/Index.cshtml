@@ -24,13 +24,21 @@
     <div class="schedule-title">
         @ViewBag.Day.@ViewBag.Month.@ViewBag.Year
     </div>
+    <div class="prev-week">
+        Попередній Тиждень
+        <div class="prev-week-title">@ViewBag.PrevWeek.Day.@ViewBag.PrevWeek.Month.@ViewBag.PrevWeek.Year</div>
+    </div>
     <div class="prev-day">
         Попередній день
-        <div class="prev-day-title">@ViewBag.PrevDay.@ViewBag.PrevMonth.@ViewBag.PrevYear</div>
+        <div class="prev-day-title">@ViewBag.PrevDay.Day.@ViewBag.PrevDay.Month.@ViewBag.PrevDay.Year</div>
+    </div>
+    <div class="next-week">
+        Наступний тиждень
+        <div class="next-week-title">@ViewBag.NextWeek.Day.@ViewBag.NextWeek.Month.@ViewBag.NextWeek.Year</div>
     </div>
     <div class="next-day">
         Наступний день
-        <div class="next-day-title">@ViewBag.NextDay.@ViewBag.NextMonth.@ViewBag.NextYear</div>
+        <div class="next-day-title">@ViewBag.NextDay.Day.@ViewBag.NextDay.Month.@ViewBag.NextDay.Year</div>
     </div>
     <div class="save-schedule">
         Зберегти розклад

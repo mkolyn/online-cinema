@@ -84,18 +84,18 @@
     font-weight: bold;
 }
 
-.prev-day, .next-day, .save-schedule {
+.prev-day, .next-day, .prev-week, .next-week, .save-schedule {
     cursor: pointer;
     border: 1px solid #ccc;
     padding: 5px;
     text-align: center;
 }
 
-.prev-day {
+.prev-day, .prev-week {
     float: left;
 }
 
-.next-day {
+.next-day, .next-week {
     float: right;
     cursor: pointer;
 }

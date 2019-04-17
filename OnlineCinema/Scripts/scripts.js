@@ -1,6 +1,7 @@
-﻿$(document).ready(function () {
-    var SCHEDULE_HOUR_HEIGHT = 24;
+﻿var SCHEDULE_HOUR_HEIGHT = 24;
+var ADMIN_BASE_URL = '/administrator/';
 
+$(document).ready(function () {
     var scheduleMovieChooseMinute = $('.schedule-movie-choose-minute');
 
     $('.generate-places').click(function () {
@@ -53,7 +54,7 @@
         }
 
         $.ajax({
-            url: '/CinemaHallPlaces/Save',
+            url: ADMIN_BASE_URL + 'CinemaHallPlaces/Save',
             method: "POST",
             data: { id: $('.cinema-hall-id').val(), places: places },
             success: function () {
@@ -119,7 +120,7 @@
         source: '/Movies/Find',
         select: function (event, ui) {
             $.ajax({
-                url: '/CinemaHallSchedule/GetMovieItemHtml',
+                url: ADMIN_BASE_URL + 'CinemaHallSchedule/GetMovieItemHtml',
                 method: "POST",
                 data: { id: ui.item.value },
                 success: function (data) {
@@ -168,7 +169,7 @@
         });
 
         $.ajax({
-            url: '/CinemaHallSchedule/Save',
+            url: ADMIN_BASE_URL + 'CinemaHallSchedule/Save',
             method: "POST",
             data: {
                 id: $('.cinema-hall-id').val(),
@@ -198,6 +199,14 @@
 
     $('.next-day').click(function () {
         changeDate(1, 1);
+    });
+
+    $('.prev-week').click(function () {
+        changeDate(7, 0);
+    });
+
+    $('.next-week').click(function () {
+        changeDate(7, 1);
     });
 });
 
@@ -253,7 +262,7 @@ function addDraggableEvents(elems) {
 
 function changeDate(days, direction) {
     $.ajax({
-        url: '/CinemaHallSchedule/ChangeDate',
+        url: ADMIN_BASE_URL + 'CinemaHallSchedule/ChangeDate',
         method: "POST",
         data: {
             cinemaHallId: $('.cinema-hall-id').val(),
@@ -269,8 +278,10 @@ function changeDate(days, direction) {
             $('.day').val(data.day);
 
             $('.schedule-title').html(data.date);
-            $('.prev-day-title').html(data.prevDate);
-            $('.next-day-title').html(data.nextDate);
+            $('.prev-day-title').html(data.prevDay);
+            $('.next-day-title').html(data.nextDay);
+            $('.prev-week-title').html(data.prevWeek);
+            $('.next-week-title').html(data.nextWeek);
 
             $('.schedule-movies').html(data.html);
 

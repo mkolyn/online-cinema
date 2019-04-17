@@ -19,7 +19,7 @@ namespace OnlineCinema.Controllers
         {
             if (Session["UserID"] == null || Session["UserID"].ToString() == "")
             {
-                Response.Redirect("Home");
+                Response.Redirect("administrator");
             }
         }
 
@@ -34,15 +34,18 @@ namespace OnlineCinema.Controllers
         public ActionResult Details(int? id)
         {
             LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Movie movie = db.Movies.Find(id);
             if (movie == null)
             {
                 return HttpNotFound();
             }
+
             return View(movie);
         }
 
@@ -62,6 +65,7 @@ namespace OnlineCinema.Controllers
         public ActionResult Create([Bind(Include = "ID,GenreID,Name,Duration,Description")] Movie movie)
         {
             LoginIfNotAuthorized();
+
             if (ModelState.IsValid)
             {
                 db.Movies.Add(movie);
@@ -76,16 +80,19 @@ namespace OnlineCinema.Controllers
         public ActionResult Edit(int? id)
         {
             LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Movie movie = db.Movies.Find(id);
             if (movie == null)
             {
                 return HttpNotFound();
             }
             ViewBag.GenreID = genreDb.GetSelectList(movie.GenreID);
+
             return View(movie);
         }
 
@@ -97,12 +104,14 @@ namespace OnlineCinema.Controllers
         public ActionResult Edit([Bind(Include = "ID,GenreID,Name,Duration,Description")] Movie movie)
         {
             LoginIfNotAuthorized();
+
             if (ModelState.IsValid)
             {
                 db.Entry(movie).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(movie);
         }
 
@@ -110,15 +119,18 @@ namespace OnlineCinema.Controllers
         public ActionResult Delete(int? id)
         {
             LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Movie movie = db.Movies.Find(id);
             if (movie == null)
             {
                 return HttpNotFound();
             }
+
             return View(movie);
         }
 

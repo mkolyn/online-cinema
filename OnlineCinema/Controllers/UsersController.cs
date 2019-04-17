@@ -14,30 +14,44 @@ namespace OnlineCinema.Controllers
     {
         private UserContext db = new UserContext();
 
+        public void LoginIfNotAuthorized()
+        {
+            if (Session["UserID"] == null || Session["UserID"].ToString() == "")
+            {
+                Response.Redirect("administrator");
+            }
+        }
+
         // GET: Users
         public ActionResult Index()
         {
+            LoginIfNotAuthorized();
             return View(db.Users.ToList());
         }
 
         // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
+            LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             User user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
 
         // GET: Users/Create
         public ActionResult Create()
         {
+            LoginIfNotAuthorized();
             return View();
         }
 
@@ -48,6 +62,8 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,FirstName,LastName,Login,Password")] User user)
         {
+            LoginIfNotAuthorized();
+
             if (ModelState.IsValid)
             {
                 db.Users.Add(user);
@@ -61,15 +77,19 @@ namespace OnlineCinema.Controllers
         // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
+            LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             User user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
 
@@ -80,27 +100,34 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,Login,Password")] User user)
         {
+            LoginIfNotAuthorized();
+
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(user);
         }
 
         // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
+            LoginIfNotAuthorized();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             User user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
 
@@ -109,6 +136,7 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            LoginIfNotAuthorized();
             User user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
