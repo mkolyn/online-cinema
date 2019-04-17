@@ -208,7 +208,16 @@
     <Compile Include="Migrations\201904080954121_CinemaHallMovie.Designer.cs">
       <DependentUpon>201904080954121_CinemaHallMovie.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904171132191_UserCinema.cs" />
+    <Compile Include="Migrations\201904171132191_UserCinema.Designer.cs">
+      <DependentUpon>201904171132191_UserCinema.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904171204533_CinemaMovie.cs" />
+    <Compile Include="Migrations\201904171204533_CinemaMovie.Designer.cs">
+      <DependentUpon>201904171204533_CinemaMovie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CinemaMovie.cs" />
     <Compile Include="Models\CinemaHallMovie.cs" />
     <Compile Include="Models\CinemaHallPlace.cs" />
     <Compile Include="Models\Genre.cs" />
@@ -276,7 +285,6 @@
     <Content Include="Views\CinemaHalls\Delete.cshtml" />
     <Content Include="Views\CinemaHalls\Details.cshtml" />
     <Content Include="Views\CinemaHalls\Edit.cshtml" />
-    <Content Include="Views\CinemaHalls\Index.cshtml" />
     <Content Include="Views\Movies\Create.cshtml" />
     <Content Include="Views\Movies\Delete.cshtml" />
     <Content Include="Views\Movies\Details.cshtml" />
@@ -335,6 +343,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904080954121_CinemaHallMovie.resx">
       <DependentUpon>201904080954121_CinemaHallMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904171132191_UserCinema.resx">
+      <DependentUpon>201904171132191_UserCinema.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904171204533_CinemaMovie.resx">
+      <DependentUpon>201904171204533_CinemaMovie.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
