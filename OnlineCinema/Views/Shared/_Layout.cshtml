@@ -24,10 +24,17 @@
             {
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Cinemas", "Index", "Cinemas")</li>
-                        <li>@Html.ActionLink("Genres", "Index", "Genres")</li>
+                        @if (Session["CinemaID"] == null || Session["CinemaID"].ToString() == "")
+                        {
+                            <li>@Html.ActionLink("Cinemas", "Index", "Cinemas")</li>
+                            <li>@Html.ActionLink("Genres", "Index", "Genres")</li>
+                            <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.RouteLink("CinemaHalls", new { controller = "Cinemas", action = "Halls", id = Session["CinemaID"].ToString() })</li>
+                        }
                         <li>@Html.ActionLink("Movies", "Index", "Movies")</li>
-                        <li>@Html.ActionLink("Users", "Index", "Users")</li>
                     </ul>
                 </div>
             }

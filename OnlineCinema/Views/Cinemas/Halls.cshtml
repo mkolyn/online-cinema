@@ -30,9 +30,9 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
+            @Html.RouteLink("Edit", new { controller = "CinemaHalls", action = "Edit", id = item.ID }) |
+            @Html.RouteLink("Details", new { controller = "CinemaHalls", action = "Details", id = item.ID }) |
+            @Html.RouteLink("Delete", new { controller = "CinemaHalls", action = "Delete", id = item.ID }) |
             @Html.RouteLink("Places", new { controller = "CinemaHallPlaces", action = "Index", id = item.ID }) |
             @Html.RouteLink("Schedule", new { controller = "CinemaHallSchedule", action = "Index", id = item.ID })
         </td>
