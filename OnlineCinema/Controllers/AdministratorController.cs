@@ -30,6 +30,7 @@ namespace OnlineCinema.Controllers
                 if (currentUser != null)
                 {
                     Session["UserID"] = currentUser.ID.ToString();
+                    Session["CinemaID"] = currentUser.CinemaID.ToString();
                     Session["UserFirstName"] = currentUser.FirstName.ToString();
                     Session["UserLastName"] = currentUser.LastName.ToString();
                 }

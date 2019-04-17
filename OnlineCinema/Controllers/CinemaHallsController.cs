@@ -18,15 +18,8 @@ namespace OnlineCinema.Controllers
         {
             if (Session["UserID"] == null || Session["UserID"].ToString() == "")
             {
-                Response.Redirect("Home");
+                Response.Redirect("administrator");
             }
-        }
-
-        // GET: CinemaHalls
-        public ActionResult Index()
-        {
-            LoginIfNotAuthorized();
-            return View(db.CinemaHalls.ToList());
         }
 
         // GET: CinemaHalls/Details/5
@@ -82,7 +75,7 @@ namespace OnlineCinema.Controllers
             {
                 db.CinemaHalls.Add(cinemaHall);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Halls", "Cinemas", new { id = cinemaHall.CinemaID });
             }
 
             return View(cinemaHall);
@@ -120,7 +113,7 @@ namespace OnlineCinema.Controllers
             {
                 db.Entry(cinemaHall).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Halls", "Cinemas", new { id = cinemaHall.CinemaID });
             }
 
             return View(cinemaHall);
@@ -154,7 +147,7 @@ namespace OnlineCinema.Controllers
             CinemaHall cinemaHall = db.CinemaHalls.Find(id);
             db.CinemaHalls.Remove(cinemaHall);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Halls", "Cinemas", new { id = cinemaHall.CinemaID });
         }
 
         protected override void Dispose(bool disposing)

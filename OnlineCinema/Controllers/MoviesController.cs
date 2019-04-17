@@ -13,6 +13,7 @@ namespace OnlineCinema.Controllers
     public class MoviesController : Controller
     {
         private MovieContext db = new MovieContext();
+        private CinemaMovieContext cinemaMovieDb = new CinemaMovieContext();
         private GenreContext genreDb = new GenreContext();
 
         public void LoginIfNotAuthorized()
@@ -27,7 +28,8 @@ namespace OnlineCinema.Controllers
         public ActionResult Index()
         {
             LoginIfNotAuthorized();
-            return View(db.Movies.ToList());
+            Int32.TryParse(Session["CinemaID"].ToString(), out int cinemaId);
+            return View(cinemaMovieDb.GetList(cinemaId));
         }
 
         // GET: Movies/Details/5
@@ -68,8 +70,38 @@ namespace OnlineCinema.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Movies.Add(movie);
-                db.SaveChanges();
+                Int32.TryParse(Session["CinemaID"].ToString(), out int cinemaId);
+                int movieId = 0;
+
+                var existedMovie = db.Movies.ToList().Where(m => m.Name == movie.Name).FirstOrDefault();
+                if (existedMovie == null)
+                {
+                    db.Movies.Add(movie);
+                    db.SaveChanges();
+                    existedMovie = db.Movies.ToList().Where(m => m.Name == movie.Name).FirstOrDefault();
+                    movieId = existedMovie.ID;
+                }
+                else
+                {
+                    movieId = existedMovie.ID;
+                }
+
+                CinemaMovie cinemaMovie = cinemaMovieDb.CinemaMovies.ToList()
+                    .Where(m => m.CinemaID == cinemaId)
+                    .Where(m => m.MovieID == movieId)
+                    .FirstOrDefault();
+
+                if (cinemaMovie == null)
+                {
+                    cinemaMovie = new CinemaMovie()
+                    {
+                        CinemaID = cinemaId,
+                        MovieID = movieId,
+                    };
+                    cinemaMovieDb.CinemaMovies.Add(cinemaMovie);
+                    cinemaMovieDb.SaveChanges();
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -140,9 +172,25 @@ namespace OnlineCinema.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             LoginIfNotAuthorized();
+            Int32.TryParse(Session["CinemaID"].ToString(), out int cinemaId);
+
             Movie movie = db.Movies.Find(id);
-            db.Movies.Remove(movie);
-            db.SaveChanges();
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+
+            CinemaMovie cinemaMovie = cinemaMovieDb.CinemaMovies.ToList()
+                    .Where(m => m.CinemaID == cinemaId)
+                    .Where(m => m.MovieID == id)
+                    .FirstOrDefault();
+
+            if (cinemaMovie != null)
+            {
+                cinemaMovieDb.CinemaMovies.Remove(cinemaMovie);
+                cinemaMovieDb.SaveChanges();
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -152,10 +200,9 @@ namespace OnlineCinema.Controllers
         {
             LoginIfNotAuthorized();
 
-            var movies = from m in db.Movies
-                                   select m;
+            Int32.TryParse(Session["CinemaID"].ToString(), out int cinemaId);
 
-            movies = movies.Where(s => s.Name.ToString().Contains(term));
+            var movies = cinemaMovieDb.GetList(cinemaId, term);
 
             List<MovieAutocomplete> movieItems = new List<MovieAutocomplete>();
 

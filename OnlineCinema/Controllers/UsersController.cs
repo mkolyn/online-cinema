@@ -13,6 +13,7 @@ namespace OnlineCinema.Controllers
     public class UsersController : Controller
     {
         private UserContext db = new UserContext();
+        private CinemaContext cinemaDb = new CinemaContext();
 
         public void LoginIfNotAuthorized()
         {
@@ -52,6 +53,7 @@ namespace OnlineCinema.Controllers
         public ActionResult Create()
         {
             LoginIfNotAuthorized();
+            ViewBag.CinemaID = cinemaDb.GetSelectList();
             return View();
         }
 
@@ -60,7 +62,7 @@ namespace OnlineCinema.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,FirstName,LastName,Login,Password")] User user)
+        public ActionResult Create([Bind(Include = "ID,CinemaID,FirstName,LastName,Login,Password")] User user)
         {
             LoginIfNotAuthorized();
 
@@ -89,6 +91,7 @@ namespace OnlineCinema.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CinemaID = cinemaDb.GetSelectList(user.CinemaID != null ? user.CinemaID.Value : 0);
 
             return View(user);
         }
@@ -98,7 +101,7 @@ namespace OnlineCinema.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,Login,Password")] User user)
+        public ActionResult Edit([Bind(Include = "ID,CinemaID,FirstName,LastName,Login,Password")] User user)
         {
             LoginIfNotAuthorized();
 

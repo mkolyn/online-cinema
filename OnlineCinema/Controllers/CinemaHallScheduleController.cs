@@ -23,7 +23,7 @@ namespace OnlineCinema.Controllers
         {
             if (Session["UserID"] == null || Session["UserID"].ToString() == "")
             {
-                Response.Redirect("Home");
+                Response.Redirect("administrator");
             }
         }
 
