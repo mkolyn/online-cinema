@@ -8,8 +8,10 @@ namespace OnlineCinema.Models
 {
     public class User
     {
-        // cinema ID
+        // user ID
         public int ID { get; set; }
+        // cinema ID
+        public int? CinemaID { get; set; }
         // first name
         public string FirstName { get; set; }
         // last name

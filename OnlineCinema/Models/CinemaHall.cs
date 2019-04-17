@@ -23,5 +23,15 @@ namespace OnlineCinema.Models
         }
 
         public DbSet<CinemaHall> CinemaHalls { get; set; }
+
+        public IEnumerable<CinemaHall> GetList(int cinemaId)
+        {
+            var cinemaHalls = from ch in CinemaHalls
+                              select ch;
+
+            cinemaHalls = cinemaHalls.Where(c => c.CinemaID == cinemaId);
+
+            return cinemaHalls;
+        }
     }
 }

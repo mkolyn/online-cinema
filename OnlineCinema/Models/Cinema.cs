@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace OnlineCinema.Models
 {
@@ -21,5 +22,16 @@ namespace OnlineCinema.Models
         }
 
         public DbSet<Cinema> Cinemas { get; set; }
+
+        public IEnumerable<SelectListItem> GetSelectList(int ID = 0)
+        {
+            return from d in Cinemas
+                   select new SelectListItem
+                   {
+                       Text = d.Name,
+                       Value = d.ID.ToString(),
+                       Selected = d.ID == ID
+                   };
+        }
     }
 }
