@@ -35,6 +35,7 @@
                             <li>@Html.RouteLink("CinemaHalls", new { controller = "Cinemas", action = "Halls", id = Session["CinemaID"].ToString() })</li>
                         }
                         <li>@Html.ActionLink("Movies", "Index", "Movies")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Administrator")</li>
                     </ul>
                 </div>
             }
