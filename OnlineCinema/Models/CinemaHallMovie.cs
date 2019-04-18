@@ -26,6 +26,23 @@ namespace OnlineCinema.Models
 
         public DbSet<CinemaHallMovie> CinemaHallMovies { get; set; }
         public DbSet<Movie> Movies { get; set; }
+
+        public List<CinemaHallScheduleMovie> GetList(int year, int month, int day)
+        {
+            var movies = from chm in CinemaHallMovies
+                         join m in Movies on chm.MovieID equals m.ID
+                         select new CinemaHallScheduleMovie
+                         {
+                             Date = chm.Date,
+                             MovieName = m.Name,
+                         };
+
+            movies = movies.Where(m => m.Date.Year == year)
+                .Where(m => m.Date.Month == month)
+                .Where(m => m.Date.Day == day);
+
+            return movies.ToList();
+        }
     }
 
     public class CinemaHallScheduleMovie

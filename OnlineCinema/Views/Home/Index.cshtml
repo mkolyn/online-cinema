@@ -33,4 +33,17 @@
 </div>-->
 <div class="row">
     <h2>Cinemas</h2>
+
+    <h3>
+        @ViewBag.Day.@ViewBag.Month.@ViewBag.Year
+    </h3>
+
+    <div class="movies">
+        @foreach (var movie in ViewBag.movies)
+        {
+            <div class="movie">
+                @movie.Name
+            </div>
+        }
+    </div>
 </div>
