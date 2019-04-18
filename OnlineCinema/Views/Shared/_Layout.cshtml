@@ -21,12 +21,13 @@
                 </button>
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            @if (Session["UserID"] != null && Session["UserID"].ToString() != "")
-            {
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        @if (Session["CinemaID"] == null || Session["CinemaID"].ToString() == "")
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (Session["UserID"] != null && Session["UserID"].ToString() != "")
+                    {
+                        if (Session["CinemaID"] == null || Session["CinemaID"].ToString() == "")
                         {
+                            <li>@Html.ActionLink("Cities", "Index", "Cities")</li>
                             <li>@Html.ActionLink("Cinemas", "Index", "Cinemas")</li>
                             <li>@Html.ActionLink("Genres", "Index", "Genres")</li>
                             <li>@Html.ActionLink("Users", "Index", "Users")</li>
@@ -37,9 +38,26 @@
                         }
                         <li>@Html.ActionLink("Movies", "Index", "Movies")</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Administrator")</li>
-                    </ul>
-                </div>
-            }
+                    }
+                </ul>
+                @if (ViewBag.Cities != null)
+                {
+                    <div class="choose-city">
+                        <div class="choose-city-title">
+                            @Html.Raw(ViewBag.City != "" ? ViewBag.City : "Вибрати місто")
+                        </div>
+                        <div class="cities">
+                            @foreach (var city in ViewBag.Cities)
+                            {
+                                string cityName = city.Name.ToString();
+                                <div class="city">
+                                    @Html.RouteLink(cityName, "Default", new { controller = "Home", action = "City", id = city.ID })
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
     <div class="container body-content">
@@ -52,7 +70,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/scripts.js")
+    @Scripts.Render("~/Scripts/admin.js")
+    @Scripts.Render("~/Scripts/script.js")
     @Scripts.Render("~/Scripts/jquery-ui.min.js")
     @RenderSection("scripts", required: false)
 </body>

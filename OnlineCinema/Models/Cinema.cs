@@ -11,6 +11,8 @@ namespace OnlineCinema.Models
     {
         // cinema ID
         public int ID { get; set; }
+        // city ID
+        public int CityID { get; set; }
         // cinema name
         public string Name { get; set; }
     }
