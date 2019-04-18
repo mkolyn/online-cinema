@@ -168,11 +168,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CinemasController.cs" />
+    <Compile Include="Controllers\Cities.cs" />
+    <Compile Include="Controllers\CoreController.cs" />
     <Compile Include="Controllers\RunBeforeController.cs" />
     <Compile Include="Controllers\CinemaHallScheduleController.cs" />
     <Compile Include="Controllers\CinemaHallPlacesController.cs" />
     <Compile Include="Controllers\CinemaHallsController.cs" />
-    <Compile Include="Controllers\CinemasController.cs" />
     <Compile Include="Controllers\GenresController.cs" />
     <Compile Include="Controllers\AdministratorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -217,10 +219,19 @@
     <Compile Include="Migrations\201904171204533_CinemaMovie.Designer.cs">
       <DependentUpon>201904171204533_CinemaMovie.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904181206595_City.cs" />
+    <Compile Include="Migrations\201904181206595_City.Designer.cs">
+      <DependentUpon>201904181206595_City.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904181208275_CinemaCity.cs" />
+    <Compile Include="Migrations\201904181208275_CinemaCity.Designer.cs">
+      <DependentUpon>201904181208275_CinemaCity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaMovie.cs" />
     <Compile Include="Models\CinemaHallMovie.cs" />
     <Compile Include="Models\CinemaHallPlace.cs" />
+    <Compile Include="Models\City.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\CinemaHall.cs" />
@@ -258,7 +269,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\scripts.js" />
+    <Content Include="Scripts\admin.js" />
+    <Content Include="Scripts\script.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -306,6 +318,11 @@
     <Content Include="Views\CinemaHallSchedule\Index.cshtml" />
     <Content Include="Views\CinemaHallSchedule\Movie.cshtml" />
     <Content Include="Views\Administrator\Index.cshtml" />
+    <Content Include="Views\Cities\Create.cshtml" />
+    <Content Include="Views\Cities\Delete.cshtml" />
+    <Content Include="Views\Cities\Details.cshtml" />
+    <Content Include="Views\Cities\Edit.cshtml" />
+    <Content Include="Views\Cities\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -350,6 +367,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904171204533_CinemaMovie.resx">
       <DependentUpon>201904171204533_CinemaMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904181206595_City.resx">
+      <DependentUpon>201904181206595_City.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904181208275_CinemaCity.resx">
+      <DependentUpon>201904181208275_CinemaCity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

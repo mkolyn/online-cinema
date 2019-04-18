@@ -28,6 +28,13 @@ namespace OnlineCinema
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                 namespaces: namespaces
             );
+
+            routes.MapRoute(
+                name: "Date",
+                url: "date/{year}/{month}/{day}",
+                defaults: new { controller = "Home", action = "Index", year = DateTime.Now.Year, month = DateTime.Now.Month, day = DateTime.Now.Day },
+                namespaces: namespaces
+            );
         }
     }
 }
