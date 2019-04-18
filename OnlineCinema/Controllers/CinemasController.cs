@@ -13,6 +13,7 @@ namespace OnlineCinema.Controllers
     public class CinemasController : RunBeforeController
     {
         private CinemaContext db = new CinemaContext();
+        private CityContext cityDb = new CityContext();
 
         // GET: Cinemas
         public ActionResult Index(string searchString)
@@ -46,6 +47,7 @@ namespace OnlineCinema.Controllers
         // GET: Cinemas/Create
         public ActionResult Create()
         {
+            ViewBag.CityID = cityDb.GetSelectList();
             return View();
         }
 
@@ -54,7 +56,7 @@ namespace OnlineCinema.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name")] Cinema cinema)
+        public ActionResult Create([Bind(Include = "ID,CityID,Name")] Cinema cinema)
         {
             if (ModelState.IsValid)
             {
@@ -73,11 +75,14 @@ namespace OnlineCinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Cinema cinema = db.Cinemas.Find(id);
             if (cinema == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.CityID = cityDb.GetSelectList(cinema.CityID);
+
             return View(cinema);
         }
 
@@ -86,7 +91,7 @@ namespace OnlineCinema.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name")] Cinema cinema)
+        public ActionResult Edit([Bind(Include = "ID,CityID,Name")] Cinema cinema)
         {
             if (ModelState.IsValid)
             {
