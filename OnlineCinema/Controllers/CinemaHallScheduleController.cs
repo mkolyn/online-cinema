@@ -13,36 +13,27 @@ using System.IO;
 
 namespace OnlineCinema.Controllers
 {
-    public class CinemaHallScheduleController : Controller
+    public class CinemaHallScheduleController : RunBeforeController
     {
         private CinemaHallPlaceContext db = new CinemaHallPlaceContext();
         private MovieContext movieDb = new MovieContext();
         private CinemaHallMovieContext cinemaHallMovieDb = new CinemaHallMovieContext();
-
-        public void LoginIfNotAuthorized()
-        {
-            if (Session["UserID"] == null || Session["UserID"].ToString() == "")
-            {
-                Response.Redirect("administrator");
-            }
-        }
+        private CinemaHallContext cinemaHallDb = new CinemaHallContext();
 
         // GET: CinemaHallSchedule/5
         public ActionResult Index(int? id)
         {
-            LoginIfNotAuthorized();
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            CinemaHallContext cinemaHallDb = new CinemaHallContext();
             CinemaHall cinemaHall = cinemaHallDb.CinemaHalls.Find(id);
             if (cinemaHall == null)
             {
                 return HttpNotFound();
             }
+            CheckCinemaRights(cinemaHall.CinemaID);
 
             ViewBag.CinemaHallID = id;
             ViewBag.CinemaHallName = cinemaHall.Name;
@@ -94,7 +85,12 @@ namespace OnlineCinema.Controllers
         [HttpPost]
         public ActionResult Save(int id, int year, int month, int day, List<CinemaHallScheduleMovie> movies)
         {
-            LoginIfNotAuthorized();
+            CinemaHall cinemaHall = cinemaHallDb.CinemaHalls.Find(id);
+            if (cinemaHall == null)
+            {
+                return HttpNotFound();
+            }
+            CheckCinemaRights(cinemaHall.CinemaID);
 
             foreach (CinemaHallScheduleMovie scheduleMovie in movies)
             {
@@ -187,8 +183,6 @@ namespace OnlineCinema.Controllers
 
         public ActionResult ChangeDate(int cinemaHallId, int year, int month, int day, int days, int direction)
         {
-            LoginIfNotAuthorized();
-
             DateTime date = new DateTime(year, month, day);
             if (direction != 1)
             {

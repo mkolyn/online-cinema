@@ -12,35 +12,21 @@ using OnlineCinema.Models;
 
 namespace OnlineCinema.Controllers
 {
-    public class CinemaHallPlacesController : Controller
+    public class CinemaHallPlacesController : RunBeforeController
     {
         private CinemaHallPlaceContext db = new CinemaHallPlaceContext();
-
-        public void LoginIfNotAuthorized()
-        {
-            if (Session["UserID"] == null || Session["UserID"].ToString() == "")
-            {
-                Response.Redirect("administrator");
-            }
-        }
+        private CinemaHallContext cinemaHallDb = new CinemaHallContext();
 
         // GET: CinemaHallPlaces/5
-        public ActionResult Index(int? id)
+        public ActionResult Index(int id)
         {
-            LoginIfNotAuthorized();
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            CinemaHallContext cinemaHallDb = new CinemaHallContext();
             CinemaHall cinemaHall = cinemaHallDb.CinemaHalls.Find(id);
             if (cinemaHall == null)
             {
                 return HttpNotFound();
             }
-            
+            CheckCinemaRights(cinemaHall.CinemaID);
+
             var cinemaHallPlaces = from chp in db.CinemaHallPlaces
                               select chp;
 
@@ -95,7 +81,12 @@ namespace OnlineCinema.Controllers
         [HttpPost]
         public ActionResult Save(int id, List<CinemaHallPlace> places)
         {
-            LoginIfNotAuthorized();
+            CinemaHall cinemaHall = cinemaHallDb.CinemaHalls.Find(id);
+            if (cinemaHall == null)
+            {
+                return HttpNotFound();
+            }
+            CheckCinemaRights(cinemaHall.CinemaID);
 
             var cinemaHallPlaces = from chp in db.CinemaHallPlaces
                                    select chp;

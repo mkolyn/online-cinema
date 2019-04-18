@@ -10,22 +10,13 @@ using OnlineCinema.Models;
 
 namespace OnlineCinema.Controllers
 {
-    public class CinemasController : Controller
+    public class CinemasController : RunBeforeController
     {
         private CinemaContext db = new CinemaContext();
-
-        public void LoginIfNotAuthorized()
-        {
-            if (Session["UserID"] == null || Session["UserID"].ToString() == "")
-            {
-                Response.Redirect("administrator");
-            }
-        }
 
         // GET: Cinemas
         public ActionResult Index(string searchString)
         {
-            LoginIfNotAuthorized();
             var cinemas = from c in db.Cinemas
                          select c;
 
@@ -40,7 +31,6 @@ namespace OnlineCinema.Controllers
         // GET: Cinemas/Details/5
         public ActionResult Details(int? id)
         {
-            LoginIfNotAuthorized();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -56,7 +46,6 @@ namespace OnlineCinema.Controllers
         // GET: Cinemas/Create
         public ActionResult Create()
         {
-            LoginIfNotAuthorized();
             return View();
         }
 
@@ -67,7 +56,6 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Name")] Cinema cinema)
         {
-            LoginIfNotAuthorized();
             if (ModelState.IsValid)
             {
                 db.Cinemas.Add(cinema);
@@ -81,7 +69,6 @@ namespace OnlineCinema.Controllers
         // GET: Cinemas/Edit/5
         public ActionResult Edit(int? id)
         {
-            LoginIfNotAuthorized();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -101,7 +88,6 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Name")] Cinema cinema)
         {
-            LoginIfNotAuthorized();
             if (ModelState.IsValid)
             {
                 db.Entry(cinema).State = EntityState.Modified;
@@ -114,7 +100,6 @@ namespace OnlineCinema.Controllers
         // GET: Cinemas/Delete/5
         public ActionResult Delete(int? id)
         {
-            LoginIfNotAuthorized();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -132,7 +117,6 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            LoginIfNotAuthorized();
             Cinema cinema = db.Cinemas.Find(id);
             db.Cinemas.Remove(cinema);
             db.SaveChanges();
@@ -151,11 +135,16 @@ namespace OnlineCinema.Controllers
         // GET: Cinemas/Halls/5
         public ActionResult Halls(int? id)
         {
-            LoginIfNotAuthorized();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            if (Session["CinemaID"] != null && Session["CinemaID"].ToString() != "" && Session["CinemaID"].ToString() != id.ToString())
+            {
+                return RedirectToAction("Index");
+            }
+
             Cinema cinema = db.Cinemas.Find(id);
             if (cinema == null)
             {
@@ -176,11 +165,11 @@ namespace OnlineCinema.Controllers
         // GET: Cinemas/Movies/5
         public ActionResult Movies(int? id)
         {
-            LoginIfNotAuthorized();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Cinema cinema = db.Cinemas.Find(id);
             if (cinema == null)
             {

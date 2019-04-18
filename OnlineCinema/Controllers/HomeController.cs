@@ -33,19 +33,5 @@ namespace OnlineCinema.Controllers
 
             return View();
         }
-
-        public ActionResult Cinemas()
-        {
-            ViewBag.Message = "Your cinemas page.";
-
-            return View();
-        }
-
-        public ActionResult Cinema(int ID)
-        {
-            ViewBag.Message = ID;
-
-            return View();
-        }
     }
 }

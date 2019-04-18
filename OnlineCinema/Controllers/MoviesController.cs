@@ -10,19 +10,11 @@ using OnlineCinema.Models;
 
 namespace OnlineCinema.Controllers
 {
-    public class MoviesController : Controller
+    public class MoviesController : RunBeforeController
     {
         private MovieContext db = new MovieContext();
         private CinemaMovieContext cinemaMovieDb = new CinemaMovieContext();
         private GenreContext genreDb = new GenreContext();
-
-        public void LoginIfNotAuthorized()
-        {
-            if (Session["UserID"] == null || Session["UserID"].ToString() == "")
-            {
-                Response.Redirect("administrator");
-            }
-        }
 
         // GET: Movies
         public ActionResult Index()
@@ -35,8 +27,6 @@ namespace OnlineCinema.Controllers
         // GET: Movies/Details/5
         public ActionResult Details(int? id)
         {
-            LoginIfNotAuthorized();
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -54,7 +44,6 @@ namespace OnlineCinema.Controllers
         // GET: Movies/Create
         public ActionResult Create()
         {
-            LoginIfNotAuthorized();
             ViewBag.GenreID = genreDb.GetSelectList();
             return View();
         }
@@ -66,8 +55,6 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,GenreID,Name,Duration,Description")] Movie movie)
         {
-            LoginIfNotAuthorized();
-
             if (ModelState.IsValid)
             {
                 Int32.TryParse(Session["CinemaID"].ToString(), out int cinemaId);
@@ -111,8 +98,6 @@ namespace OnlineCinema.Controllers
         // GET: Movies/Edit/5
         public ActionResult Edit(int? id)
         {
-            LoginIfNotAuthorized();
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -135,8 +120,6 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,GenreID,Name,Duration,Description")] Movie movie)
         {
-            LoginIfNotAuthorized();
-
             if (ModelState.IsValid)
             {
                 db.Entry(movie).State = EntityState.Modified;
@@ -150,8 +133,6 @@ namespace OnlineCinema.Controllers
         // GET: Movies/Delete/5
         public ActionResult Delete(int? id)
         {
-            LoginIfNotAuthorized();
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -171,7 +152,6 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            LoginIfNotAuthorized();
             Int32.TryParse(Session["CinemaID"].ToString(), out int cinemaId);
 
             Movie movie = db.Movies.Find(id);
@@ -198,8 +178,6 @@ namespace OnlineCinema.Controllers
         [HttpGet]
         public ActionResult Find(string term)
         {
-            LoginIfNotAuthorized();
-
             Int32.TryParse(Session["CinemaID"].ToString(), out int cinemaId);
 
             var movies = cinemaMovieDb.GetList(cinemaId, term);

@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Helpers;
 
 namespace OnlineCinema.Controllers
 {
@@ -15,7 +16,7 @@ namespace OnlineCinema.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.UserId = Session["UserID"] != null ? Session["UserID"].ToString() : "";
+            ViewBag.UserId = Core.GetUserId();
 
             return View();
         }
@@ -26,7 +27,11 @@ namespace OnlineCinema.Controllers
         {
             if (ModelState.IsValid)
             {
-                var currentUser = this.userDb.Users.Where(a => a.Login.Equals(user.Login) && a.Password.Equals(user.Password)).FirstOrDefault();
+                user.Password = Crypto.SHA256(user.Password);
+                var currentUser = this.userDb.Users.Where(a => a.Login.Equals(user.Login))
+                    .Where(a => a.Password.Equals(user.Password))
+                    .FirstOrDefault();
+
                 if (currentUser != null)
                 {
                     Session["UserID"] = currentUser.ID.ToString();
@@ -34,6 +39,19 @@ namespace OnlineCinema.Controllers
                     Session["UserFirstName"] = currentUser.FirstName.ToString();
                     Session["UserLastName"] = currentUser.LastName.ToString();
                 }
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Logout()
+        {
+            if (Session["UserID"] != null)
+            {
+                Session["UserID"] = null;
+                Session["CinemaID"] = null;
+                Session["UserFirstName"] = null;
+                Session["UserLastName"] = null;
             }
 
             return RedirectToAction("Index");

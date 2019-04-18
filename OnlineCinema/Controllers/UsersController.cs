@@ -7,34 +7,25 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OnlineCinema.Models;
+using System.Security.Cryptography;
+using System.Web.Helpers;
 
 namespace OnlineCinema.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController : RunBeforeController
     {
         private UserContext db = new UserContext();
         private CinemaContext cinemaDb = new CinemaContext();
 
-        public void LoginIfNotAuthorized()
-        {
-            if (Session["UserID"] == null || Session["UserID"].ToString() == "")
-            {
-                Response.Redirect("administrator");
-            }
-        }
-
         // GET: Users
         public ActionResult Index()
         {
-            LoginIfNotAuthorized();
             return View(db.Users.ToList());
         }
 
         // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
-            LoginIfNotAuthorized();
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -52,7 +43,6 @@ namespace OnlineCinema.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            LoginIfNotAuthorized();
             ViewBag.CinemaID = cinemaDb.GetSelectList();
             return View();
         }
@@ -64,10 +54,9 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,CinemaID,FirstName,LastName,Login,Password")] User user)
         {
-            LoginIfNotAuthorized();
-
             if (ModelState.IsValid)
             {
+                user.Password = Crypto.SHA256(user.Password);
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -79,8 +68,6 @@ namespace OnlineCinema.Controllers
         // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
-            LoginIfNotAuthorized();
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -103,10 +90,9 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,CinemaID,FirstName,LastName,Login,Password")] User user)
         {
-            LoginIfNotAuthorized();
-
             if (ModelState.IsValid)
             {
+                user.Password = Crypto.SHA256(user.Password);
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -118,8 +104,6 @@ namespace OnlineCinema.Controllers
         // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
-            LoginIfNotAuthorized();
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -139,7 +123,6 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            LoginIfNotAuthorized();
             User user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
