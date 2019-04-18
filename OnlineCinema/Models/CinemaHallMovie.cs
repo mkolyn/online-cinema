@@ -35,6 +35,7 @@ namespace OnlineCinema.Models
                          {
                              Date = chm.Date,
                              MovieName = m.Name,
+                             Duration = m.Duration,
                          };
 
             movies = movies.Where(m => m.Date.Year == year)

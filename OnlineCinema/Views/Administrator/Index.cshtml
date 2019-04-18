@@ -34,7 +34,7 @@
 <div class="row">
     <h2>Authorization</h2>
 
-    @if (ViewBag.UserId == "")
+    @if (ViewBag.UserId == 0)
     {
         using (Html.BeginForm("Login", "Administrator", FormMethod.Post))
         {

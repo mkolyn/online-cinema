@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = ViewBag.Message;
+    var hour = "";
+    var minute = "";
 }
 
 <!--<div class="jumbotron">
@@ -35,14 +37,24 @@
     <h2>Cinemas</h2>
 
     <h3>
-        @ViewBag.Day.@ViewBag.Month.@ViewBag.Year
+        @ViewBag.date.Day.@ViewBag.date.Month.@ViewBag.date.Year
     </h3>
 
     <div class="movies">
         @foreach (var movie in ViewBag.movies)
         {
+            hour = movie.Date.Hour < 10 ? "0" + movie.Date.Hour.ToString() : movie.Date.Hour.ToString();
+            minute = movie.Date.Minute < 10 ? "0" + movie.Date.Minute.ToString() : movie.Date.Minute.ToString();
             <div class="movie">
-                @movie.Name
+                <div class="movie-title">
+                    @movie.MovieName
+                </div>
+                <div class="movie-time">
+                    @hour:@minute
+                </div>
+                <div class="movie-duration">
+                    @movie.Duration хв
+                </div>
             </div>
         }
     </div>
