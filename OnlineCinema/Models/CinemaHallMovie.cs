@@ -38,6 +38,7 @@ namespace OnlineCinema.Models
                          join c in Cinemas on ch.CinemaID equals c.ID
                          join m in Movies on chm.MovieID equals m.ID
                          where cm.CinemaID == ch.CinemaID
+                         orderby chm.Date
                          select new CinemaHallScheduleMovie
                          {
                              Date = chm.Date,
