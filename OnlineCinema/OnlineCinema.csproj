@@ -227,6 +227,10 @@
     <Compile Include="Migrations\201904181208275_CinemaCity.Designer.cs">
       <DependentUpon>201904181208275_CinemaCity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904190642539_CinemaMovieImage.cs" />
+    <Compile Include="Migrations\201904190642539_CinemaMovieImage.Designer.cs">
+      <DependentUpon>201904190642539_CinemaMovieImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaMovie.cs" />
     <Compile Include="Models\CinemaHallMovie.cs" />
@@ -373,6 +377,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904181208275_CinemaCity.resx">
       <DependentUpon>201904181208275_CinemaCity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904190642539_CinemaMovieImage.resx">
+      <DependentUpon>201904190642539_CinemaMovieImage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
