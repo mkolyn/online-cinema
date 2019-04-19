@@ -13,7 +13,7 @@ using System.IO;
 
 namespace OnlineCinema.Controllers
 {
-    public class CinemaHallScheduleController : RunBeforeController
+    public class CinemaHallScheduleController : AdminController
     {
         private CinemaHallPlaceContext db = new CinemaHallPlaceContext();
         private MovieContext movieDb = new MovieContext();

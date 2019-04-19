@@ -34,6 +34,13 @@ namespace OnlineCinema.Models
         }
     }
 
+    public class CinemaHallPlaceData
+    {
+        public int MaxRow { get; set; }
+        public int MaxCell { get; set; }
+        public CinemaHallPlace[,] CinemaHallRows { get; set; }
+    }
+
     public class CinemaHallPlaceContext : DbContext
     {
         public CinemaHallPlaceContext() : base("name=DefaultConnection")
@@ -43,5 +50,56 @@ namespace OnlineCinema.Models
         public DbSet<CinemaHall> CinemaHalls { get; set; }
 
         public System.Data.Entity.DbSet<OnlineCinema.Models.CinemaHallPlace> CinemaHallPlaces { get; set; }
+
+        public CinemaHallPlaceData GetCinemaHallPlacesData(int id)
+        {
+            var cinemaHallPlaces = from chp in CinemaHallPlaces
+                                   select chp;
+
+            cinemaHallPlaces = cinemaHallPlaces.Where(s => s.CinemaHallID == id);
+
+            int maxRow = 0;
+            int maxCell = 0;
+            foreach (CinemaHallPlace cinemaHallPlace in cinemaHallPlaces)
+            {
+                if (cinemaHallPlace.Row > maxRow)
+                {
+                    maxRow = cinemaHallPlace.Row;
+                }
+                if (cinemaHallPlace.Cell > maxCell)
+                {
+                    maxCell = cinemaHallPlace.Cell;
+                }
+            }
+
+            CinemaHallPlace[,] cinemaHallRows = new CinemaHallPlace[maxRow, maxCell];
+            bool[,] cinemaHallIsJoinedPlaces = new bool[maxRow, maxCell];
+
+            foreach (CinemaHallPlace cinemaHallPlace in cinemaHallPlaces)
+            {
+                if (cinemaHallPlace.Rows > 1 || cinemaHallPlace.Cells > 1)
+                {
+                    for (var i = cinemaHallPlace.Row - 1; i < cinemaHallPlace.Row - 1 + cinemaHallPlace.Rows; i++)
+                    {
+                        for (var j = cinemaHallPlace.Cell - 1; j < cinemaHallPlace.Cell - 1 + cinemaHallPlace.Cells; j++)
+                        {
+                            cinemaHallIsJoinedPlaces[i, j] = true;
+                        }
+                    }
+                }
+                if (cinemaHallIsJoinedPlaces[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] == true)
+                {
+                    cinemaHallPlace.SetIsJoined(true);
+                }
+                cinemaHallRows[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] = cinemaHallPlace;
+            }
+
+            return new CinemaHallPlaceData
+            {
+                MaxRow = maxRow,
+                MaxCell = maxCell,
+                CinemaHallRows = cinemaHallRows,
+            };
+        }
     }
 }

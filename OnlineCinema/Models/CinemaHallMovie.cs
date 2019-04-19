@@ -46,6 +46,7 @@ namespace OnlineCinema.Models
                              Duration = m.Duration,
                              CityID = c.CityID,
                              Image = cm.Image,
+                             CinemaHallMovieID = chm.ID,
                          };
 
             int cityId = Core.GetCityId();

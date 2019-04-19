@@ -59,5 +59,15 @@ namespace OnlineCinema.Models
 
             return cinemaMovies.ToList();
         }
+
+        public CinemaMovie Get(int cinemaId, int movieId)
+        {
+            CinemaMovie cinemaMovie = CinemaMovies.ToList()
+                    .Where(m => m.CinemaID == cinemaId)
+                    .Where(m => m.MovieID == movieId)
+                    .FirstOrDefault();
+
+            return cinemaMovie;
+        }
     }
 }

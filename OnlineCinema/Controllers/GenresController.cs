@@ -10,7 +10,7 @@ using OnlineCinema.Models;
 
 namespace OnlineCinema.Controllers
 {
-    public class GenresController : RunBeforeController
+    public class GenresController : AdminController
     {
         private GenreContext db = new GenreContext();
 

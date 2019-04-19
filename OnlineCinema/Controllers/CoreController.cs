@@ -22,6 +22,8 @@ namespace OnlineCinema.Controllers
         {
             ViewBag.Cities = cityDb.Cities.ToList();
             ViewBag.City = Core.GetCityId() > 0 ? cityDb.Cities.Find(Core.GetCityId()).Name : "";
+            ViewBag.Styles = new List<string>() { "style" };
+            ViewBag.Scripts = new List<string>() { "script" };
         }
     }
 }

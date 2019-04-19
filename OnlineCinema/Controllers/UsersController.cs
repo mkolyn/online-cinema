@@ -12,7 +12,7 @@ using System.Web.Helpers;
 
 namespace OnlineCinema.Controllers
 {
-    public class UsersController : RunBeforeController
+    public class UsersController : AdminController
     {
         private UserContext db = new UserContext();
         private CinemaContext cinemaDb = new CinemaContext();

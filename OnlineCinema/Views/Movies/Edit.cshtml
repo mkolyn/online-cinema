@@ -17,6 +17,11 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.ID)
 
+    @if (ViewBag.Image != null && ViewBag.Image != "")
+    {
+        <img src="/images/@ViewBag.Image" class="movie-image" />
+    }
+
     <div class="form-group">
         <div class="col-md-10">
             <input type="file" name="image" id="image" accept="image/jpeg,image/png" />

@@ -62,16 +62,18 @@
             hour = movie.Date.Hour < 10 ? "0" + movie.Date.Hour.ToString() : movie.Date.Hour.ToString();
             minute = movie.Date.Minute < 10 ? "0" + movie.Date.Minute.ToString() : movie.Date.Minute.ToString();
             <div class="movie">
-                <div class="movie-title">
-                    @movie.MovieName
-                </div>
-                <div class="movie-image" style="background-image: url('/images/@movie.Image')"></div>
-                <div class="movie-time">
-                    @hour:@minute
-                </div>
-                <div class="movie-duration">
-                    @movie.Duration хв
-                </div>
+                <a href="/book/@movie.CinemaHallMovieID">
+                    <div class="movie-title">
+                        @movie.MovieName
+                    </div>
+                    <div class="movie-image" style="background-image: url('/images/@movie.Image')"></div>
+                    <div class="movie-time">
+                        @hour:@minute
+                    </div>
+                    <div class="movie-duration">
+                        @movie.Duration хв
+                    </div>
+                </a>
             </div>
         }
     </div>

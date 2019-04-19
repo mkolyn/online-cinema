@@ -130,3 +130,9 @@
     width: 100px;
     font-weight: bold;
 }
+
+.movie-image {
+    width: 200px;
+    height: auto;
+    margin-bottom: 10px;
+}

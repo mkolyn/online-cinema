@@ -10,7 +10,7 @@ using OnlineCinema.Models;
 
 namespace OnlineCinema.Controllers
 {
-    public class CitiesController : RunBeforeController
+    public class CitiesController : AdminController
     {
         private CityContext db = new CityContext();
 

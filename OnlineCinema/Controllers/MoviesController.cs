@@ -12,7 +12,7 @@ using OnlineCinema.Models;
 
 namespace OnlineCinema.Controllers
 {
-    public class MoviesController : RunBeforeController
+    public class MoviesController : AdminController
     {
         private MovieContext db = new MovieContext();
         private CinemaMovieContext cinemaMovieDb = new CinemaMovieContext();
@@ -74,10 +74,7 @@ namespace OnlineCinema.Controllers
                     movieId = existedMovie.ID;
                 }
 
-                CinemaMovie cinemaMovie = cinemaMovieDb.CinemaMovies.ToList()
-                    .Where(m => m.CinemaID == cinemaId)
-                    .Where(m => m.MovieID == movieId)
-                    .FirstOrDefault();
+                CinemaMovie cinemaMovie = cinemaMovieDb.Get(cinemaId, movieId);
 
                 if (cinemaMovie == null)
                 {
@@ -105,19 +102,22 @@ namespace OnlineCinema.Controllers
         }
 
         // GET: Movies/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             Movie movie = db.Movies.Find(id);
             if (movie == null)
             {
                 return HttpNotFound();
             }
+
+            CinemaMovie cinemaMovie = cinemaMovieDb.Get(Core.GetCinemaId(), id);
+            if (cinemaMovie == null)
+            {
+                return HttpNotFound();
+            }
+
             ViewBag.GenreID = genreDb.GetSelectList(movie.GenreID);
+            ViewBag.Image = cinemaMovie.Image;
 
             return View(movie);
         }
@@ -131,10 +131,7 @@ namespace OnlineCinema.Controllers
         {
             if (ModelState.IsValid)
             {
-                CinemaMovie cinemaMovie = cinemaMovieDb.CinemaMovies.ToList()
-                    .Where(m => m.CinemaID == Core.GetCinemaId())
-                    .Where(m => m.MovieID == id)
-                    .FirstOrDefault();
+                CinemaMovie cinemaMovie = cinemaMovieDb.Get(Core.GetCinemaId(), id);
 
                 if (cinemaMovie != null)
                 {
@@ -174,18 +171,13 @@ namespace OnlineCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Int32.TryParse(Session["CinemaID"].ToString(), out int cinemaId);
-
             Movie movie = db.Movies.Find(id);
             if (movie == null)
             {
                 return HttpNotFound();
             }
 
-            CinemaMovie cinemaMovie = cinemaMovieDb.CinemaMovies.ToList()
-                    .Where(m => m.CinemaID == cinemaId)
-                    .Where(m => m.MovieID == id)
-                    .FirstOrDefault();
+            CinemaMovie cinemaMovie = cinemaMovieDb.Get(Core.GetCinemaId(), id);
 
             if (cinemaMovie != null)
             {
@@ -200,9 +192,7 @@ namespace OnlineCinema.Controllers
         [HttpGet]
         public ActionResult Find(string term)
         {
-            Int32.TryParse(Session["CinemaID"].ToString(), out int cinemaId);
-
-            var movies = cinemaMovieDb.GetList(cinemaId, term);
+            var movies = cinemaMovieDb.GetList(Core.GetCinemaId(), term);
 
             List<MovieAutocomplete> movieItems = new List<MovieAutocomplete>();
 

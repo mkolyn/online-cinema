@@ -12,7 +12,7 @@ using OnlineCinema.Models;
 
 namespace OnlineCinema.Controllers
 {
-    public class CinemaHallPlacesController : RunBeforeController
+    public class CinemaHallPlacesController : AdminController
     {
         private CinemaHallPlaceContext db = new CinemaHallPlaceContext();
         private CinemaHallContext cinemaHallDb = new CinemaHallContext();
@@ -32,45 +32,12 @@ namespace OnlineCinema.Controllers
 
             cinemaHallPlaces = cinemaHallPlaces.Where(s => s.CinemaHallID == id);
 
-            int maxRow = 0;
-            int maxCell = 0;
-            foreach (CinemaHallPlace cinemaHallPlace in cinemaHallPlaces)
-            {
-                if (cinemaHallPlace.Row > maxRow)
-                {
-                    maxRow = cinemaHallPlace.Row;
-                }
-                if (cinemaHallPlace.Cell > maxCell)
-                {
-                    maxCell = cinemaHallPlace.Cell;
-                }
-            }
-
-            CinemaHallPlace[,] cinemaHallRows = new CinemaHallPlace[maxRow, maxCell];
-            bool[,] cinemaHallIsJoinedPlaces = new bool[maxRow, maxCell];
-            foreach (CinemaHallPlace cinemaHallPlace in cinemaHallPlaces)
-            {
-                if (cinemaHallPlace.Rows > 1 || cinemaHallPlace.Cells > 1)
-                {
-                    for (var i = cinemaHallPlace.Row - 1; i < cinemaHallPlace.Row - 1 + cinemaHallPlace.Rows; i++)
-                    {
-                        for (var j = cinemaHallPlace.Cell - 1; j < cinemaHallPlace.Cell - 1 + cinemaHallPlace.Cells; j++)
-                        {
-                            cinemaHallIsJoinedPlaces[i, j] = true;
-                        }
-                    }
-                }
-                if (cinemaHallIsJoinedPlaces[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] == true)
-                {
-                    cinemaHallPlace.SetIsJoined(true);
-                }
-                cinemaHallRows[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] = cinemaHallPlace;
-            }
+            CinemaHallPlaceData cinemaHallPlaceData = db.GetCinemaHallPlacesData(id);
 
             ViewBag.CinemaHallID = id;
-            ViewBag.maxRow = maxRow;
-            ViewBag.maxCell = maxCell;
-            ViewBag.cinemaHallRows = cinemaHallRows;
+            ViewBag.maxRow = cinemaHallPlaceData.MaxRow;
+            ViewBag.maxCell = cinemaHallPlaceData.MaxCell;
+            ViewBag.cinemaHallRows = cinemaHallPlaceData.CinemaHallRows;
 
             return View();
         }

@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Online cinema</title>
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/admin.css")
-    @Styles.Render("~/Content/style.css")
+    @if (ViewBag.Styles != null)
+    {
+        foreach (string style in ViewBag.Styles)
+        {
+            @Styles.Render("~/Content/" + style + ".css")
+        }
+    }
     @Styles.Render("~/Content/jquery-ui.min.css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -70,8 +75,13 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/admin.js")
-    @Scripts.Render("~/Scripts/script.js")
+    @if (ViewBag.Scripts != null)
+    {
+        foreach (string script in ViewBag.Scripts)
+        {
+            @Scripts.Render("~/Scripts/" + script + ".js")
+        }
+    }
     @Scripts.Render("~/Scripts/jquery-ui.min.js")
     @RenderSection("scripts", required: false)
 </body>
