@@ -1,0 +1,22 @@
+﻿<div class="cinema-hall-places">
+    @for (var i = 0; i < ViewBag.maxRow; i++)
+    {
+        <div class="cinema-hall-row">
+            @for (var j = 0; j < ViewBag.maxCell; j++)
+            {
+                if (ViewBag.cinemaHallRows[i, j] == null)
+                {
+                    <div class="cinema-hall-cell removed"></div>
+                }
+                else if (ViewBag.cinemaHallRows[i, j].GetIsJoined())
+                {
+                    <div class="cinema-hall-cell joined" data-rows="@ViewBag.cinemaHallRows[i, j].Rows" data-cells="@ViewBag.cinemaHallRows[i, j].Cells"></div>
+                }
+                else
+                {
+                    <div class="cinema-hall-cell" data-rows="@ViewBag.cinemaHallRows[i, j].Rows" data-cells="@ViewBag.cinemaHallRows[i, j].Cells"></div>
+                }
+            }
+        </div>
+    }
+</div>
