@@ -171,7 +171,8 @@
     <Compile Include="Controllers\CinemasController.cs" />
     <Compile Include="Controllers\Cities.cs" />
     <Compile Include="Controllers\CoreController.cs" />
-    <Compile Include="Controllers\RunBeforeController.cs" />
+    <Compile Include="Controllers\BookController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CinemaHallScheduleController.cs" />
     <Compile Include="Controllers\CinemaHallPlacesController.cs" />
     <Compile Include="Controllers\CinemaHallsController.cs" />
@@ -231,7 +232,12 @@
     <Compile Include="Migrations\201904190642539_CinemaMovieImage.Designer.cs">
       <DependentUpon>201904190642539_CinemaMovieImage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904191030502_CinemaHallMoviePlace.cs" />
+    <Compile Include="Migrations\201904191030502_CinemaHallMoviePlace.Designer.cs">
+      <DependentUpon>201904191030502_CinemaHallMoviePlace.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CinemaHallMoviePlace.cs" />
     <Compile Include="Models\CinemaMovie.cs" />
     <Compile Include="Models\CinemaHallMovie.cs" />
     <Compile Include="Models\CinemaHallPlace.cs" />
@@ -327,6 +333,8 @@
     <Content Include="Views\Cities\Details.cshtml" />
     <Content Include="Views\Cities\Edit.cshtml" />
     <Content Include="Views\Cities\Index.cshtml" />
+    <Content Include="Views\Book\Index.cshtml" />
+    <Content Include="Views\CinemaHallPlaces\Places.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -380,6 +388,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904190642539_CinemaMovieImage.resx">
       <DependentUpon>201904190642539_CinemaMovieImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904191030502_CinemaHallMoviePlace.resx">
+      <DependentUpon>201904191030502_CinemaHallMoviePlace.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
