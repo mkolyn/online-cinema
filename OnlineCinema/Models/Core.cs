@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace OnlineCinema.Models
@@ -56,6 +58,38 @@ namespace OnlineCinema.Models
             }
 
             return dates;
+        }
+
+        public static string UploadImage(HttpPostedFileBase image, string folderPath, string imageNamePrefix = "")
+        {
+            string imageFileName = "";
+
+            if (image != null && image.ContentLength > 0)
+            {
+                imageFileName = Path.GetFileName(image.FileName) + DateTime.Now.ToFileTime();
+                if (imageNamePrefix != "")
+                {
+                    imageFileName += imageNamePrefix;
+                }
+                imageFileName = Crypto.SHA256(imageFileName);
+                imageFileName += Path.GetExtension(image.FileName);
+
+                image.SaveAs(Path.Combine(folderPath, imageFileName));
+            }
+
+            return imageFileName;
+        }
+
+        public static void RemoveImage(string folderPath, string imageName)
+        {
+            if (imageName != null && imageName != "")
+            {
+                string imagePath = Path.Combine(folderPath, imageName);
+                if (File.Exists(imagePath))
+                {
+                    File.Delete(imagePath);
+                }
+            }
         }
     }
 }

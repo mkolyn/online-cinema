@@ -32,6 +32,8 @@ namespace OnlineCinema.Controllers
             ViewBag.movies = movies;
             ViewBag.dates = Core.GetNextDates(DateTime.Now);
 
+            ViewBag.cityId = Core.GetCityId();
+
             return View();
         }
 

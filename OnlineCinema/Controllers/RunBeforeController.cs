@@ -30,10 +30,10 @@ namespace OnlineCinema.Controllers
             Dictionary<string, List<string>> cinemaRightsAllowPages = new Dictionary<string, List<string>>();
             cinemaRightsAllowPages.Add("Cinemas", new List<string>() { "Halls" });
             cinemaRightsAllowPages.Add("Genres", new List<string>());
-            cinemaRightsAllowPages.Add("Movies", new List<string>() { "Index", "Create", "Delete", "DeleteConfirmed", "Find" });
+            cinemaRightsAllowPages.Add("Movies", new List<string>() { "Index", "Create", "Edit", "Delete", "DeleteConfirmed", "Find" });
             cinemaRightsAllowPages.Add("Users", new List<string>());
 
-            if (Session["CinemaID"] != null && Session["CinemaID"].ToString() != "")
+            if (Core.GetCinemaId() > 0)
             {
                 string controllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
                 string actionName = this.ControllerContext.RouteData.Values["action"].ToString();

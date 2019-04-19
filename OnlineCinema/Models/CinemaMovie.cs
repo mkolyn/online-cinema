@@ -14,6 +14,8 @@ namespace OnlineCinema.Models
         public int CinemaID { get; set; }
         // movie ID
         public int MovieID { get; set; }
+        // image
+        public string Image { get; set; }
     }
 
     public class CinemaMovieSelect

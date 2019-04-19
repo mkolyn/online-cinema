@@ -41,17 +41,20 @@
         @ViewBag.date.Day.@ViewBag.date.Month.@ViewBag.date.Year
     </h3>
 
-    <div class="dates">
-        @foreach (var date in ViewBag.dates)
-        {
-            dateClass = date.Year == ViewBag.date.Year && date.Month == ViewBag.date.Month && date.Day == ViewBag.date.Day ? "active" : "";
-            <div class="date @dateClass">
-                <a href="/date/@date.Year/@date.Month/@date.Day">
-                    @date.Day.@date.Month.@date.Year
-                </a>
-            </div>
-        }
-    </div>
+    @if (ViewBag.cityId > 0)
+    {
+        <div class="dates">
+            @foreach (var date in ViewBag.dates)
+            {
+                dateClass = date.Year == ViewBag.date.Year && date.Month == ViewBag.date.Month && date.Day == ViewBag.date.Day ? "active" : "";
+                <div class="date @dateClass">
+                    <a href="/date/@date.Year/@date.Month/@date.Day">
+                        @date.Day.@date.Month.@date.Year
+                    </a>
+                </div>
+            }
+        </div>
+    }
 
     <div class="movies">
         @foreach (var movie in ViewBag.movies)
@@ -62,6 +65,7 @@
                 <div class="movie-title">
                     @movie.MovieName
                 </div>
+                <div class="movie-image" style="background-image: url('/images/@movie.Image')"></div>
                 <div class="movie-time">
                     @hour:@minute
                 </div>

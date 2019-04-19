@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using OnlineCinema.Models;
 
@@ -20,8 +22,7 @@ namespace OnlineCinema.Controllers
         public ActionResult Index()
         {
             LoginIfNotAuthorized();
-            Int32.TryParse(Session["CinemaID"].ToString(), out int cinemaId);
-            return View(cinemaMovieDb.GetList(cinemaId));
+            return View(cinemaMovieDb.GetList(Core.GetCinemaId()));
         }
 
         // GET: Movies/Details/5
@@ -53,11 +54,11 @@ namespace OnlineCinema.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,GenreID,Name,Duration,Description")] Movie movie)
+        public ActionResult Create([Bind(Include = "ID,GenreID,Name,Duration,Description")] Movie movie, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
-                Int32.TryParse(Session["CinemaID"].ToString(), out int cinemaId);
+                int cinemaId = Core.GetCinemaId();
                 int movieId = 0;
 
                 var existedMovie = db.Movies.ToList().Where(m => m.Name == movie.Name).FirstOrDefault();
@@ -85,7 +86,15 @@ namespace OnlineCinema.Controllers
                         CinemaID = cinemaId,
                         MovieID = movieId,
                     };
+
                     cinemaMovieDb.CinemaMovies.Add(cinemaMovie);
+                    cinemaMovieDb.SaveChanges();
+                }
+
+                string imageFileName = Core.UploadImage(image, Server.MapPath("~/Images"), cinemaMovie.ID.ToString());
+                if (imageFileName != "")
+                {
+                    cinemaMovie.Image = imageFileName;
                     cinemaMovieDb.SaveChanges();
                 }
 
@@ -118,16 +127,29 @@ namespace OnlineCinema.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,GenreID,Name,Duration,Description")] Movie movie)
+        public ActionResult Edit(int id, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(movie).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                CinemaMovie cinemaMovie = cinemaMovieDb.CinemaMovies.ToList()
+                    .Where(m => m.CinemaID == Core.GetCinemaId())
+                    .Where(m => m.MovieID == id)
+                    .FirstOrDefault();
+
+                if (cinemaMovie != null)
+                {
+                    string imageFileName = Core.UploadImage(image, Server.MapPath("~/Images"), cinemaMovie.ID.ToString());
+                    if (imageFileName != "")
+                    {
+                        Core.RemoveImage(Server.MapPath("~/Images"), cinemaMovie.Image);
+                        cinemaMovie.Image = imageFileName;
+                        cinemaMovieDb.SaveChanges();
+                    }
+                    db.SaveChanges();
+                }
             }
 
-            return View(movie);
+            return RedirectToAction("Index");
         }
 
         // GET: Movies/Delete/5
