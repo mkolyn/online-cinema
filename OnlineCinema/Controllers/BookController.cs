@@ -17,6 +17,8 @@ namespace OnlineCinema.Controllers
 
         public ActionResult Index(int id)
         {
+            ViewBag.Styles.Add("places");
+
             CinemaHallMovie cinemaHallMovie = cinemaHallMovieDb.CinemaHallMovies.Find(id);
             if (cinemaHallMovie == null)
             {

@@ -1,32 +1,4 @@
-﻿.cinema-hall-places {
-    display: inline-block;
-    text-align: center;
-}
-
-.cinema-hall-cell {
-    width: 50px;
-    height: 50px;
-    border: 1px solid #808080;
-    /*display: inline-block;*/
-    float: left;
-    background-color: cornflowerblue;
-    /*margin-left: 10px;*/
-}
-
-.cinema-hall-cell:hover, .cinema-hall-cell.active {
-    background-color: #6467ed;
-    cursor: pointer;
-}
-
-.cinema-hall-cell.removed {
-    opacity: 0.5;
-}
-
-.cinema-hall-cell.joined {
-    background-color: blue;
-}
-
-.cineme-hall {
+﻿.cineme-hall {
     text-align: center;
 }
 

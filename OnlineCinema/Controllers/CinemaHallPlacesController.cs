@@ -20,6 +20,8 @@ namespace OnlineCinema.Controllers
         // GET: CinemaHallPlaces/5
         public ActionResult Index(int id)
         {
+            ViewBag.Styles.Add("places");
+
             CinemaHall cinemaHall = cinemaHallDb.CinemaHalls.Find(id);
             if (cinemaHall == null)
             {
