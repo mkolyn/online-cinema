@@ -13,15 +13,15 @@
     /*margin-left: 10px;*/
 }
 
-.cinema-hall-cell:hover, .cinema-hall-cell.active {
-    background-color: #6467ed;
-    cursor: pointer;
-}
-
 .cinema-hall-cell.removed {
     opacity: 0.5;
 }
 
 .cinema-hall-cell.joined {
     background-color: blue;
+}
+
+.cinema-hall-cell:hover, .cinema-hall-cell.active {
+    background-color: #6467ed;
+    cursor: pointer;
 }

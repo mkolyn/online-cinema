@@ -10,7 +10,12 @@
                 }
                 else if (ViewBag.cinemaHallRows[i, j].GetIsJoined())
                 {
-                    <div class="cinema-hall-cell joined" data-rows="@ViewBag.cinemaHallRows[i, j].Rows" data-cells="@ViewBag.cinemaHallRows[i, j].Cells"></div>
+                    var group = "";
+                    if (ViewBag.cinemaHallRows[i, j].GetJoinedGroupName() != "")
+                    {
+                        group = " data-group=" + ViewBag.cinemaHallRows[i, j].GetJoinedGroupName();
+                    }
+                    <div class="cinema-hall-cell joined" data-rows="@ViewBag.cinemaHallRows[i, j].Rows" data-cells="@ViewBag.cinemaHallRows[i, j].Cells"@group></div>
                 }
                 else
                 {

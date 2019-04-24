@@ -22,6 +22,8 @@ namespace OnlineCinema.Models
         public int Cells { get; set; }
         // is joined place
         private bool IsJoined { get; set; }
+        // joined gpoup name
+        private string JoinedGroupName { get; set; }
 
         public bool GetIsJoined()
         {
@@ -31,6 +33,16 @@ namespace OnlineCinema.Models
         public void SetIsJoined(bool IsJoined)
         {
             this.IsJoined = IsJoined;
+        }
+
+        public string GetJoinedGroupName()
+        {
+            return JoinedGroupName;
+        }
+
+        public void SetJoinedGroupName(string JoinedGroupName)
+        {
+            this.JoinedGroupName = JoinedGroupName;
         }
     }
 
@@ -74,22 +86,27 @@ namespace OnlineCinema.Models
 
             CinemaHallPlace[,] cinemaHallRows = new CinemaHallPlace[maxRow, maxCell];
             bool[,] cinemaHallIsJoinedPlaces = new bool[maxRow, maxCell];
+            string[,] cinemaHallJoinedPlacesGroupName = new string[maxRow, maxCell];
+            int cinemaHallJoinedPlacesGroupNumber = 0;
 
             foreach (CinemaHallPlace cinemaHallPlace in cinemaHallPlaces)
             {
                 if (cinemaHallPlace.Rows > 1 || cinemaHallPlace.Cells > 1)
                 {
+                    cinemaHallJoinedPlacesGroupNumber++;
                     for (var i = cinemaHallPlace.Row - 1; i < cinemaHallPlace.Row - 1 + cinemaHallPlace.Rows; i++)
                     {
                         for (var j = cinemaHallPlace.Cell - 1; j < cinemaHallPlace.Cell - 1 + cinemaHallPlace.Cells; j++)
                         {
                             cinemaHallIsJoinedPlaces[i, j] = true;
+                            cinemaHallJoinedPlacesGroupName[i, j] = "group" + cinemaHallJoinedPlacesGroupNumber;
                         }
                     }
                 }
                 if (cinemaHallIsJoinedPlaces[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] == true)
                 {
                     cinemaHallPlace.SetIsJoined(true);
+                    cinemaHallPlace.SetJoinedGroupName(cinemaHallJoinedPlacesGroupName[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1]);
                 }
                 cinemaHallRows[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] = cinemaHallPlace;
             }
