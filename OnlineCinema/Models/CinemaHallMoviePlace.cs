@@ -14,6 +14,8 @@ namespace OnlineCinema.Models
         public int CinemaHallMovieID { get; set; }
         // cinema hall place ID
         public int CinemaHallPlaceID { get; set; }
+        // cinema hall movie place status
+        public int Status { get; set; }
     }
 
     public class CinemaHallMoviePlaceContext : DbContext

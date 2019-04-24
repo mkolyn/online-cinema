@@ -14,7 +14,7 @@ namespace OnlineCinema.Migrations
                     ID = c.Int(nullable: false, identity: true),
                     CinemaHallMovieID = c.Int(nullable: false),
                     CinemaHallPlaceID = c.Int(nullable: false),
-                    status = c.Int(),
+                    Status = c.Int(),
                 })
                 .PrimaryKey(t => t.ID);
         }
