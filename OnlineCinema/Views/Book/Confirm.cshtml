@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = ViewBag.Message;
+    string hour = ViewBag.date.Hour < 10 ? "0" + ViewBag.date.Hour.ToString() : ViewBag.date.Hour.ToString();
+    string minute = ViewBag.date.Minute < 10 ? "0" + ViewBag.date.Minute.ToString() : ViewBag.date.Minute.ToString();
+}
+
+<div class="row">
+    <h2>Підтвердити бронювання</h2>
+
+    Дата бронювання:
+    <h3>
+        @ViewBag.date.Day.@ViewBag.date.Month.@ViewBag.date.Year @hour:@minute
+    </h3>
+
+    <div class="order-items">
+        @foreach (var orderItem in ViewBag.orderItems)
+        {
+            <div class="order-item">
+                <div class="order-item-info">
+                    Кінотеатр: @orderItem.CinemaName
+                </div>
+                <div class="order-item-info">
+                    Фільм: @orderItem.MovieName
+                </div>
+                <div class="order-item-info">
+                    Жанр: @orderItem.Genre
+                </div>
+                <div class="order-item-info">
+                    Зал: @orderItem.CinemaHallName
+                </div>
+                <div class="order-item-info">
+                    Ряд: @orderItem.Row
+                </div>
+                <div class="order-item-info">
+                    Місце: @orderItem.Cell
+                </div>
+            </div>
+        }
+    </div>
+</div>

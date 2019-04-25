@@ -8,18 +8,25 @@
                 {
                     <div class="cinema-hall-cell removed"></div>
                 }
-                else if (ViewBag.cinemaHallRows[i, j].GetIsJoined())
+                else
                 {
                     var group = "";
+                    var data = "";
+                    var cellClass = "";
+                    if (ViewBag.cinemaHallRows[i, j].GetIsJoined())
+                    {
+                        data = " data-rows=" + ViewBag.cinemaHallRows[i, j].Rows + " data-cells=" + ViewBag.cinemaHallRows[i, j].Cells;
+                        cellClass = " joined";
+                    }
                     if (ViewBag.cinemaHallRows[i, j].GetJoinedGroupName() != "")
                     {
                         group = " data-group=" + ViewBag.cinemaHallRows[i, j].GetJoinedGroupName();
                     }
-                    <div class="cinema-hall-cell joined" data-rows="@ViewBag.cinemaHallRows[i, j].Rows" data-cells="@ViewBag.cinemaHallRows[i, j].Cells"@group></div>
-                }
-                else
-                {
-                    <div class="cinema-hall-cell" data-rows="@ViewBag.cinemaHallRows[i, j].Rows" data-cells="@ViewBag.cinemaHallRows[i, j].Cells"></div>
+                    if (ViewBag.cinemaHallRows[i, j].GetIsBooked())
+                    {
+                        cellClass += " booked";
+                    }
+                    <div class="cinema-hall-cell@{@cellClass}" data-id="@ViewBag.cinemaHallRows[i, j].ID"@data@group></div>
                 }
             }
         </div>
