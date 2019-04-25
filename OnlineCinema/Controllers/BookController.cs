@@ -85,11 +85,16 @@ namespace OnlineCinema.Controllers
 
         public ActionResult Confirm(int id)
         {
+            ViewBag.Styles.Add("book");
+
             Order order = orderDb.Orders.Find(id);
+
             List<OrderItemInfo> orderItems = orderDb.GetOrderItems(id);
 
             ViewBag.orderItems = orderItems;
             ViewBag.date = order.Date;
+            ViewBag.isPaid = order.IsPaid;
+            ViewBag.orderId = order.ID;
 
             return View();
         }

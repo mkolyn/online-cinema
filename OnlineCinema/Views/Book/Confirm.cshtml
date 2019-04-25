@@ -12,29 +12,56 @@
         @ViewBag.date.Day.@ViewBag.date.Month.@ViewBag.date.Year @hour:@minute
     </h3>
 
+    @if (ViewBag.isPaid)
+    {
+        <h4>
+            Бронювання успішно підтверджено
+        </h4>
+    }
+
     <div class="order-items">
         @foreach (var orderItem in ViewBag.orderItems)
         {
             <div class="order-item">
-                <div class="order-item-info">
-                    Кінотеатр: @orderItem.CinemaName
+                <div class="order-item-row">
+                    <div class="order-item-info">
+                        Кінотеатр: @orderItem.CinemaName
+                    </div>
+                    <div class="order-item-info">
+                        Зал: @orderItem.CinemaHallName
+                    </div>
                 </div>
-                <div class="order-item-info">
-                    Фільм: @orderItem.MovieName
+                <div class="order-item-row">
+                    <div class="order-item-info">
+                        Фільм: @orderItem.MovieName
+                    </div>
+                    <div class="order-item-info">
+                        Жанр: @orderItem.Genre
+                    </div>
                 </div>
-                <div class="order-item-info">
-                    Жанр: @orderItem.Genre
-                </div>
-                <div class="order-item-info">
-                    Зал: @orderItem.CinemaHallName
-                </div>
-                <div class="order-item-info">
-                    Ряд: @orderItem.Row
-                </div>
-                <div class="order-item-info">
-                    Місце: @orderItem.Cell
+                <div class="order-item-row">
+                    <div class="order-item-info">
+                        Ряд: @orderItem.Row
+                    </div>
+                    <div class="order-item-info">
+                        Місце: @orderItem.Cell
+                    </div>
                 </div>
             </div>
         }
     </div>
+
+    @if (!ViewBag.isPaid)
+    {
+    <div class="">
+        @using (Html.BeginRouteForm("Default", new { Controller = "Book", Action = "Success", Id = @ViewBag.orderId }))
+        {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Оплатити" class="btn btn-default" />
+                </div>
+            </div>
+        }
+    </div>
+    }
 </div>

@@ -1,0 +1,10 @@
+﻿.order-item-row {
+    margin-top: 5px;
+}
+
+.order-item-info {
+    display: inline-block;
+    width: 150px;
+    border-right: 1px dotted #808080;
+    padding: 5px;
+}
