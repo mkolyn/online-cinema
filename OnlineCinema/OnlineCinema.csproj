@@ -236,6 +236,10 @@
     <Compile Include="Migrations\201904191030502_CinemaHallMoviePlace.Designer.cs">
       <DependentUpon>201904191030502_CinemaHallMoviePlace.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904250930269_Order.cs" />
+    <Compile Include="Migrations\201904250930269_Order.Designer.cs">
+      <DependentUpon>201904250930269_Order.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaHallMoviePlace.cs" />
     <Compile Include="Models\CinemaMovie.cs" />
@@ -247,6 +251,7 @@
     <Compile Include="Models\CinemaHall.cs" />
     <Compile Include="Models\Cinema.cs" />
     <Compile Include="Models\Core.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -338,6 +343,7 @@
     <Content Include="Views\Cities\Index.cshtml" />
     <Content Include="Views\Book\Index.cshtml" />
     <Content Include="Views\CinemaHallPlaces\Places.cshtml" />
+    <Content Include="Views\Book\Confirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -394,6 +400,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904191030502_CinemaHallMoviePlace.resx">
       <DependentUpon>201904191030502_CinemaHallMoviePlace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904250930269_Order.resx">
+      <DependentUpon>201904250930269_Order.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
