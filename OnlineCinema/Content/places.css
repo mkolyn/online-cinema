@@ -21,7 +21,15 @@
     background-color: blue;
 }
 
-.cinema-hall-cell:hover, .cinema-hall-cell.active {
+.cinema-hall-cell.booked {
+    background-color: #000000;
+}
+
+.cinema-hall-cell:hover, .cinema-hall-cell.active, .cinema-hall-cell.grouped {
     background-color: #6467ed;
     cursor: pointer;
+}
+
+.cinema-hall-cell.booked:hover {
+    background-color: #000000;
 }
