@@ -8,6 +8,9 @@ namespace OnlineCinema.Models
 {
     public class CinemaHallMoviePlace
     {
+        public const int STATUS_PROCESSING = 0;
+        public const int STATUS_SUCCESSFULL = 1;
+        public const int STATUS_FAILED = 1;
         // cinema hall movie place ID
         public int ID { get; set; }
         // cinema hall movie ID
@@ -18,6 +21,14 @@ namespace OnlineCinema.Models
         public int Status { get; set; }
     }
 
+    public class CinemaHallMoviePlaceInfo
+    {
+        // cinema hall movie row
+        public int Row;
+        // cinema hall movie cell
+        public int Cell;
+    }
+
     public class CinemaHallMoviePlaceContext : DbContext
     {
         public CinemaHallMoviePlaceContext() : base("name=DefaultConnection")
@@ -25,5 +36,26 @@ namespace OnlineCinema.Models
         }
 
         public DbSet<CinemaHallMoviePlace> CinemaHallMoviePlaces { get; set; }
+        public DbSet<CinemaHallPlace> CinemaHallPlaces { get; set; }
+
+        public CinemaHallMoviePlace GetCinemaHallMoviePlace(int cinemaHallMovieID, int cinemaHallPlaceID)
+        {
+            return CinemaHallMoviePlaces.Where(s => s.CinemaHallMovieID == cinemaHallMovieID)
+                .Where(s => s.CinemaHallPlaceID == cinemaHallPlaceID)
+                .FirstOrDefault();
+        }
+
+        public List<CinemaHallMoviePlaceInfo> GetCinemaHallMoviePlaces(int cinemaHallMovieID)
+        {
+            var cinemaHallMoviePlaces = from chmp in CinemaHallMoviePlaces
+                                        join chp in CinemaHallPlaces on chmp.CinemaHallPlaceID equals chp.ID
+                                        select new CinemaHallMoviePlaceInfo
+                                        {
+                                            Row = chp.Row,
+                                            Cell = chp.Cell,
+                                        };
+
+            return cinemaHallMoviePlaces.ToList();
+        }
     }
 }
