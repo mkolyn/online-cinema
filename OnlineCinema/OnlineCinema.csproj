@@ -240,6 +240,14 @@
     <Compile Include="Migrations\201904250930269_Order.Designer.cs">
       <DependentUpon>201904250930269_Order.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904260942417_MoviePrice.cs" />
+    <Compile Include="Migrations\201904260942417_MoviePrice.Designer.cs">
+      <DependentUpon>201904260942417_MoviePrice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904261015341_OrderItemPrice.cs" />
+    <Compile Include="Migrations\201904261015341_OrderItemPrice.Designer.cs">
+      <DependentUpon>201904261015341_OrderItemPrice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaHallMoviePlace.cs" />
     <Compile Include="Models\CinemaMovie.cs" />
@@ -269,6 +277,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\core.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -404,6 +413,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904250930269_Order.resx">
       <DependentUpon>201904250930269_Order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904260942417_MoviePrice.resx">
+      <DependentUpon>201904260942417_MoviePrice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904261015341_OrderItemPrice.resx">
+      <DependentUpon>201904261015341_OrderItemPrice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

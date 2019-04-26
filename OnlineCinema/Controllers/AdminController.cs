@@ -57,7 +57,7 @@ namespace OnlineCinema.Controllers
         public void SetViewBagData()
         {
             ViewBag.Styles = new List<string>() { "admin" };
-            ViewBag.Scripts = new List<string>() { "admin" };
+            ViewBag.Scripts = new List<string>() { "core", "admin" };
         }
     }
 }

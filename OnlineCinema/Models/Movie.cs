@@ -33,5 +33,6 @@ namespace OnlineCinema.Models
     {
         public string label { get; set; }
         public string value { get; set; }
+        public int id { get; set; }
     }
 }

@@ -1,4 +1,13 @@
-﻿<div class="cinema-hall-places">
+﻿<div class="cinema-hall-rows">
+    @for (var i = 0; i < ViewBag.maxRow; i++)
+    {
+        <div class="cinema-hall-row-title">
+            Ряд @(i  + 1)
+        </div>
+    }
+</div>
+
+<div class="cinema-hall-places">
     @for (var i = 0; i < ViewBag.maxRow; i++)
     {
         <div class="cinema-hall-row">
@@ -26,7 +35,9 @@
                     {
                         cellClass += " booked";
                     }
-                    <div class="cinema-hall-cell@{@cellClass}" data-id="@ViewBag.cinemaHallRows[i, j].ID"@data@group></div>
+                    <div class="cinema-hall-cell@{@cellClass}" data-id="@ViewBag.cinemaHallRows[i, j].ID"@data@group>
+                        @(j + 1)
+                    </div>
                 }
             }
         </div>

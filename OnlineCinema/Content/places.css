@@ -3,14 +3,26 @@
     text-align: center;
 }
 
+.cinema-hall-rows {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.cinema-hall-row-title {
+    width: 50px;
+    line-height: 50px;
+}
+
 .cinema-hall-cell {
     width: 50px;
     height: 50px;
+    line-height: 50px;
     border: 1px solid #808080;
     /*display: inline-block;*/
     float: left;
     background-color: cornflowerblue;
     /*margin-left: 10px;*/
+    color: #FFFFFF;
 }
 
 .cinema-hall-cell.removed {

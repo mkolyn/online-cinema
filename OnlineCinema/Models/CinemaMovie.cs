@@ -16,6 +16,8 @@ namespace OnlineCinema.Models
         public int MovieID { get; set; }
         // image
         public string Image { get; set; }
+        // movie price
+        public int Price { get; set; }
     }
 
     public class CinemaMovieSelect
@@ -36,6 +38,7 @@ namespace OnlineCinema.Models
 
         public DbSet<Movie> Movies { get; set; }
         public DbSet<CinemaMovie> CinemaMovies { get; set; }
+        public CinemaMovie CinemaMovie { get; set; }
 
         public IEnumerable<CinemaMovieSelect> GetList(int cinemaId, string term = "")
         {
@@ -62,8 +65,7 @@ namespace OnlineCinema.Models
 
         public CinemaMovie Get(int cinemaId, int movieId)
         {
-            CinemaMovie cinemaMovie = CinemaMovies.ToList()
-                    .Where(m => m.CinemaID == cinemaId)
+            CinemaMovie cinemaMovie = CinemaMovies.Where(m => m.CinemaID == cinemaId)
                     .Where(m => m.MovieID == movieId)
                     .FirstOrDefault();
 

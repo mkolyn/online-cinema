@@ -12,6 +12,7 @@ namespace OnlineCinema.Controllers
     public class BookController : CoreController
     {
         private UserContext userDb = new UserContext();
+        private CinemaMovieContext cinemaMovieDb = new CinemaMovieContext();
         private CinemaHallMovieContext cinemaHallMovieDb = new CinemaHallMovieContext();
         private CinemaHallPlaceContext cinemaHallPlaceDb = new CinemaHallPlaceContext();
         private CinemaHallMoviePlaceContext cinemaHallMoviePlaceDb = new CinemaHallMoviePlaceContext();
@@ -45,6 +46,7 @@ namespace OnlineCinema.Controllers
             ViewBag.maxCell = cinemaHallPlaceData.MaxCell;
             ViewBag.cinemaHallRows = cinemaHallPlaceData.CinemaHallRows;
             ViewBag.cinemaHallMovieId = cinemaHallMovie.ID;
+            ViewBag.price = cinemaHallMovieDb.GetPrice(cinemaHallMovie.ID);
 
             return View();
         }
@@ -59,6 +61,8 @@ namespace OnlineCinema.Controllers
             orderDb.Orders.Add(order);
             orderDb.SaveChanges();
 
+            int price = cinemaHallMovieDb.GetPrice(id);
+
             for (var i = 0; i < cinemaHallPlaces.Length; i++)
             {
                 OrderItem orderItem = new OrderItem()
@@ -66,6 +70,7 @@ namespace OnlineCinema.Controllers
                     OrderID = order.ID,
                     CinemaHallMovieID = id,
                     CinemaHallPlaceID = cinemaHallPlaces[i],
+                    Price = price,
                 };
                 orderDb.OrderItems.Add(orderItem);
 
@@ -96,6 +101,14 @@ namespace OnlineCinema.Controllers
             ViewBag.isPaid = order.IsPaid;
             ViewBag.orderId = order.ID;
 
+            int totalPrice = 0;
+            foreach (OrderItemInfo orderItem in orderItems)
+            {
+                totalPrice += orderItem.Price;
+            }
+
+            ViewBag.totalPrice = totalPrice;
+
             return View();
         }
 
@@ -114,6 +127,21 @@ namespace OnlineCinema.Controllers
                 cinemaHallMoviePlace.Status = CinemaHallMoviePlace.STATUS_SUCCESSFULL;
                 cinemaHallMoviePlaceDb.SaveChanges();
             }
+
+            return Json("ok", JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Fail(int id)
+        {
+            List<OrderItemInfo> orderItems = orderDb.GetOrderItems(id);
+            foreach (OrderItemInfo orderItem in orderItems)
+            {
+                CinemaHallMoviePlace cinemaHallMoviePlace = cinemaHallMoviePlaceDb.GetCinemaHallMoviePlace(
+                    orderItem.CinemaHallMovieID, orderItem.CinemaHallPlaceID);
+
+                cinemaHallMoviePlaceDb.CinemaHallMoviePlaces.Remove(cinemaHallMoviePlace);
+            }
+            cinemaHallMoviePlaceDb.SaveChanges();
 
             return Json("ok", JsonRequestBehavior.AllowGet);
         }

@@ -47,8 +47,17 @@
                         Місце: @orderItem.Cell
                     </div>
                 </div>
+                <div class="order-item-row">
+                    <div class="order-item-info">
+                        Ціна: @orderItem.Price грн.
+                    </div>
+                </div>
             </div>
         }
+    </div>
+
+    <div class="">
+        Разом: @ViewBag.totalPrice грн.
     </div>
 
     @if (!ViewBag.isPaid)

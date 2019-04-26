@@ -26,6 +26,8 @@ namespace OnlineCinema.Models
         public int CinemaHallMovieID { get; set; }
         // cinema hall place ID
         public int CinemaHallPlaceID { get; set; }
+        // price
+        public int Price { get; set; }
     }
 
     public class OrderItemInfo
@@ -46,6 +48,8 @@ namespace OnlineCinema.Models
         public int CinemaHallMovieID { get; set; }
         // cinema hall place id
         public int CinemaHallPlaceID { get; set; }
+        // price
+        public int Price { get; set; }
     }
 
     public class OrderContext : DbContext
@@ -84,6 +88,7 @@ namespace OnlineCinema.Models
                                  CinemaHallName = ch.Name,
                                  CinemaHallMovieID = chm.ID,
                                  CinemaHallPlaceID = chp.ID,
+                                 Price = oi.Price,
                              };
 
             return orderItems.ToList();

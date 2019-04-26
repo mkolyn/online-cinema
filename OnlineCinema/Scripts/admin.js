@@ -53,13 +53,7 @@ $(document).ready(function () {
             }
         }
 
-        $.ajax({
-            url: ADMIN_BASE_URL + 'CinemaHallPlaces/Save',
-            method: "POST",
-            data: { id: $('.cinema-hall-id').val(), places: places },
-            success: function () {
-            }
-        });
+        ajax(ADMIN_BASE_URL + 'CinemaHallPlaces/Save', { id: $('.cinema-hall-id').val(), places: places });
     });
 
     $('.cinema-hall-places').on('click', '.cinema-hall-cell', function () {
@@ -119,28 +113,23 @@ $(document).ready(function () {
     $('.cinema-hall-movie').autocomplete({
         source: '/Movies/Find',
         select: function (event, ui) {
-            $.ajax({
-                url: ADMIN_BASE_URL + 'CinemaHallSchedule/GetMovieItemHtml',
-                method: "POST",
-                data: { id: ui.item.value },
-                success: function (data) {
-                    $('.schedule-movies').append(data);
+            ajax(ADMIN_BASE_URL + 'CinemaHallSchedule/GetMovieItemHtml', { id: ui.item.id }, function (data) {
+                $('.schedule-movies').append(data);
 
-                    addDraggableEvents($('.schedule-movie:last'));
+                addDraggableEvents($('.schedule-movie:last'));
 
-                    $('.schedule-movie:last .schedule-movie-edit').click(function () {
-                        var scheduleMovie = $(this).closest('.schedule-movie');
-                        var startMinute = parseInt(scheduleMovie.attr('data-start-minute'));
-                        var minute = startMinute - parseInt(startMinute / 60) * 60;
+                $('.schedule-movie:last .schedule-movie-edit').click(function () {
+                    var scheduleMovie = $(this).closest('.schedule-movie');
+                    var startMinute = parseInt(scheduleMovie.attr('data-start-minute'));
+                    var minute = startMinute - parseInt(startMinute / 60) * 60;
 
-                        scheduleMovieChooseMinute.removeClass('hidden');
-                        scheduleMovieChooseMinute.css('top', scheduleMovie.offset().top + 'px');
-                        scheduleMovieChooseMinute.css('left', scheduleMovie.offset().left + scheduleMovie.width() + 25 + 'px');
-                        scheduleMovieChooseMinute.attr('data-schedule-movie', scheduleMovie.index());
-                        scheduleMovieChooseMinute.find('select').find('option').prop('selected', false);
-                        scheduleMovieChooseMinute.find('select').find('option[value="' + minute + '"]').prop('selected', true);
-                    });
-                }
+                    scheduleMovieChooseMinute.removeClass('hidden');
+                    scheduleMovieChooseMinute.css('top', scheduleMovie.offset().top + 'px');
+                    scheduleMovieChooseMinute.css('left', scheduleMovie.offset().left + scheduleMovie.width() + 25 + 'px');
+                    scheduleMovieChooseMinute.attr('data-schedule-movie', scheduleMovie.index());
+                    scheduleMovieChooseMinute.find('select').find('option').prop('selected', false);
+                    scheduleMovieChooseMinute.find('select').find('option[value="' + minute + '"]').prop('selected', true);
+                });
             });
         },
     });
@@ -168,19 +157,14 @@ $(document).ready(function () {
             });
         });
 
-        $.ajax({
-            url: ADMIN_BASE_URL + 'CinemaHallSchedule/Save',
-            method: "POST",
-            data: {
-                id: $('.cinema-hall-id').val(),
-                year: $('.year').val(),
-                month: $('.month').val(),
-                day: $('.day').val(),
-                movies: movies,
-            },
-            success: function () {
-            }
-        });
+        var data = {
+            id: $('.cinema-hall-id').val(),
+            year: $('.year').val(),
+            month: $('.month').val(),
+            day: $('.day').val(),
+            movies: movies,
+        };
+        ajax(ADMIN_BASE_URL + 'CinemaHallSchedule/Save', data);
     });
 
     $('.schedule-movie').each(function () {
@@ -261,34 +245,31 @@ function addDraggableEvents(elems) {
 }
 
 function changeDate(days, direction) {
-    $.ajax({
-        url: ADMIN_BASE_URL + 'CinemaHallSchedule/ChangeDate',
-        method: "POST",
-        data: {
-            cinemaHallId: $('.cinema-hall-id').val(),
-            year: $('.year').val(),
-            month: $('.month').val(),
-            day: $('.day').val(),
-            days: days,
-            direction: direction,
-        },
-        success: function (data) {
-            $('.year').val(data.year);
-            $('.month').val(data.month);
-            $('.day').val(data.day);
+    var data = {
+        cinemaHallId: $('.cinema-hall-id').val(),
+        year: $('.year').val(),
+        month: $('.month').val(),
+        day: $('.day').val(),
+        days: days,
+        direction: direction,
+    };
 
-            $('.schedule-title').html(data.date);
-            $('.prev-day-title').html(data.prevDay);
-            $('.next-day-title').html(data.nextDay);
-            $('.prev-week-title').html(data.prevWeek);
-            $('.next-week-title').html(data.nextWeek);
+    ajax(ADMIN_BASE_URL + 'CinemaHallSchedule/ChangeDate', data, function () {
+        $('.year').val(data.year);
+        $('.month').val(data.month);
+        $('.day').val(data.day);
 
-            $('.schedule-movies').html(data.html);
+        $('.schedule-title').html(data.date);
+        $('.prev-day-title').html(data.prevDay);
+        $('.next-day-title').html(data.nextDay);
+        $('.prev-week-title').html(data.prevWeek);
+        $('.next-week-title').html(data.nextWeek);
 
-            $('.schedule-movie').each(function () {
-                setScheduleMoviePosition($(this), parseInt($(this).attr('data-start-minute')));
-            });
-            addDraggableEvents($('.schedule-movie'));
-        }
+        $('.schedule-movies').html(data.html);
+
+        $('.schedule-movie').each(function () {
+            setScheduleMoviePosition($(this), parseInt($(this).attr('data-start-minute')));
+        });
+        addDraggableEvents($('.schedule-movie'));
     });
 }

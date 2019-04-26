@@ -72,7 +72,7 @@ namespace OnlineCinema.Controllers
             string cinemaHallMoviesHtml = "";
             foreach (CinemaHallScheduleMovie cinemaHallMovie in cinemaHallMovies)
             {
-                cinemaHallMoviesHtml += GetSchedulteMovieItemHtml(cinemaHallMovie);
+                cinemaHallMoviesHtml += GetScheduleMovieItemHtml(cinemaHallMovie);
             }
             ViewBag.CinemaHallMoviesHtml = cinemaHallMoviesHtml;
 
@@ -94,47 +94,12 @@ namespace OnlineCinema.Controllers
 
             foreach (CinemaHallScheduleMovie scheduleMovie in movies)
             {
-                var cinemaHallMovies = from chm in cinemaHallMovieDb.CinemaHallMovies
-                                       select chm;
-
-                cinemaHallMovies = cinemaHallMovies.Where(s => s.CinemaHallID == id);
-
                 Movie movie = movieDb.Movies.Find(scheduleMovie.MovieID);
                 int hour = scheduleMovie.StartMinute / 60;
                 int minute = scheduleMovie.StartMinute - hour * 60;
                 DateTime date = new DateTime(year, month, day, hour, minute, 0);
 
-                if (scheduleMovie.CinemaHallMovieID > 0)
-                {
-                    CinemaHallMovie cinemaHallMovie = cinemaHallMovieDb.CinemaHallMovies.Find(scheduleMovie.CinemaHallMovieID);
-                    if (scheduleMovie.IsRemoved)
-                    {
-                        cinemaHallMovieDb.CinemaHallMovies.Remove(cinemaHallMovie);
-                    }
-                    else
-                    {
-                        cinemaHallMovie.Date = date;
-                    }
-                    cinemaHallMovieDb.SaveChanges();
-                }
-                else
-                {
-                    cinemaHallMovies = cinemaHallMovies.Where(s => s.MovieID == movie.ID)
-                        .Where(s => s.Date == date);
-
-                    if (cinemaHallMovies.FirstOrDefault() == null)
-                    {
-                        CinemaHallMovie cinemaHallMovie = new CinemaHallMovie
-                        {
-                            CinemaHallID = id,
-                            MovieID = movie.ID,
-                            Date = date,
-                        };
-
-                        cinemaHallMovieDb.CinemaHallMovies.Add(cinemaHallMovie);
-                        cinemaHallMovieDb.SaveChanges();
-                    }
-                }
+                cinemaHallMovieDb.SaveMovie(scheduleMovie.CinemaHallMovieID, id, movie.ID, scheduleMovie.IsRemoved, date);
             }
 
             return Json("ok");
@@ -151,7 +116,7 @@ namespace OnlineCinema.Controllers
             return PartialView("Movie");
         }
 
-        public string GetSchedulteMovieItemHtml(CinemaHallScheduleMovie cinemaHallMovie)
+        public string GetScheduleMovieItemHtml(CinemaHallScheduleMovie cinemaHallMovie)
         {
             string html = "";
             DateTime cinemaHallMovieDate = cinemaHallMovie.Date;
@@ -169,6 +134,7 @@ namespace OnlineCinema.Controllers
                     { "StartMinute", startMinute },
                     { "Duration", cinemaHallMovie.Duration },
                     { "ItemHeight", cinemaHallMovie.Duration / 60 * 25 },
+                    { "Price", cinemaHallMovie.Price },
                 };
 
             using (var sw = new StringWriter())
@@ -195,28 +161,12 @@ namespace OnlineCinema.Controllers
             DateTime prevWeek = date.AddDays(-7);
             DateTime nextWeek = date.AddDays(7);
 
-            var cinemaHallMovies = from chm in cinemaHallMovieDb.CinemaHallMovies
-                                   join m in cinemaHallMovieDb.Movies on chm.MovieID equals m.ID
-                                   orderby chm.Date
-                                   select new CinemaHallScheduleMovie
-                                   {
-                                       CinemaHallMovieID = chm.ID,
-                                       CinemaHallID = chm.CinemaHallID,
-                                       MovieID = m.ID,
-                                       MovieName = m.Name,
-                                       Duration = m.Duration,
-                                       Date = chm.Date
-                                   };
-
-            cinemaHallMovies = cinemaHallMovies.Where(s => s.CinemaHallID == cinemaHallId)
-                .Where(s => s.Date.Year == date.Year)
-                .Where(s => s.Date.Month == date.Month)
-                .Where(s => s.Date.Day == date.Day);
+            List<CinemaHallScheduleMovie> cinemaHallMovies = cinemaHallMovieDb.GetListByCinemaHallId(cinemaHallId, date.Year, date.Month, date.Day);
 
             string html = "";
             foreach (CinemaHallScheduleMovie cinemaHallMovie in cinemaHallMovies)
             {
-                html += GetSchedulteMovieItemHtml(cinemaHallMovie);
+                html += GetScheduleMovieItemHtml(cinemaHallMovie);
             }
 
             return Json(new {

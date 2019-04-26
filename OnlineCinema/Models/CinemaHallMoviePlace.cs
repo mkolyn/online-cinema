@@ -49,6 +49,7 @@ namespace OnlineCinema.Models
         {
             var cinemaHallMoviePlaces = from chmp in CinemaHallMoviePlaces
                                         join chp in CinemaHallPlaces on chmp.CinemaHallPlaceID equals chp.ID
+                                        where chmp.CinemaHallMovieID == cinemaHallMovieID
                                         select new CinemaHallMoviePlaceInfo
                                         {
                                             Row = chp.Row,

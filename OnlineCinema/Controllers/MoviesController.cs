@@ -54,7 +54,7 @@ namespace OnlineCinema.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,GenreID,Name,Duration,Description")] Movie movie, HttpPostedFileBase image)
+        public ActionResult Create([Bind(Include = "ID,GenreID,Name,Duration,Description")] Movie movie, int price, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -82,18 +82,24 @@ namespace OnlineCinema.Controllers
                     {
                         CinemaID = cinemaId,
                         MovieID = movieId,
+                        Price = price,
                     };
 
                     cinemaMovieDb.CinemaMovies.Add(cinemaMovie);
                     cinemaMovieDb.SaveChanges();
+                }
+                else
+                {
+                    cinemaMovie.Price = price;
                 }
 
                 string imageFileName = Core.UploadImage(image, Server.MapPath("~/Images"), cinemaMovie.ID.ToString());
                 if (imageFileName != "")
                 {
                     cinemaMovie.Image = imageFileName;
-                    cinemaMovieDb.SaveChanges();
                 }
+
+                cinemaMovieDb.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -118,6 +124,7 @@ namespace OnlineCinema.Controllers
 
             ViewBag.GenreID = genreDb.GetSelectList(movie.GenreID);
             ViewBag.Image = cinemaMovie.Image;
+            ViewBag.price = cinemaMovie.Price;
 
             return View(movie);
         }
@@ -127,7 +134,7 @@ namespace OnlineCinema.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, HttpPostedFileBase image)
+        public ActionResult Edit(int id, HttpPostedFileBase image, int price)
         {
             if (ModelState.IsValid)
             {
@@ -140,9 +147,9 @@ namespace OnlineCinema.Controllers
                     {
                         Core.RemoveImage(Server.MapPath("~/Images"), cinemaMovie.Image);
                         cinemaMovie.Image = imageFileName;
-                        cinemaMovieDb.SaveChanges();
                     }
-                    db.SaveChanges();
+                    cinemaMovie.Price = price;
+                    cinemaMovieDb.SaveChanges();
                 }
             }
 
@@ -200,7 +207,8 @@ namespace OnlineCinema.Controllers
             {
                 MovieAutocomplete movieItem = new MovieAutocomplete();
                 movieItem.label = movie.Name;
-                movieItem.value = movie.ID.ToString();
+                movieItem.value = movie.Name;
+                movieItem.id = movie.ID;
                 movieItems.Add(movieItem);
             }
 
