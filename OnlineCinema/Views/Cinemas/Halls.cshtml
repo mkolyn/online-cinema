@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<OnlineCinema.Models.CinemaHall>
 
 @{
-    ViewBag.Title = "Cinema halls";
+    ViewBag.Title = "Зали";
 }
 
 <h2>Cinema halls</h2>
 
 <div>
-    @Html.RouteLink("Create New", new { controller = "CinemaHalls", action = "Create", id = ViewBag.CinemaID })
+    @Html.RouteLink("Створити", new { controller = "CinemaHalls", action = "Create", id = ViewBag.CinemaID })
 
     @using (Html.BeginForm()) {
     <p>
         Title: @Html.TextBox("SearchString")
-        <input type="submit" value="Filter" />
+        <input type="submit" value="Фільтр" />
     </p>
     }
 </div>
@@ -30,11 +30,11 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.RouteLink("Edit", new { controller = "CinemaHalls", action = "Edit", id = item.ID }) |
-            @Html.RouteLink("Details", new { controller = "CinemaHalls", action = "Details", id = item.ID }) |
-            @Html.RouteLink("Delete", new { controller = "CinemaHalls", action = "Delete", id = item.ID }) |
-            @Html.RouteLink("Places", new { controller = "CinemaHallPlaces", action = "Index", id = item.ID }) |
-            @Html.RouteLink("Schedule", new { controller = "CinemaHallSchedule", action = "Index", id = item.ID })
+            @Html.RouteLink("Редагувати", new { controller = "CinemaHalls", action = "Edit", id = item.ID }) |
+            @Html.RouteLink("Деталі", new { controller = "CinemaHalls", action = "Details", id = item.ID }) |
+            @Html.RouteLink("Вилучити", new { controller = "CinemaHalls", action = "Delete", id = item.ID }) |
+            @Html.RouteLink("Конструктор місць", new { controller = "CinemaHallPlaces", action = "Index", id = item.ID }) |
+            @Html.RouteLink("Розклад", new { controller = "CinemaHallSchedule", action = "Index", id = item.ID })
         </td>
     </tr>
 }

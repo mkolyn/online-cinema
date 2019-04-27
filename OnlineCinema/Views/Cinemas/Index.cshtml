@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<OnlineCinema.Models.Cinema>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Кінотеатри";
 }
 
 <h2>Index</h2>
 
 <div>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Створити", "Create")
 
     @using (Html.BeginForm()) {
     <p>
         Title: @Html.TextBox("SearchString")
-        <input type="submit" value="Filter" />
+        <input type="submit" value="Фільтр" />
     </p>
     }
 </div>
@@ -30,10 +30,10 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
-            @Html.ActionLink("Halls", "Halls", new { id = item.ID })
+            @Html.ActionLink("Редагувати", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Деталі", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Вилучити", "Delete", new { id = item.ID }) |
+            @Html.ActionLink("Зали", "Halls", new { id = item.ID })
         </td>
     </tr>
 }
