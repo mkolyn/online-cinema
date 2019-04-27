@@ -117,19 +117,7 @@ $(document).ready(function () {
                 $('.schedule-movies').append(data);
 
                 addDraggableEvents($('.schedule-movie:last'));
-
-                $('.schedule-movie:last .schedule-movie-edit').click(function () {
-                    var scheduleMovie = $(this).closest('.schedule-movie');
-                    var startMinute = parseInt(scheduleMovie.attr('data-start-minute'));
-                    var minute = startMinute - parseInt(startMinute / 60) * 60;
-
-                    scheduleMovieChooseMinute.removeClass('hidden');
-                    scheduleMovieChooseMinute.css('top', scheduleMovie.offset().top + 'px');
-                    scheduleMovieChooseMinute.css('left', scheduleMovie.offset().left + scheduleMovie.width() + 25 + 'px');
-                    scheduleMovieChooseMinute.attr('data-schedule-movie', scheduleMovie.index());
-                    scheduleMovieChooseMinute.find('select').find('option').prop('selected', false);
-                    scheduleMovieChooseMinute.find('select').find('option[value="' + minute + '"]').prop('selected', true);
-                });
+                addScheduleMovieChooseMinuteEvents('.schedule-movie:last');
             });
         },
     });
@@ -172,6 +160,7 @@ $(document).ready(function () {
     });
 
     addDraggableEvents($('.schedule-movie'));
+    addScheduleMovieChooseMinuteEvents('.schedule-movie');
 
     $('.schedule-movie-remove').click(function () {
         $(this).closest('.schedule-movie').attr('data-is-removed', 1).addClass('hidden');
@@ -254,7 +243,7 @@ function changeDate(days, direction) {
         direction: direction,
     };
 
-    ajax(ADMIN_BASE_URL + 'CinemaHallSchedule/ChangeDate', data, function () {
+    ajax(ADMIN_BASE_URL + 'CinemaHallSchedule/ChangeDate', data, function (data) {
         $('.year').val(data.year);
         $('.month').val(data.month);
         $('.day').val(data.day);
@@ -269,7 +258,26 @@ function changeDate(days, direction) {
 
         $('.schedule-movie').each(function () {
             setScheduleMoviePosition($(this), parseInt($(this).attr('data-start-minute')));
+            addScheduleMovieChooseMinuteEvents(this);
         });
         addDraggableEvents($('.schedule-movie'));
+    });
+}
+
+function addScheduleMovieChooseMinuteEvents(selector) {
+    var scheduleMovieChooseMinute = $('.schedule-movie-choose-minute');
+
+    $(selector).find('.schedule-movie-edit').click(function () {
+        console.log();
+        var scheduleMovie = $(this).closest('.schedule-movie');
+        var startMinute = parseInt(scheduleMovie.attr('data-start-minute'));
+        var minute = startMinute - parseInt(startMinute / 60) * 60;
+
+        scheduleMovieChooseMinute.removeClass('hidden');
+        scheduleMovieChooseMinute.css('top', scheduleMovie.offset().top + 'px');
+        scheduleMovieChooseMinute.css('left', scheduleMovie.offset().left + scheduleMovie.width() + 25 + 'px');
+        scheduleMovieChooseMinute.attr('data-schedule-movie', scheduleMovie.index());
+        scheduleMovieChooseMinute.find('select').find('option').prop('selected', false);
+        scheduleMovieChooseMinute.find('select').find('option[value="' + minute + '"]').prop('selected', true);
     });
 }

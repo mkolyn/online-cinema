@@ -45,3 +45,26 @@
 .cinema-hall-cell.booked:hover {
     background-color: #000000;
 }
+
+.legend > div {
+    display: inline-block;
+    line-height: 50px;
+    vertical-align: top;
+}
+
+.legend > div:nth-child(2n+1) {
+    width: 50px;
+    height: 50px;
+}
+
+.legend .booked {
+    background-color: #000000;
+}
+
+.legend .free {
+    background-color: cornflowerblue;
+}
+
+.book-ticket {
+    text-align: center;
+}
