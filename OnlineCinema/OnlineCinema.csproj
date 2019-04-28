@@ -319,12 +319,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Cinemas\Create.cshtml" />
     <Content Include="Views\Cinemas\Delete.cshtml" />
-    <Content Include="Views\Cinemas\Details.cshtml" />
     <Content Include="Views\Cinemas\Edit.cshtml" />
     <Content Include="Views\Cinemas\Index.cshtml" />
     <Content Include="Views\CinemaHalls\Create.cshtml" />
     <Content Include="Views\CinemaHalls\Delete.cshtml" />
-    <Content Include="Views\CinemaHalls\Details.cshtml" />
     <Content Include="Views\CinemaHalls\Edit.cshtml" />
     <Content Include="Views\Movies\Create.cshtml" />
     <Content Include="Views\Movies\Delete.cshtml" />
@@ -334,7 +332,6 @@
     <Content Include="Views\Cinemas\Halls.cshtml" />
     <Content Include="Views\Genres\Create.cshtml" />
     <Content Include="Views\Genres\Delete.cshtml" />
-    <Content Include="Views\Genres\Details.cshtml" />
     <Content Include="Views\Genres\Edit.cshtml" />
     <Content Include="Views\Genres\Index.cshtml" />
     <Content Include="Views\CinemaHallPlaces\Index.cshtml" />
@@ -348,7 +345,6 @@
     <Content Include="Views\Administrator\Index.cshtml" />
     <Content Include="Views\Cities\Create.cshtml" />
     <Content Include="Views\Cities\Delete.cshtml" />
-    <Content Include="Views\Cities\Details.cshtml" />
     <Content Include="Views\Cities\Edit.cshtml" />
     <Content Include="Views\Cities\Index.cshtml" />
     <Content Include="Views\Book\Index.cshtml" />
