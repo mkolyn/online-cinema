@@ -14,24 +14,6 @@ namespace OnlineCinema.Controllers
     {
         private CinemaHallContext db = new CinemaHallContext();
 
-        // GET: CinemaHalls/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            CinemaHall cinemaHall = db.CinemaHalls.Find(id);
-            if (cinemaHall == null)
-            {
-                return HttpNotFound();
-            }
-            CheckCinemaRights(cinemaHall.CinemaID);
-
-            return View(cinemaHall);
-        }
-
         // GET: CinemaHalls/Create
         public ActionResult Create(int id)
         {

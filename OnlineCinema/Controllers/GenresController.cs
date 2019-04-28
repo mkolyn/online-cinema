@@ -20,23 +20,6 @@ namespace OnlineCinema.Controllers
             return View(db.Genres.ToList());
         }
 
-        // GET: Genres/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Genre genre = db.Genres.Find(id);
-            if (genre == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(genre);
-        }
-
         // GET: Genres/Create
         public ActionResult Create()
         {

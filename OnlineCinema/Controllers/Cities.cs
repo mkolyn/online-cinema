@@ -20,23 +20,6 @@ namespace OnlineCinema.Controllers
             return View(db.Cities.ToList());
         }
 
-        // GET: Cities/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            City city = db.Cities.Find(id);
-            if (city == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(city);
-        }
-
         // GET: Cities/Create
         public ActionResult Create()
         {

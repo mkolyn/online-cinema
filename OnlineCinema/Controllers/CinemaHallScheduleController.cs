@@ -19,15 +19,11 @@ namespace OnlineCinema.Controllers
         private MovieContext movieDb = new MovieContext();
         private CinemaHallMovieContext cinemaHallMovieDb = new CinemaHallMovieContext();
         private CinemaHallContext cinemaHallDb = new CinemaHallContext();
+        private CinemaMovieContext cinemaMovieDb = new CinemaMovieContext();
 
         // GET: CinemaHallSchedule/5
-        public ActionResult Index(int? id)
+        public ActionResult Index(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             CinemaHall cinemaHall = cinemaHallDb.CinemaHalls.Find(id);
             if (cinemaHall == null)
             {
@@ -51,23 +47,7 @@ namespace OnlineCinema.Controllers
             ViewBag.PrevWeek = date.AddDays(-7).Date;
             ViewBag.NextWeek = date.AddDays(7).Date;
 
-            var cinemaHallMovies = from chm in cinemaHallMovieDb.CinemaHallMovies
-                                   join m in cinemaHallMovieDb.Movies on chm.MovieID equals m.ID
-                                   orderby chm.Date
-                                   select new CinemaHallScheduleMovie
-                                   {
-                                       CinemaHallMovieID = chm.ID,
-                                       CinemaHallID = chm.CinemaHallID,
-                                       MovieID = m.ID,
-                                       MovieName = m.Name,
-                                       Duration = m.Duration,
-                                       Date = chm.Date,
-                                   };
-
-            cinemaHallMovies = cinemaHallMovies.Where(s => s.CinemaHallID == id)
-                .Where(s => s.Date.Year == date.Year)
-                .Where(s => s.Date.Month == date.Month)
-                .Where(s => s.Date.Day == date.Day);
+            List<CinemaHallScheduleMovie> cinemaHallMovies = cinemaHallMovieDb.GetListByCinemaHallId(id, date.Year, date.Month, date.Day);
 
             string cinemaHallMoviesHtml = "";
             foreach (CinemaHallScheduleMovie cinemaHallMovie in cinemaHallMovies)
@@ -108,11 +88,15 @@ namespace OnlineCinema.Controllers
         public ActionResult GetMovieItemHtml(int id)
         {
             Movie movie = movieDb.Movies.Find(id);
+            CinemaMovie cinemaMovie = cinemaMovieDb.Get(Core.GetCinemaId(), id);
+
             ViewData["CinemaHallMovieID"] = 0;
             ViewData["MovieID"] = movie.ID;
             ViewData["MovieName"] = movie.Name;
             ViewData["Duration"] = movie.Duration;
             ViewData["ItemHeight"] = movie.Duration / 60 * 25;
+            ViewData["Price"] = cinemaMovie.Price;
+
             return PartialView("Movie");
         }
 

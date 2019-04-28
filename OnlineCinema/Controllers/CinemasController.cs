@@ -29,21 +29,6 @@ namespace OnlineCinema.Controllers
             return View(cinemas);
         }
 
-        // GET: Cinemas/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cinema cinema = db.Cinemas.Find(id);
-            if (cinema == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cinema);
-        }
-
         // GET: Cinemas/Create
         public ActionResult Create()
         {
