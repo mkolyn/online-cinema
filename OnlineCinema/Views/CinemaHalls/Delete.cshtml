@@ -1,14 +1,14 @@
 ﻿@model OnlineCinema.Models.CinemaHall
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Вилучення залу";
 }
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Вилучити зал?</h3>
 <div>
-    <h4>CinemaHall</h4>
+    <h4>Вилучення залу</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -33,8 +33,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Вилучити" class="btn btn-default" /> |
+            @Html.ActionLink("До списку", "Index")
         </div>
     }
 </div>

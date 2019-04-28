@@ -1,10 +1,10 @@
 ﻿@model OnlineCinema.Models.User
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Деталі користувача";
 }
 
-<h2>Details</h2>
+<h2>Деталі користувача</h2>
 
 <div>
     <h4>User</h4>
@@ -34,17 +34,9 @@
             @Html.DisplayFor(model => model.Login)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Змінити", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("До списку", "Index")
 </p>

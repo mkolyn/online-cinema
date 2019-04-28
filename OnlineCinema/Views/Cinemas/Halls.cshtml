@@ -4,7 +4,7 @@
     ViewBag.Title = "Зали";
 }
 
-<h2>Cinema halls</h2>
+<h2>Зали</h2>
 
 <div>
     @Html.RouteLink("Створити", new { controller = "CinemaHalls", action = "Create", id = ViewBag.CinemaID })
@@ -31,7 +31,6 @@
         </td>
         <td>
             @Html.RouteLink("Редагувати", new { controller = "CinemaHalls", action = "Edit", id = item.ID }) |
-            @Html.RouteLink("Деталі", new { controller = "CinemaHalls", action = "Details", id = item.ID }) |
             @Html.RouteLink("Вилучити", new { controller = "CinemaHalls", action = "Delete", id = item.ID }) |
             @Html.RouteLink("Конструктор місць", new { controller = "CinemaHallPlaces", action = "Index", id = item.ID }) |
             @Html.RouteLink("Розклад", new { controller = "CinemaHallSchedule", action = "Index", id = item.ID })
