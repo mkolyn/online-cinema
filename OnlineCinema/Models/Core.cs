@@ -11,7 +11,8 @@ namespace OnlineCinema.Models
 {
     public class Core
     {
-        const int nextDays = 10;
+        public const int PAGE_SIZE = 10;
+        const int NEXT_DAYS = 10;
 
         public static int GetCinemaId()
         {
@@ -51,7 +52,7 @@ namespace OnlineCinema.Models
             List<DateTime> dates = new List<DateTime>();
             dates.Add(date);
 
-            for (var i = 0; i < nextDays; i++)
+            for (var i = 0; i < NEXT_DAYS; i++)
             {
                 date = date.AddDays(1);
                 dates.Add(date);

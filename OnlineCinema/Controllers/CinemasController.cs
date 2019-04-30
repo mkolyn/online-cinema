@@ -4,9 +4,9 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using OnlineCinema.Models;
+using PagedList;
 
 namespace OnlineCinema.Controllers
 {
@@ -16,7 +16,7 @@ namespace OnlineCinema.Controllers
         private CityContext cityDb = new CityContext();
 
         // GET: Cinemas
-        public ActionResult Index(string searchString)
+        public ActionResult Index(string searchString, int? page)
         {
             var cinemas = from c in db.Cinemas
                          select c;
@@ -26,7 +26,9 @@ namespace OnlineCinema.Controllers
                 cinemas = cinemas.Where(s => s.Name.Contains(searchString));
             }
 
-            return View(cinemas);
+            int pageNumber = page ?? 1;
+
+            return View(cinemas.ToList().ToPagedList(pageNumber, Core.PAGE_SIZE));
         }
 
         // GET: Cinemas/Create

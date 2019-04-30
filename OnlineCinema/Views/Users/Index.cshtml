@@ -1,10 +1,11 @@
-﻿@model IEnumerable<OnlineCinema.Models.User>
+﻿@model PagedList.IPagedList<OnlineCinema.Models.User>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Користувачі";
 }
 
-<h2>Index</h2>
+<h2>Користувачі</h2>
 
 <p>
     @Html.ActionLink("Створити", "Create")
@@ -12,34 +13,36 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            Ім'я
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            Прізвище
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Login)
+            Логін
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Login)
-        </td>
-        <td>
-            @Html.ActionLink("Редагувати", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Деталі", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Вилучити", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Login)
+            </td>
+            <td>
+                @Html.ActionLink("Редагувати", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Деталі", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Вилучити", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

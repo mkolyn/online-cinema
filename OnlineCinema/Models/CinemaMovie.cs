@@ -25,7 +25,7 @@ namespace OnlineCinema.Models
         // movie ID
         public int ID { get; set; }
         // cinema ID
-        public int CinemaID { get; set; }
+        public int? CinemaID { get; set; }
         // movie name
         public string Name { get; set; }
     }
@@ -40,14 +40,15 @@ namespace OnlineCinema.Models
         public DbSet<CinemaMovie> CinemaMovies { get; set; }
         public CinemaMovie CinemaMovie { get; set; }
 
-        public IEnumerable<CinemaMovieSelect> GetList(int cinemaId, string term = "")
+        public List<CinemaMovieSelect> GetList(int cinemaId, string term = "")
         {
-            var cinemaMovies = from cm in CinemaMovies
-                   join m in Movies on cm.MovieID equals m.ID
+            var cinemaMovies = from m in Movies
+                   join cm in CinemaMovies on m.ID equals cm.MovieID into mcm
+                   from movies in mcm.DefaultIfEmpty()
                    select new CinemaMovieSelect
                    {
                        ID = m.ID,
-                       CinemaID = cm.CinemaID,
+                       CinemaID = movies.CinemaID,
                        Name = m.Name,
                    };
 

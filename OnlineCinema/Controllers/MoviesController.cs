@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using OnlineCinema.Models;
+using PagedList;
 
 namespace OnlineCinema.Controllers
 {
@@ -19,10 +16,13 @@ namespace OnlineCinema.Controllers
         private GenreContext genreDb = new GenreContext();
 
         // GET: Movies
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             LoginIfNotAuthorized();
-            return View(cinemaMovieDb.GetList(Core.GetCinemaId()));
+            int pageNumber = page ?? 1;
+            var cinemaMovies = cinemaMovieDb.GetList(Core.GetCinemaId());
+            ViewBag.cinemaId = Core.GetCinemaId();
+            return View(cinemaMovies.ToPagedList(pageNumber, Core.PAGE_SIZE));
         }
 
         // GET: Movies/Details/5
@@ -54,7 +54,7 @@ namespace OnlineCinema.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,GenreID,Name,Duration,Description")] Movie movie, int price, HttpPostedFileBase image)
+        public ActionResult Create([Bind(Include = "ID,GenreID,Name,Duration,Description")] Movie movie, int price = 0, HttpPostedFileBase image = null)
         {
             if (ModelState.IsValid)
             {
@@ -74,32 +74,35 @@ namespace OnlineCinema.Controllers
                     movieId = existedMovie.ID;
                 }
 
-                CinemaMovie cinemaMovie = cinemaMovieDb.Get(cinemaId, movieId);
-
-                if (cinemaMovie == null)
+                if (cinemaId > 0)
                 {
-                    cinemaMovie = new CinemaMovie()
-                    {
-                        CinemaID = cinemaId,
-                        MovieID = movieId,
-                        Price = price,
-                    };
+                    CinemaMovie cinemaMovie = cinemaMovieDb.Get(cinemaId, movieId);
 
-                    cinemaMovieDb.CinemaMovies.Add(cinemaMovie);
+                    if (cinemaMovie == null)
+                    {
+                        cinemaMovie = new CinemaMovie()
+                        {
+                            CinemaID = cinemaId,
+                            MovieID = movieId,
+                            Price = price,
+                        };
+
+                        cinemaMovieDb.CinemaMovies.Add(cinemaMovie);
+                        cinemaMovieDb.SaveChanges();
+                    }
+                    else
+                    {
+                        cinemaMovie.Price = price;
+                    }
+
+                    string imageFileName = Core.UploadImage(image, Server.MapPath("~/Images"), cinemaMovie.ID.ToString());
+                    if (imageFileName != "")
+                    {
+                        cinemaMovie.Image = imageFileName;
+                    }
+
                     cinemaMovieDb.SaveChanges();
                 }
-                else
-                {
-                    cinemaMovie.Price = price;
-                }
-
-                string imageFileName = Core.UploadImage(image, Server.MapPath("~/Images"), cinemaMovie.ID.ToString());
-                if (imageFileName != "")
-                {
-                    cinemaMovie.Image = imageFileName;
-                }
-
-                cinemaMovieDb.SaveChanges();
 
                 return RedirectToAction("Index");
             }

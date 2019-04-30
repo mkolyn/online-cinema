@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using OnlineCinema.Models;
-using System.Security.Cryptography;
 using System.Web.Helpers;
+using PagedList;
 
 namespace OnlineCinema.Controllers
 {
@@ -18,9 +14,10 @@ namespace OnlineCinema.Controllers
         private CinemaContext cinemaDb = new CinemaContext();
 
         // GET: Users
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.Users.ToList());
+            int pageNumber = page ?? 1;
+            return View(db.Users.ToList().ToPagedList(pageNumber, Core.PAGE_SIZE));
         }
 
         // GET: Users/Details/5

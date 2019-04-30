@@ -1,4 +1,5 @@
-﻿@model IEnumerable<OnlineCinema.Models.CinemaMovieSelect>
+﻿@model PagedList.IPagedList<OnlineCinema.Models.CinemaMovieSelect>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Фільми";
@@ -12,22 +13,24 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Назва
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Редагувати", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Деталі", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Вилучити", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Редагувати", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Деталі", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Вилучити", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

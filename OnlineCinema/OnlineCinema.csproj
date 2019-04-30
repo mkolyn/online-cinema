@@ -61,6 +61,12 @@
     <Reference Include="MySql.Data.Entity.EF6, Version=6.10.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.Entity.6.10.8\lib\net452\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
     <Reference Include="System.Configuration.Install" />
@@ -248,6 +254,10 @@
     <Compile Include="Migrations\201904261015341_OrderItemPrice.Designer.cs">
       <DependentUpon>201904261015341_OrderItemPrice.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904300805259_IndexForeignKey.cs" />
+    <Compile Include="Migrations\201904300805259_IndexForeignKey.Designer.cs">
+      <DependentUpon>201904300805259_IndexForeignKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaHallMoviePlace.cs" />
     <Compile Include="Models\CinemaMovie.cs" />
@@ -265,6 +275,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\book.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\places.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -415,6 +426,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904261015341_OrderItemPrice.resx">
       <DependentUpon>201904261015341_OrderItemPrice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904300805259_IndexForeignKey.resx">
+      <DependentUpon>201904300805259_IndexForeignKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

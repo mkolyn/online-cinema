@@ -17,7 +17,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
-        @Html.LabelFor(model => model.GenreID, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.GenreID, "Жанр", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownList("GenreID", "All")
             @Html.ValidationMessageFor(model => model.GenreID, "", new { @class = "text-danger" })
@@ -25,7 +25,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Name, "Назва", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -33,7 +33,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Duration, "Тривалість", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
@@ -41,26 +41,30 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Description, "Опис", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.Label("Ціна", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.Editor("Ціна", new { htmlAttributes = new { @Name = "price", @class = "form-control" } })
-            @Html.ValidationMessage("Ціна", "", new { @class = "text-danger" })
+    @if (ViewBag.cinemaId > 0)
+    {
+        <div class="form-group">
+            @Html.Label("Ціна", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("Ціна", new { htmlAttributes = new { @Name = "price", @class = "form-control" } })
+                @Html.ValidationMessage("Ціна", "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-10">
-            <input type="file" name="image" id="image" accept="image/jpeg,image/png" />
+        <div class="form-group">
+            @Html.Label("Зображення", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="image" id="image" accept="image/jpeg,image/png" />
+            </div>
         </div>
-    </div>
+    }
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
