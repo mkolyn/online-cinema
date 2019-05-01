@@ -10,25 +10,44 @@ namespace OnlineCinema.Controllers
         private OrderContext orderDb = new OrderContext();
         private LiqpayResultContext liqpayResultDb = new LiqpayResultContext();
 
-        public ActionResult Result(string data, string signature,
-            [Bind(Include = "amount,liqpay_order_id,order_id,payment_id,status,description,err_code,err_description")] LiqpayResult liqpayResult)
+        public ActionResult Result(
+            string data,
+            string signature,
+            int amount,
+            string liqpay_order_id,
+            string order_id,
+            int payment_id,
+            string status,
+            string description,
+            string err_code,
+            string err_description)
         {
             bool success = false;
             bool failed = false;
-            Int32.TryParse(liqpayResult.OrderId, out int orderId);
+            Int32.TryParse(order_id, out int orderId);
 
-            int liqpayResultId = liqpayResultDb.GetIdByOrderId(orderId);
-            if (liqpayResultId > 0)
+            LiqpayResult liqpayResult = liqpayResultDb.Get(orderId);
+            if (liqpayResult != null)
             {
-                liqpayResult.ID = liqpayResultId;
                 liqpayResultDb.Entry(liqpayResult).State = EntityState.Modified;
-                liqpayResultDb.SaveChanges();
             }
             else
             {
+                liqpayResult = new LiqpayResult();
                 liqpayResultDb.LiqpayResults.Add(liqpayResult);
-                liqpayResultDb.SaveChanges();
             }
+
+            liqpayResult.Amount = amount;
+            liqpayResult.LiqpayOrderId = liqpay_order_id;
+            liqpayResult.OrderId = order_id;
+            liqpayResult.PaymentId = payment_id;
+            liqpayResult.Status = status;
+            liqpayResult.Description = description;
+            liqpayResult.ErrorCode = err_code;
+            liqpayResult.ErrorDescription = err_description;
+            liqpayResult.Date = DateTime.Now;
+
+            liqpayResultDb.SaveChanges();
 
             if (signature == Liqpay.GetSignature(data))
             {
@@ -64,7 +83,7 @@ namespace OnlineCinema.Controllers
                 orderDb.SetFailedOrder(orderId);
             }
 
-            return Json(new { success });
+            return Json(new { success }, JsonRequestBehavior.AllowGet);
         }
     }
 }

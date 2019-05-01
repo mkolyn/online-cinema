@@ -44,15 +44,13 @@ namespace OnlineCinema.Models
         {
         }
 
-        public int GetIdByOrderId(int orderId)
+        public LiqpayResult Get(int orderId)
         {
             var liqpayQuery = from lr in LiqpayResults
-                               where lr.OrderId == orderId.ToString()
-                               select lr;
+                              where lr.OrderId == orderId.ToString()
+                              select lr;
 
-            var liqpayResult = liqpayQuery.FirstOrDefault();
-
-            return liqpayResult != null ? liqpayResult.ID : 0;
+            return liqpayQuery.FirstOrDefault();
         }
     }
 }
