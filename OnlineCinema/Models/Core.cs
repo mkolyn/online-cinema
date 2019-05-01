@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace OnlineCinema.Models
 {
@@ -91,6 +92,18 @@ namespace OnlineCinema.Models
                     File.Delete(imagePath);
                 }
             }
+        }
+
+        public static string ToJson(object data)
+        {
+            var serializer = new JavaScriptSerializer();
+            return serializer.Serialize(data);
+        }
+
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return Convert.ToBase64String(plainTextBytes);
         }
     }
 }

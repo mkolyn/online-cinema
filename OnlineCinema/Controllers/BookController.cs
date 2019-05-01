@@ -1,10 +1,7 @@
 ﻿using OnlineCinema.Models;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace OnlineCinema.Controllers
@@ -106,42 +103,33 @@ namespace OnlineCinema.Controllers
             {
                 totalPrice += orderItem.Price;
             }
+            string description = "Оплата квитка (квитків) на фільм " + orderItems.First().MovieName + ".";
+            description += " К-ть місць: " + orderItems.Count;
+
+            UrlHelper urlHelper = new UrlHelper();
+            string serverUrl = urlHelper.Action("Result", "Liqpay");
+            Liqpay liqpay = new Liqpay(totalPrice, id.ToString(), description, serverUrl);
+
+            string liqpayData = Core.Base64Encode(Core.ToJson(liqpay));
+            string liqpaySignature = Liqpay.GetSignature(liqpayData);
 
             ViewBag.totalPrice = totalPrice;
+            ViewBag.liqpayData = liqpayData;
+            ViewBag.liqpaySignature = liqpaySignature;
 
             return View();
         }
 
         public ActionResult Success(int id)
         {
-            Order order = orderDb.Orders.Find(id);
-            order.IsPaid = true;
-            orderDb.SaveChanges();
-
-            List<OrderItemInfo> orderItems = orderDb.GetOrderItems(id);
-            foreach (OrderItemInfo orderItem in orderItems)
-            {
-                CinemaHallMoviePlace cinemaHallMoviePlace = cinemaHallMoviePlaceDb.GetCinemaHallMoviePlace(
-                    orderItem.CinemaHallMovieID, orderItem.CinemaHallPlaceID);
-
-                cinemaHallMoviePlace.Status = CinemaHallMoviePlace.STATUS_SUCCESSFULL;
-                cinemaHallMoviePlaceDb.SaveChanges();
-            }
+            orderDb.SetSuccessfullOrder(id);
 
             return Json("ok", JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Fail(int id)
         {
-            List<OrderItemInfo> orderItems = orderDb.GetOrderItems(id);
-            foreach (OrderItemInfo orderItem in orderItems)
-            {
-                CinemaHallMoviePlace cinemaHallMoviePlace = cinemaHallMoviePlaceDb.GetCinemaHallMoviePlace(
-                    orderItem.CinemaHallMovieID, orderItem.CinemaHallPlaceID);
-
-                cinemaHallMoviePlaceDb.CinemaHallMoviePlaces.Remove(cinemaHallMoviePlace);
-            }
-            cinemaHallMoviePlaceDb.SaveChanges();
+            orderDb.SetFailedOrder(id);
 
             return Json("ok", JsonRequestBehavior.AllowGet);
         }

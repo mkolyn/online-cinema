@@ -58,6 +58,8 @@ namespace OnlineCinema.Models
         {
         }
 
+        private CinemaHallMoviePlaceContext cinemaHallMoviePlaceDb = new CinemaHallMoviePlaceContext();
+
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<CinemaHallMovie> CinemaHallMovies { get; set; }
@@ -92,6 +94,36 @@ namespace OnlineCinema.Models
                              };
 
             return orderItems.ToList();
+        }
+
+        public void SetSuccessfullOrder(int id)
+        {
+            Order order = Orders.Find(id);
+            order.IsPaid = true;
+            SaveChanges();
+
+            List<OrderItemInfo> orderItems = GetOrderItems(id);
+            foreach (OrderItemInfo orderItem in orderItems)
+            {
+                CinemaHallMoviePlace cinemaHallMoviePlace = cinemaHallMoviePlaceDb.GetCinemaHallMoviePlace(
+                    orderItem.CinemaHallMovieID, orderItem.CinemaHallPlaceID);
+
+                cinemaHallMoviePlace.Status = CinemaHallMoviePlace.STATUS_SUCCESSFULL;
+                cinemaHallMoviePlaceDb.SaveChanges();
+            }
+        }
+
+        public void SetFailedOrder(int id)
+        {
+            List<OrderItemInfo> orderItems = GetOrderItems(id);
+            foreach (OrderItemInfo orderItem in orderItems)
+            {
+                CinemaHallMoviePlace cinemaHallMoviePlace = cinemaHallMoviePlaceDb.GetCinemaHallMoviePlace(
+                    orderItem.CinemaHallMovieID, orderItem.CinemaHallPlaceID);
+
+                cinemaHallMoviePlaceDb.CinemaHallMoviePlaces.Remove(cinemaHallMoviePlace);
+            }
+            cinemaHallMoviePlaceDb.SaveChanges();
         }
     }
 }
