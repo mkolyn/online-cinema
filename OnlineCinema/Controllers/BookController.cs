@@ -106,7 +106,7 @@ namespace OnlineCinema.Controllers
             string description = "Оплата квитка (квитків) на фільм " + orderItems.First().MovieName + ".";
             description += " К-ть місць: " + orderItems.Count;
 
-            UrlHelper urlHelper = new UrlHelper();
+            UrlHelper urlHelper = new UrlHelper(HttpContext.Request.RequestContext);
             string serverUrl = urlHelper.Action("Result", "Liqpay");
             Liqpay liqpay = new Liqpay(totalPrice, id.ToString(), description, serverUrl);
 
