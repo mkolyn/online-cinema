@@ -35,5 +35,23 @@ namespace OnlineCinema.Models
                        Selected = d.ID == ID
                    };
         }
+
+        public List<Cinema> GetList(string searchString, int cityId)
+        {
+            var cinemas = from c in Cinemas
+                          select c;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                cinemas = cinemas.Where(s => s.Name.Contains(searchString));
+            }
+
+            if (cityId > 0)
+            {
+                cinemas = cinemas.Where(s => s.CityID == cityId);
+            }
+
+            return cinemas.ToList();
+        }
     }
 }

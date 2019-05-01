@@ -10,10 +10,11 @@
 <div>
     @Html.ActionLink("Створити", "Create")
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Index", "Cinemas", FormMethod.Get))
     {
         <p>
             Назва: @Html.TextBox("SearchString")
+            Місто: @Html.DropDownList("CityID", "All")
             <input type="submit" value="Фільтр" />
         </p>
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -16,12 +17,15 @@ namespace OnlineCinema.Controllers
         private GenreContext genreDb = new GenreContext();
 
         // GET: Movies
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string searchString = "")
         {
             LoginIfNotAuthorized();
+
             int pageNumber = page ?? 1;
-            var cinemaMovies = cinemaMovieDb.GetList(Core.GetCinemaId());
+            var cinemaMovies = cinemaMovieDb.GetList(Core.GetCinemaId(), searchString);
+
             ViewBag.cinemaId = Core.GetCinemaId();
+
             return View(cinemaMovies.ToPagedList(pageNumber, Core.PAGE_SIZE));
         }
 

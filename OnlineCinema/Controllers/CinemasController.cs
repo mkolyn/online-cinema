@@ -16,17 +16,12 @@ namespace OnlineCinema.Controllers
         private CityContext cityDb = new CityContext();
 
         // GET: Cinemas
-        public ActionResult Index(string searchString, int? page)
+        public ActionResult Index(int? page, string searchString = "", int cityId = 0)
         {
-            var cinemas = from c in db.Cinemas
-                         select c;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                cinemas = cinemas.Where(s => s.Name.Contains(searchString));
-            }
+            List<Cinema> cinemas = db.GetList(searchString, cityId);
 
             int pageNumber = page ?? 1;
+            ViewBag.CityID = cityDb.GetSelectList();
 
             return View(cinemas.ToList().ToPagedList(pageNumber, Core.PAGE_SIZE));
         }

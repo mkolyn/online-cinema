@@ -7,9 +7,17 @@
 
 <h2>Фільми</h2>
 
-<p>
+<div>
     @Html.ActionLink("Створити", "Create")
-</p>
+
+    @using (Html.BeginForm("Index", "Movies", FormMethod.Get))
+    {
+        <p>
+            Назва: @Html.TextBox("SearchString")
+            <input type="submit" value="Фільтр" />
+        </p>
+    }
+</div>
 <table class="table">
     <tr>
         <th>
