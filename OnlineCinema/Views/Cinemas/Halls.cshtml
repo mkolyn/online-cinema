@@ -11,7 +11,7 @@
 
     @using (Html.BeginForm()) {
     <p>
-        Title: @Html.TextBox("SearchString")
+        Назва: @Html.TextBox("SearchString")
         <input type="submit" value="Фільтр" />
     </p>
     }
@@ -19,7 +19,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Назва
         </th>
         <th></th>
     </tr>
