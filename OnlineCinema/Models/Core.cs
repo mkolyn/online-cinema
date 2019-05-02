@@ -105,5 +105,22 @@ namespace OnlineCinema.Models
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
             return Convert.ToBase64String(plainTextBytes);
         }
+
+        public static string GetHtmlString(string viewName, ViewDataDictionary viewData, ControllerContext context)
+        {
+            string html = "";
+
+            ViewEngineResult viewEngineResult = ViewEngines.Engines.FindPartialView(context, viewName);
+            var view = viewEngineResult.View;
+
+            using (var sw = new StringWriter())
+            {
+                var ctx = new ViewContext(context, view, viewData, context.Controller.TempData, sw);
+                view.Render(ctx, sw);
+                html = sw.ToString();
+            }
+
+            return html;
+        }
     }
 }

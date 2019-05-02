@@ -20,6 +20,7 @@ namespace OnlineCinema.Controllers
         private CinemaHallMovieContext cinemaHallMovieDb = new CinemaHallMovieContext();
         private CinemaHallContext cinemaHallDb = new CinemaHallContext();
         private CinemaMovieContext cinemaMovieDb = new CinemaMovieContext();
+        private CinemaPlaceGroupContext cinemaPlaceGroupDb = new CinemaPlaceGroupContext();
 
         // GET: CinemaHallSchedule/5
         public ActionResult Index(int id)
@@ -163,6 +164,49 @@ namespace OnlineCinema.Controllers
                 prevWeek = prevWeek.Day + "." + prevWeek.Month + "." + prevWeek.Year,
                 nextWeek = nextWeek.Day + "." + nextWeek.Month + "." + nextWeek.Year,
                 html,
+            });
+        }
+
+        public ActionResult LoadSetPlacesGroupPopupHtml(int cinemaHallPlaceId)
+        {
+            ViewDataDictionary viewData = new ViewDataDictionary()
+            {
+                { "CinemaHallPlaceID", cinemaHallPlaceId },
+                { "CinemaPlaceGroupID", cinemaPlaceGroupDb.GetSelectList(cinemaPlaceGroupDb.GetCinemaPlaceGroupId(cinemaHallPlaceId)) },
+            };
+
+            string cinemaHallPlaceGroupHtml = Core.GetHtmlString("PlaceGroup", viewData, ControllerContext);
+            string html = Core.GetHtmlString("Popup", new ViewDataDictionary() {
+                { "html", cinemaHallPlaceGroupHtml },
+            }, ControllerContext);
+
+            return Json(new
+            {
+                html,
+            });
+        }
+
+        public ActionResult SetPlacesGroup(int cinemaHallPlaceId, int cinemaPlaceGroupId)
+        {
+            CinemaHallPlaceGroup cinemaHallPlaceGroup = cinemaPlaceGroupDb.Get(cinemaHallPlaceId);
+            if (cinemaHallPlaceGroup != null)
+            {
+                cinemaHallPlaceGroup.CinemaPlaceGroupID = cinemaPlaceGroupId;
+            }
+            else
+            {
+                cinemaHallPlaceGroup = new CinemaHallPlaceGroup()
+                {
+                    CinemaHallPlaceID = cinemaHallPlaceId,
+                    CinemaPlaceGroupID = cinemaPlaceGroupId,
+                };
+                cinemaPlaceGroupDb.CinemaHallPlaceGroups.Add(cinemaHallPlaceGroup);
+            }
+            cinemaPlaceGroupDb.SaveChanges();
+
+            return Json(new
+            {
+                success = true,
             });
         }
 

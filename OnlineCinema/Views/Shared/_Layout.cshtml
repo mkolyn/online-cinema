@@ -40,6 +40,7 @@
                         else
                         {
                             <li>@Html.RouteLink("Зали", new { controller = "Cinemas", action = "Halls", id = Session["CinemaID"].ToString() })</li>
+                            <li>@Html.RouteLink("Групи місць", new { controller = "Cinemas", action = "PlaceGroups", id = Session["CinemaID"].ToString() })</li>
                         }
                         <li>@Html.ActionLink("Фільми", "Index", "Movies")</li>
                         <li>@Html.ActionLink("Вийти", "Logout", "Administrator")</li>

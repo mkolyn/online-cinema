@@ -14,6 +14,7 @@ namespace OnlineCinema.Controllers
     {
         private CinemaContext db = new CinemaContext();
         private CityContext cityDb = new CityContext();
+        private CinemaPlaceGroupContext cinemaPlaceGroupDb = new CinemaPlaceGroupContext();
 
         // GET: Cinemas
         public ActionResult Index(int? page, string searchString = "", int cityId = 0)
@@ -172,6 +173,26 @@ namespace OnlineCinema.Controllers
             ViewBag.CinemaID = id;
 
             return View(cinemaHalls);
+        }
+
+        public ActionResult PlaceGroups(int id)
+        {
+            if (Session["CinemaID"] != null && Session["CinemaID"].ToString() != "" && Session["CinemaID"].ToString() != id.ToString())
+            {
+                return RedirectToAction("Index");
+            }
+
+            Cinema cinema = db.Cinemas.Find(id);
+            if (cinema == null)
+            {
+                return HttpNotFound();
+            }
+
+            List<CinemaPlaceGroup> cinemaPlaceGroups = cinemaPlaceGroupDb.GetList(Core.GetCinemaId());
+
+            ViewBag.CinemaID = id;
+
+            return View(cinemaPlaceGroups);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace OnlineCinema.Controllers
         public void CheckRights()
         {
             Dictionary<string, List<string>> cinemaRightsAllowPages = new Dictionary<string, List<string>>();
-            cinemaRightsAllowPages.Add("Cinemas", new List<string>() { "Halls" });
+            cinemaRightsAllowPages.Add("Cinemas", new List<string>() { "Halls", "PlaceGroups" });
             cinemaRightsAllowPages.Add("Genres", new List<string>());
             cinemaRightsAllowPages.Add("Movies", new List<string>() { "Index", "Create", "Edit", "Delete", "DeleteConfirmed", "Find" });
             cinemaRightsAllowPages.Add("Users", new List<string>());
