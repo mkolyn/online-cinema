@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Редагування фільму";
+    var i = 0;
 }
 
 <h2>Редагування фільму</h2>
@@ -36,6 +37,19 @@
             @Html.ValidationMessage("Ціна", "", new { @class = "text-danger" })
         </div>
     </div>
+
+    @foreach (OnlineCinema.Models.CinemaPlaceGroup cinemaPlaceGroup in ViewBag.cinemaPlaceGroups)
+    {
+        <div class="form-group">
+            @Html.Label("Ціна (" + cinemaPlaceGroup.Name + ")", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Hidden("GroupPrices[" + i + "][key]", cinemaPlaceGroup.ID)
+                @Html.Editor("Ціна", new { htmlAttributes = new { @Name = "GroupPrices[" + i + "][value]", @Value = ViewBag.groupPrices[cinemaPlaceGroup.ID], @class = "form-control" } })
+                @Html.ValidationMessage("Ціна", "", new { @class = "text-danger" })
+            </div>
+        </div>
+        i++;
+    }
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

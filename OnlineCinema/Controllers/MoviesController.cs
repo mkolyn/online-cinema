@@ -15,6 +15,8 @@ namespace OnlineCinema.Controllers
         private MovieContext db = new MovieContext();
         private CinemaMovieContext cinemaMovieDb = new CinemaMovieContext();
         private GenreContext genreDb = new GenreContext();
+        private CinemaPlaceGroupContext cinemaPlaceGroupDb = new CinemaPlaceGroupContext();
+        private CinemaMovieGroupPriceContext cinemaMovieGroupPriceDb = new CinemaMovieGroupPriceContext();
 
         // GET: Movies
         public ActionResult Index(int? page, string searchString = "")
@@ -49,7 +51,16 @@ namespace OnlineCinema.Controllers
         // GET: Movies/Create
         public ActionResult Create()
         {
+            List<CinemaPlaceGroup> cinemaPlaceGroups = new List<CinemaPlaceGroup>();
+            if (Core.GetCinemaId() > 0)
+            {
+                cinemaPlaceGroups = cinemaPlaceGroupDb.GetList(Core.GetCinemaId());
+            }
+
             ViewBag.GenreID = genreDb.GetSelectList();
+            ViewBag.cinemaId = Core.GetCinemaId();
+            ViewBag.cinemaPlaceGroups = cinemaPlaceGroups;
+
             return View();
         }
 
@@ -58,7 +69,12 @@ namespace OnlineCinema.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,GenreID,Name,Duration,Description")] Movie movie, int price = 0, HttpPostedFileBase image = null)
+        public ActionResult Create(
+            [Bind(Include = "ID,GenreID,Name,Duration,Description")] Movie movie,
+            Dictionary<int, int> GroupPrices,
+            int price = 0,
+            HttpPostedFileBase image = null
+            )
         {
             if (ModelState.IsValid)
             {
@@ -106,6 +122,8 @@ namespace OnlineCinema.Controllers
                     }
 
                     cinemaMovieDb.SaveChanges();
+
+                    UpdateCinemaMovieGroupPrices(cinemaMovie.ID, GroupPrices);
                 }
 
                 return RedirectToAction("Index");
@@ -129,9 +147,29 @@ namespace OnlineCinema.Controllers
                 return HttpNotFound();
             }
 
+            List<CinemaPlaceGroup> cinemaPlaceGroups = new List<CinemaPlaceGroup>();
+            Dictionary<int, int> groupPrices = new Dictionary<int, int>();
+            if (Core.GetCinemaId() > 0)
+            {
+                cinemaPlaceGroups = cinemaPlaceGroupDb.GetList(Core.GetCinemaId());
+                foreach (CinemaPlaceGroup cinemaPlaceGroup in cinemaPlaceGroups)
+                {
+                    groupPrices[cinemaPlaceGroup.ID] = 0;
+                }
+            }
+
+            List<CinemaMovieGroupPrice> cinemaMovieGroupPrices = cinemaMovieGroupPriceDb.GetList(cinemaMovie.ID);
+            foreach (CinemaMovieGroupPrice cinemaMovieGroupPrice in cinemaMovieGroupPrices)
+            {
+                groupPrices[cinemaMovieGroupPrice.CinemaPlaceGroupID] = cinemaMovieGroupPrice.Price;
+            }
+
             ViewBag.GenreID = genreDb.GetSelectList(movie.GenreID);
+            ViewBag.cinemaId = Core.GetCinemaId();
             ViewBag.Image = cinemaMovie.Image;
             ViewBag.price = cinemaMovie.Price;
+            ViewBag.cinemaPlaceGroups = cinemaPlaceGroups;
+            ViewBag.groupPrices = groupPrices;
 
             return View(movie);
         }
@@ -141,7 +179,7 @@ namespace OnlineCinema.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, HttpPostedFileBase image, int price)
+        public ActionResult Edit(int id, HttpPostedFileBase image, int price, Dictionary<int, int> GroupPrices)
         {
             if (ModelState.IsValid)
             {
@@ -157,6 +195,8 @@ namespace OnlineCinema.Controllers
                     }
                     cinemaMovie.Price = price;
                     cinemaMovieDb.SaveChanges();
+
+                    UpdateCinemaMovieGroupPrices(cinemaMovie.ID, GroupPrices);
                 }
             }
 
@@ -220,6 +260,30 @@ namespace OnlineCinema.Controllers
             }
 
             return Json(movieItems, JsonRequestBehavior.AllowGet);
+        }
+
+        public void UpdateCinemaMovieGroupPrices(int cinemaMovieId, Dictionary<int, int> groupPrices)
+        {
+            foreach (var groupPrice in groupPrices as Dictionary<int, int>)
+            {
+                CinemaMovieGroupPrice cinemaMovieGroupPrice = cinemaMovieGroupPriceDb.Get(cinemaMovieId, groupPrice.Key);
+                if (cinemaMovieGroupPrice != null)
+                {
+                    cinemaMovieGroupPrice.Price = groupPrice.Value;
+                }
+                else
+                {
+                    cinemaMovieGroupPrice = new CinemaMovieGroupPrice()
+                    {
+                        CinemaMovieID = cinemaMovieId,
+                        CinemaPlaceGroupID = groupPrice.Key,
+                        Price = groupPrice.Value,
+                    };
+                    cinemaMovieGroupPriceDb.CinemaMovieGroupPrices.Add(cinemaMovieGroupPrice);
+                }
+            }
+
+            cinemaMovieGroupPriceDb.SaveChanges();
         }
 
         protected override void Dispose(bool disposing)

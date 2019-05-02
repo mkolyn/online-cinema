@@ -268,7 +268,12 @@
     <Compile Include="Migrations\201905020800455_CinemaPlaceGroup.Designer.cs">
       <DependentUpon>201905020800455_CinemaPlaceGroup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905021640100_CinemaMovieGroupPrice.cs" />
+    <Compile Include="Migrations\201905021640100_CinemaMovieGroupPrice.Designer.cs">
+      <DependentUpon>201905021640100_CinemaMovieGroupPrice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CinemaMovieGroupPrice.cs" />
     <Compile Include="Models\CinemaPlaceGroup.cs" />
     <Compile Include="Models\CinemaHallMoviePlace.cs" />
     <Compile Include="Models\CinemaMovie.cs" />
@@ -454,6 +459,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905020800455_CinemaPlaceGroup.resx">
       <DependentUpon>201905020800455_CinemaPlaceGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905021640100_CinemaMovieGroupPrice.resx">
+      <DependentUpon>201905021640100_CinemaMovieGroupPrice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
