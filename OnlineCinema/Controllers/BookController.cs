@@ -14,6 +14,8 @@ namespace OnlineCinema.Controllers
         private CinemaHallPlaceContext cinemaHallPlaceDb = new CinemaHallPlaceContext();
         private CinemaHallMoviePlaceContext cinemaHallMoviePlaceDb = new CinemaHallMoviePlaceContext();
         private OrderContext orderDb = new OrderContext();
+        private CinemaMovieGroupPriceContext cinemaMovieGroupPriceDb = new CinemaMovieGroupPriceContext();
+        private CinemaPlaceGroupContext cinemaPlaceGroupDb = new CinemaPlaceGroupContext();
 
         public ActionResult Index(int id)
         {
@@ -59,22 +61,30 @@ namespace OnlineCinema.Controllers
             orderDb.SaveChanges();
 
             int price = cinemaHallMovieDb.GetPrice(id);
+            CinemaHallMovie cinemaHallMovie = cinemaHallMovieDb.CinemaHallMovies.Find(id);
+            CinemaHall cinemaHall = cinemaHallMovieDb.CinemaHalls.Find(cinemaHallMovie.CinemaHallID);
+            CinemaMovie cinemaMovie = cinemaMovieDb.Get(cinemaHall.CinemaID, cinemaHallMovie.MovieID);
 
             for (var i = 0; i < cinemaHallPlaces.Length; i++)
             {
+                int cinemaHallPlaceId = cinemaHallPlaces[i];
+                int cinemaPlaceGroupID = cinemaPlaceGroupDb.GetCinemaPlaceGroupId(cinemaHallPlaceId);
+                CinemaMovieGroupPrice cinemaMovieGroupPrice = cinemaMovieGroupPriceDb.Get(cinemaMovie.ID, cinemaPlaceGroupID);
+                int orderItemPrice = cinemaMovieGroupPrice != null ? cinemaMovieGroupPrice.Price : price;
+
                 OrderItem orderItem = new OrderItem()
                 {
                     OrderID = order.ID,
                     CinemaHallMovieID = id,
-                    CinemaHallPlaceID = cinemaHallPlaces[i],
-                    Price = price,
+                    CinemaHallPlaceID = cinemaHallPlaceId,
+                    Price = orderItemPrice,
                 };
                 orderDb.OrderItems.Add(orderItem);
 
                 CinemaHallMoviePlace cinemaHallMoviePlace = new CinemaHallMoviePlace()
                 {
                     CinemaHallMovieID = id,
-                    CinemaHallPlaceID = cinemaHallPlaces[i],
+                    CinemaHallPlaceID = cinemaHallPlaceId,
                     Status = CinemaHallMoviePlace.STATUS_PROCESSING,
                 };
                 cinemaHallMoviePlaceDb.CinemaHallMoviePlaces.Add(cinemaHallMoviePlace);
