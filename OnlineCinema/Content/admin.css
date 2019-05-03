@@ -124,6 +124,7 @@
 
 .popup {
     position: absolute;
+    display: table;
     width: 300px;
     height: 300px;
     top: calc(50% - 150px);
@@ -140,4 +141,10 @@
 
 .save-places-group {
     margin-top: 10px;
+}
+
+.popup-actions {
+    display: table-row;
+    vertical-align: bottom;
+    text-align: center;
 }

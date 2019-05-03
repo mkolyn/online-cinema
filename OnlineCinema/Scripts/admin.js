@@ -56,8 +56,27 @@ $(document).ready(function () {
         ajax(ADMIN_BASE_URL + 'CinemaHallPlaces/Save', { id: $('.cinema-hall-id').val(), places: places });
     });
 
+    $('.cinema-hall-cell.joined').mouseenter(function () {
+        $('.cinema-hall-cell.joined[data-group="' + $(this).attr('data-group') + '"]').addClass('grouped');
+    }).mouseleave(function () {
+        $('.cinema-hall-cell.joined').removeClass('grouped');
+    });
+
     $('.cinema-hall-places').on('click', '.cinema-hall-cell', function () {
         $(this).toggleClass('active');
+
+        var isActive = $(this).hasClass('active');
+        if ($(this).hasClass('joined')) {
+            if (isActive) {
+                $('.set-places-group').removeClass('hidden');
+            }
+            $('.cinema-hall-cell.joined').removeClass('active');
+            $('.cinema-hall-cell.joined[data-group="' + $(this).attr('data-group') + '"]').each(function () {
+                isActive ? $(this).addClass('active') : $(this).removeClass('active');
+            });
+        } else {
+            $('.set-places-group').addClass('hidden');
+        }
 
         if ($('.cinema-hall-cell.active').length > 0) {
             if ($('.cinema-hall-cell.active').length > 1) {
@@ -192,6 +211,7 @@ $(document).ready(function () {
 
         ajax(ADMIN_BASE_URL + 'CinemaHallSchedule/LoadSetPlacesGroupPopupHtml', data, function (data) {
             $('body').append(data.html);
+
             $('.save-places-group').click(function () {
                 var data = {
                     cinemaHallPlaceId: cinemaHallPlaceId,
@@ -201,6 +221,10 @@ $(document).ready(function () {
                 ajax(ADMIN_BASE_URL + 'CinemaHallSchedule/SetPlacesGroup', data, function (data) {
                     $('.popup').remove();
                 });
+            });
+
+            $('.popup-close').click(function () {
+                $('.popup').remove();
             });
         });
     });
