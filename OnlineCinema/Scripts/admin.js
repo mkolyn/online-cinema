@@ -201,6 +201,19 @@ $(document).ready(function () {
         changeDate(7, 1);
     });
 
+    $('.copy-schedule').click(function () {
+        var data = {
+            id: $('.cinema-hall-id').val(),
+            year: $('.year').val(),
+            month: $('.month').val(),
+            day: $('.day').val(),
+        };
+
+        ajax(ADMIN_BASE_URL + 'CinemaHallSchedule/Copy', data, function () {
+            changeDate(0, 0);
+        });
+    });
+
     $('.set-places-group').click(function () {
         $('.popup').remove();
 

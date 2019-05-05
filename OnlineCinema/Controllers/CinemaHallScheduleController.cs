@@ -203,6 +203,35 @@ namespace OnlineCinema.Controllers
             });
         }
 
+        [HttpPost]
+        public ActionResult Copy(int id, int year, int month, int day)
+        {
+            CinemaHall cinemaHall = cinemaHallDb.CinemaHalls.Find(id);
+            if (cinemaHall == null)
+            {
+                return HttpNotFound();
+            }
+            CheckCinemaRights(cinemaHall.CinemaID);
+
+            List<CinemaHallScheduleMovie> cinemaHallScheduleMovies = cinemaHallMovieDb.GetListByCinemaHallId(cinemaHall.ID, year, month, day);
+            foreach (CinemaHallScheduleMovie cinemaHallScheduleMovie in cinemaHallScheduleMovies)
+            {
+                CinemaHallMovie cinemaHallMovie = cinemaHallMovieDb.CinemaHallMovies.Find(cinemaHallScheduleMovie.CinemaHallMovieID);
+                cinemaHallMovieDb.CinemaHallMovies.Remove(cinemaHallMovie);
+            }
+            cinemaHallMovieDb.SaveChanges();
+
+            DateTime date = new DateTime(year, month, day).AddDays(-1);
+            cinemaHallScheduleMovies = cinemaHallMovieDb.GetListByCinemaHallId(cinemaHall.ID, date.Year, date.Month, date.Day);
+            foreach (CinemaHallScheduleMovie cinemaHallScheduleMovie in cinemaHallScheduleMovies)
+            {
+                date = new DateTime(year, month, day, cinemaHallScheduleMovie.Date.Hour, cinemaHallScheduleMovie.Date.Minute, 0);
+                cinemaHallMovieDb.SaveMovie(0, cinemaHall.ID, cinemaHallScheduleMovie.MovieID, false, date);
+            }
+
+            return Json("ok");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

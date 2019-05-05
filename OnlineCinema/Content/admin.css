@@ -69,7 +69,7 @@
     font-weight: bold;
 }
 
-.prev-day, .next-day, .prev-week, .next-week, .save-schedule {
+.prev-day, .next-day, .prev-week, .next-week, .save-schedule, .copy-schedule {
     cursor: pointer;
     border: 1px solid #ccc;
     padding: 5px;
@@ -109,7 +109,7 @@
     position: absolute;
 }
 
-.save-schedule {
+.save-schedule, .copy-schedule {
     cursor: pointer;
     margin: auto;
     width: 100px;
