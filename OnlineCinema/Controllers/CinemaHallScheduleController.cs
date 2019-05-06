@@ -50,6 +50,20 @@ namespace OnlineCinema.Controllers
             }
             ViewBag.CinemaHallMoviesHtml = cinemaHallMoviesHtml;
 
+            ViewBag.prevMovieEndHour = null;
+            ViewBag.prevMovieEndMinute = null;
+
+            CinemaHallScheduleMovie cinemaHallLastMovie = cinemaHallMovieDb.GetLastByCinemaHallId(id, prevDate.Year, prevDate.Month, prevDate.Day);
+            if (cinemaHallLastMovie != null)
+            {
+                DateTime lastMovieEndDate = cinemaHallLastMovie.Date.AddMinutes(cinemaHallLastMovie.Duration);
+                if (lastMovieEndDate.Year == date.Year && lastMovieEndDate.Month == date.Month && lastMovieEndDate.Day == date.Day)
+                {
+                    ViewBag.prevMovieEndHour = lastMovieEndDate.Hour;
+                    ViewBag.prevMovieEndMinute = lastMovieEndDate.Minute;
+                }
+            }
+
             return View();
         }
 

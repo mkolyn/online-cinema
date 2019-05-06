@@ -259,18 +259,22 @@ function addDraggableEvents(elems) {
             var currentHourIndex = 0;
             var currentOffsetDifference = 0;
 
-            for (var i = 0; i < $('.schedule-table-hour').length; i++) {
-                var offsetDifference = ui.offset.top - $('.schedule-table-hour').eq(i).offset().top;
+            for (var i = 0; i < $('.schedule-table-hour').not('.disabled').length; i++) {
+                var offsetDifference = ui.offset.top - $('.schedule-table-hour').not('.disabled').eq(i).offset().top;
                 if (offsetDifference > 0 && offsetDifference < currentOffsetDifference || currentOffsetDifference == 0) {
                     currentHourIndex = i;
                     currentOffsetDifference = offsetDifference;
                 }
             }
 
-            var scheduleHour = $('.schedule-table-hour').eq(currentHourIndex);
+            var scheduleHour = $('.schedule-table-hour').not('.disabled').eq(currentHourIndex);
             var scheduleMovie = $(event.target);
             var duration = parseInt(scheduleMovie.attr('data-duration'));
             var startMinute = parseInt(scheduleHour.attr('data-hour')) * 60;
+            
+            if (typeof scheduleHour.attr('data-start-minute') != null) {
+                startMinute += scheduleHour.attr('data-start-minute');
+            }
             var endMinute = startMinute + duration;
 
             $('.schedule-movie:visible').each(function () {

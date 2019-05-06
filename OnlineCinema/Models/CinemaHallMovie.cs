@@ -161,5 +161,32 @@ namespace OnlineCinema.Models
 
             return cinemaMovie.First().Price;
         }
+
+        public CinemaHallScheduleMovie GetLastByCinemaHallId(int cinemaHallId, int year, int month, int day)
+        {
+            var cinemaHallMovies = from chm in CinemaHallMovies
+                                   join ch in CinemaHalls on chm.CinemaHallID equals ch.ID
+                                   join cm in CinemaMovies on ch.CinemaID equals cm.CinemaID
+                                   join m in Movies on chm.MovieID equals m.ID
+                                   where cm.MovieID == m.ID
+                                   orderby chm.Date descending
+                                   select new CinemaHallScheduleMovie
+                                   {
+                                       CinemaHallMovieID = chm.ID,
+                                       CinemaHallID = chm.CinemaHallID,
+                                       MovieID = m.ID,
+                                       MovieName = m.Name,
+                                       Duration = m.Duration,
+                                       Date = chm.Date,
+                                       Price = cm.Price,
+                                   };
+
+            cinemaHallMovies = cinemaHallMovies.Where(s => s.CinemaHallID == cinemaHallId)
+                .Where(s => s.Date.Year == year)
+                .Where(s => s.Date.Month == month)
+                .Where(s => s.Date.Day == day);
+
+            return cinemaHallMovies.FirstOrDefault();
+        }
     }
 }
