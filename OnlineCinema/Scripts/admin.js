@@ -271,9 +271,10 @@ function addDraggableEvents(elems) {
             var scheduleMovie = $(event.target);
             var duration = parseInt(scheduleMovie.attr('data-duration'));
             var startMinute = parseInt(scheduleHour.attr('data-hour')) * 60;
-            
-            if (typeof scheduleHour.attr('data-start-minute') != null) {
+
+            if (typeof scheduleHour.attr('data-start-minute') != 'undefined') {
                 startMinute += scheduleHour.attr('data-start-minute');
+                scheduleMovie.attr('data-min-minute', scheduleHour.attr('data-start-minute'));
             }
             var endMinute = startMinute + duration;
 
@@ -319,6 +320,7 @@ function changeDate(days, direction) {
         $('.next-week-title').html(data.nextWeek);
 
         $('.schedule-movies').html(data.html);
+        $('.schedule-table-hours').html(data.hoursHtml);
 
         $('.schedule-movie').each(function () {
             setScheduleMoviePosition($(this), parseInt($(this).attr('data-start-minute')));
@@ -342,5 +344,17 @@ function addScheduleMovieChooseMinuteEvents(selector) {
         scheduleMovieChooseMinute.attr('data-schedule-movie', scheduleMovie.index());
         scheduleMovieChooseMinute.find('select').find('option').prop('selected', false);
         scheduleMovieChooseMinute.find('select').find('option[value="' + minute + '"]').prop('selected', true);
+
+        if (typeof scheduleMovie.attr('data-min-minute') != 'undefined') {
+            scheduleMovieChooseMinute.find('select').find('option').each(function () {
+                if (parseInt($(this).val()) < parseInt(scheduleMovie.attr('data-min-minute'))) {
+                    $(this).prop('disabled', true);
+                }
+            });
+        } else {
+            scheduleMovieChooseMinute.find('select').find('option').each(function () {
+                $(this).prop('disabled', false);
+            });
+        }
     });
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace OnlineCinema.Models
 {
@@ -187,6 +188,33 @@ namespace OnlineCinema.Models
                 .Where(s => s.Date.Day == day);
 
             return cinemaHallMovies.FirstOrDefault();
+        }
+
+        public string GetCinemaHallScheduleHoursHtml(int cinemaHallId, DateTime date, ControllerContext controllerContext)
+        {
+            int prevMovieEndHour = 0;
+            int prevMovieEndMinute = 0;
+
+            DateTime prevDate = date.AddDays(-1).Date;
+
+            CinemaHallScheduleMovie cinemaHallLastMovie = GetLastByCinemaHallId(cinemaHallId, prevDate.Year, prevDate.Month, prevDate.Day);
+            if (cinemaHallLastMovie != null)
+            {
+                DateTime lastMovieEndDate = cinemaHallLastMovie.Date.AddMinutes(cinemaHallLastMovie.Duration);
+                if (lastMovieEndDate.Year == date.Year && lastMovieEndDate.Month == date.Month && lastMovieEndDate.Day == date.Day)
+                {
+                    prevMovieEndHour = lastMovieEndDate.Hour;
+                    prevMovieEndMinute = lastMovieEndDate.Minute;
+                }
+            }
+
+            ViewDataDictionary viewData = new ViewDataDictionary()
+            {
+                { "prevMovieEndHour", prevMovieEndHour },
+                { "prevMovieEndMinute", prevMovieEndMinute },
+            };
+
+            return Core.GetHtmlString("Hours", viewData, controllerContext);
         }
     }
 }

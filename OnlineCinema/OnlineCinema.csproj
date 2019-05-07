@@ -385,6 +385,7 @@
     <Content Include="Views\CinemaPlaceGroups\Create.cshtml" />
     <Content Include="Views\CinemaPlaceGroups\Delete.cshtml" />
     <Content Include="Views\CinemaPlaceGroups\Edit.cshtml" />
+    <Content Include="Views\CinemaHallSchedule\Hours.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

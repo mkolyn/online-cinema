@@ -101,6 +101,10 @@
     height: 24px;
 }
 
+.schedule-table-hour.disabled {
+    background-color: #ccc;
+}
+
 .schedule-table-hour-title {
     width: 50px;
 }

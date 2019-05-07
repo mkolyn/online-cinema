@@ -1,6 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Index";
-    var hour = "";
+    ViewBag.Title = "Розклад сеансів";
     var minute = "";
 }
 
@@ -48,29 +47,7 @@
     </div>
     <div class="schedule-table">
         <div class="schedule-table-hours">
-            @for (var i = 0; i < 24; i++)
-            {
-                hour = i < 10 ? "0" + i.ToString() : i.ToString();
-                var className = "";
-                var startMinute = 0;
-                var data = "";
-                if (ViewBag.prevMovieEndHour != null && ViewBag.prevMovieEndMinute != null)
-                {
-                    if (i < ViewBag.prevMovieEndHour)
-                    {
-                        className = " disabled";
-                    }
-                    else if (i == ViewBag.prevMovieEndHour)
-                    {
-                        data = " data-start-minute=" + (ViewBag.prevMovieEndminute + 5);
-                    }
-                }
-                <div class="schedule-table-hour@{@className}" data-hour="@i.ToString()"@data>
-                    <div class="schedule-table-hour-title">
-                        @(hour):00
-                    </div>
-                </div>
-            }
+            @Html.Raw(ViewBag.hoursHtml)
         </div>
     </div>
 </div>
