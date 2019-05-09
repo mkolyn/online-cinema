@@ -16,6 +16,12 @@ namespace OnlineCinema.Models
         public int Price { get; set; }
     }
 
+    public class CinemaHallPlacePrice
+    {
+        public int ID;
+        public int Price;
+    }
+
     public class CinemaMovieGroupPriceContext : DbContext
     {
         public CinemaMovieGroupPriceContext() : base("name=DefaultConnection")
@@ -23,6 +29,9 @@ namespace OnlineCinema.Models
         }
 
         public DbSet<CinemaMovieGroupPrice> CinemaMovieGroupPrices { get; set; }
+        public DbSet<CinemaHall> CinemaHalls { get; set; }
+        public DbSet<CinemaHallPlace> CinemaHallPlaces { get; set; }
+        public DbSet<CinemaHallPlaceGroup> CinemaHallPlaceGroups { get; set; }
 
         public List<CinemaMovieGroupPrice> GetList(int cinemaMovieId)
         {
@@ -43,6 +52,29 @@ namespace OnlineCinema.Models
                 .Where(s => s.CinemaPlaceGroupID == cinemaPlaceGroupID);
 
             return cinemaMovieGroupPrice.FirstOrDefault();
+        }
+
+        public Dictionary<int, int> GetGroupPlacePrices(int cinemaHallId, int cinemaMovieId)
+        {
+            var cinemaHallPlacePriceQuery = from ch in CinemaHalls
+                                            join chp in CinemaHallPlaces on ch.ID equals chp.CinemaHallID
+                                            join chpg in CinemaHallPlaceGroups on chp.ID equals chpg.CinemaHallPlaceID
+                                            join cmgp in CinemaMovieGroupPrices on chpg.CinemaPlaceGroupID equals cmgp.CinemaPlaceGroupID
+                                            where cmgp.CinemaMovieID == cinemaMovieId && ch.ID == cinemaHallId
+                                            select new CinemaHallPlacePrice
+                                            {
+                                                ID = chp.ID,
+                                                Price = cmgp.Price,
+                                            };
+
+            List<CinemaHallPlacePrice> cinemaHallPlacePrices = cinemaHallPlacePriceQuery.ToList();
+            Dictionary<int, int> prices = new Dictionary<int, int>();
+            foreach (CinemaHallPlacePrice cinemaHallPlacePrice in cinemaHallPlacePrices)
+            {
+                prices.Add(cinemaHallPlacePrice.ID, cinemaHallPlacePrice.Price);
+            }
+
+            return prices;
         }
     }
 }

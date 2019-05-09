@@ -35,6 +35,10 @@
                     {
                         cellClass += " booked";
                     }
+                    if (ViewBag.cinemaHallRows[i, j].GetPrice() > 0)
+                    {
+                        data += " data-price=" + ViewBag.cinemaHallRows[i, j].GetPrice();
+                    }
                     <div class="cinema-hall-cell@{@cellClass}" data-id="@ViewBag.cinemaHallRows[i, j].ID"@data@group>
                         @(j + 1)
                     </div>

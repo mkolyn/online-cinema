@@ -17,6 +17,23 @@
         } else {
             $('.book-places').addClass('hidden');
         }
+
+        var totalPrice = 0;
+        $('.cinema-hall-cell.active').each(function () {
+            if ($(this).hasClass('joined')) {
+                if ($(this).attr('data-rows') > 0 && $(this).attr('data-cells') > 0) {
+                    if (typeof $(this).attr('data-price') != 'undefined') {
+                        totalPrice += parseInt($(this).attr('data-price'));
+                    } else {
+                        totalPrice += parseInt($('.cinema-hall-movie-price').val());
+                    }
+                }
+            } else {
+                totalPrice += parseInt($('.cinema-hall-movie-price').val());
+            }
+        });
+
+        $('.total-price-value').html(totalPrice);
     });
 
     $('.book-places').click(function () {

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 
 namespace OnlineCinema.Models
 {
@@ -26,6 +24,8 @@ namespace OnlineCinema.Models
         private string JoinedGroupName { get; set; }
         // is booked
         private bool IsBooked { get; set; }
+        // group price
+        private int Price { get; set; }
 
         public bool GetIsJoined()
         {
@@ -56,6 +56,16 @@ namespace OnlineCinema.Models
         {
             this.IsBooked = IsBooked;
         }
+
+        public int GetPrice()
+        {
+            return Price;
+        }
+
+        public void SetPrice(int Price)
+        {
+            this.Price = Price;
+        }
     }
 
     public class CinemaHallPlaceData
@@ -73,11 +83,18 @@ namespace OnlineCinema.Models
 
         public DbSet<CinemaHall> CinemaHalls { get; set; }
         private CinemaHallMoviePlaceContext cinemaHallMoviePlaceDb = new CinemaHallMoviePlaceContext();
+        private CinemaMovieGroupPriceContext cinemaMovieGroupPriceDb = new CinemaMovieGroupPriceContext();
+        private CinemaHallMovieContext cinemaHallMovieDb = new CinemaHallMovieContext();
+        private CinemaMovieContext cinemaMovieDb = new CinemaMovieContext();
 
-        public System.Data.Entity.DbSet<OnlineCinema.Models.CinemaHallPlace> CinemaHallPlaces { get; set; }
+        public DbSet<CinemaHallPlace> CinemaHallPlaces { get; set; }
 
         public CinemaHallPlaceData GetCinemaHallPlacesData(int id, int cinemaHallMovieId = 0)
         {
+            CinemaHallMovie cinemaHallMovie = cinemaHallMovieDb.CinemaHallMovies.Find(cinemaHallMovieId);
+            CinemaHall cinemaHall = CinemaHalls.Find(cinemaHallMovie.CinemaHallID);
+            CinemaMovie cinemaMovie = cinemaMovieDb.Get(cinemaHall.CinemaID, cinemaHallMovie.MovieID);
+
             var cinemaHallPlaces = from chp in CinemaHallPlaces
                                    select chp;
 
@@ -102,6 +119,7 @@ namespace OnlineCinema.Models
             string[,] cinemaHallJoinedPlacesGroupName = new string[maxRow, maxCell];
             bool[,] cinemaHallIsBookedPlaces = new bool[maxRow, maxCell];
             int cinemaHallJoinedPlacesGroupNumber = 0;
+            Dictionary<int, int> prices = new Dictionary<int, int>();
 
             if (cinemaHallMovieId > 0)
             {
@@ -110,6 +128,8 @@ namespace OnlineCinema.Models
                 {
                     cinemaHallIsBookedPlaces[cinemaHallMoviePlace.Row - 1, cinemaHallMoviePlace.Cell - 1] = true;
                 }
+
+                prices = cinemaMovieGroupPriceDb.GetGroupPlacePrices(id, cinemaMovie.ID);
             }
 
             foreach (CinemaHallPlace cinemaHallPlace in cinemaHallPlaces)
@@ -136,6 +156,11 @@ namespace OnlineCinema.Models
                 if (cinemaHallIsBookedPlaces[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] == true)
                 {
                     cinemaHallPlace.SetIsBooked(true);
+                }
+
+                if (prices.ContainsKey(cinemaHallPlace.ID) && prices[cinemaHallPlace.ID] > 0)
+                {
+                    cinemaHallPlace.SetPrice(prices[cinemaHallPlace.ID]);
                 }
 
                 cinemaHallRows[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] = cinemaHallPlace;
