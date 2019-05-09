@@ -91,9 +91,13 @@ namespace OnlineCinema.Models
 
         public CinemaHallPlaceData GetCinemaHallPlacesData(int id, int cinemaHallMovieId = 0)
         {
-            CinemaHallMovie cinemaHallMovie = cinemaHallMovieDb.CinemaHallMovies.Find(cinemaHallMovieId);
-            CinemaHall cinemaHall = CinemaHalls.Find(cinemaHallMovie.CinemaHallID);
-            CinemaMovie cinemaMovie = cinemaMovieDb.Get(cinemaHall.CinemaID, cinemaHallMovie.MovieID);
+            CinemaMovie cinemaMovie = null;
+            if (cinemaHallMovieId > 0)
+            {
+                CinemaHallMovie cinemaHallMovie = cinemaHallMovieDb.CinemaHallMovies.Find(cinemaHallMovieId);
+                CinemaHall cinemaHall = CinemaHalls.Find(cinemaHallMovie.CinemaHallID);
+                cinemaMovie = cinemaMovieDb.Get(cinemaHall.CinemaID, cinemaHallMovie.MovieID);
+            }
 
             var cinemaHallPlaces = from chp in CinemaHallPlaces
                                    select chp;
@@ -129,7 +133,10 @@ namespace OnlineCinema.Models
                     cinemaHallIsBookedPlaces[cinemaHallMoviePlace.Row - 1, cinemaHallMoviePlace.Cell - 1] = true;
                 }
 
-                prices = cinemaMovieGroupPriceDb.GetGroupPlacePrices(id, cinemaMovie.ID);
+                if (cinemaMovie != null)
+                {
+                    prices = cinemaMovieGroupPriceDb.GetGroupPlacePrices(id, cinemaMovie.ID);
+                }
             }
 
             foreach (CinemaHallPlace cinemaHallPlace in cinemaHallPlaces)
