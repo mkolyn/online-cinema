@@ -1,6 +1,10 @@
 ﻿using OnlineCinema.Models;
+using QRCoder;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Net;
+using System.Net.Mail;
 using System.Web.Mvc;
 
 namespace OnlineCinema.Controllers
@@ -9,6 +13,8 @@ namespace OnlineCinema.Controllers
     {
         private OrderContext orderDb = new OrderContext();
         private LiqpayResultContext liqpayResultDb = new LiqpayResultContext();
+        private CinemaHallMoviePlaceContext cinemaHallMoviePlaceDb = new CinemaHallMoviePlaceContext();
+        private CinemaHallPlaceContext cinemaHallPlaceDb = new CinemaHallPlaceContext();
 
         public ActionResult Result(
             string data,
@@ -76,6 +82,7 @@ namespace OnlineCinema.Controllers
             if (success)
             {
                 orderDb.SetSuccessfullOrder(orderId);
+                //SendEmail(orderId);
             }
 
             if (failed)
@@ -84,6 +91,56 @@ namespace OnlineCinema.Controllers
             }
 
             return Json(new { success }, JsonRequestBehavior.AllowGet);
+        }
+
+        public byte[] GenerateQRCode(int orderId)
+        {
+            string qrCodeMessage = "";
+
+            List<OrderItemInfo> orderItems = orderDb.GetOrderItems(orderId);
+            foreach (OrderItemInfo orderItem in orderItems)
+            {
+                CinemaHallMoviePlace cinemaHallMoviePlace = cinemaHallMoviePlaceDb.GetCinemaHallMoviePlace(
+                    orderItem.CinemaHallMovieID, orderItem.CinemaHallPlaceID);
+
+                CinemaHallPlace cinemaHallPlace = cinemaHallPlaceDb.CinemaHallPlaces.Find(cinemaHallMoviePlace.CinemaHallPlaceID);
+
+                qrCodeMessage += "Ряд: " + cinemaHallPlace.Row + " Місце: " + cinemaHallPlace.Cell + "\n";
+            }
+
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrCodeMessage, QRCodeGenerator.ECCLevel.Q);
+            BitmapByteQRCode qrCode = new BitmapByteQRCode(qrCodeData);
+            byte[] qrCodeImage = qrCode.GetGraphic(20);
+            return qrCodeImage;
+        }
+
+        public void SendEmail(int orderId)
+        {
+            var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+            var message = new MailMessage();
+            message.To.Add(new MailAddress("recipient@gmail.com"));
+            message.From = new MailAddress("sender@outlook.com");
+            message.Subject = "Your email subject";
+            var imageSrc = Convert.ToBase64String(GenerateQRCode(orderId));
+            var emailMessage = "<img src='data:image/png;base64," + imageSrc + "' />";
+            message.Body = string.Format(body, "OnlineCinema", "online-cinema.com.ua", emailMessage);
+            message.IsBodyHtml = true;
+
+            using (var smtp = new SmtpClient())
+            {
+                var credential = new NetworkCredential
+                {
+                    UserName = "user@outlook.com",  // replace with valid value
+                    Password = "password"  // replace with valid value
+                };
+
+                smtp.Credentials = credential;
+                smtp.Host = "smtp-mail.outlook.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                smtp.SendMailAsync(message);
+            }
         }
     }
 }
