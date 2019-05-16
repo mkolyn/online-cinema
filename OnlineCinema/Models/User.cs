@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 
 namespace OnlineCinema.Models
 {
@@ -18,6 +19,10 @@ namespace OnlineCinema.Models
         public string LastName { get; set; }
         // login
         public string Login { get; set; }
+        // email
+        public string Email { get; set; }
+        // is email confirmed
+        public bool IsEmailConfirmed { get; set; }
         // password
         public string Password { get; set; }
     }
@@ -29,5 +34,10 @@ namespace OnlineCinema.Models
         }
 
         public DbSet<User> Users { get; set; }
+
+        public User GetByHash(string hash)
+        {
+            return Users.Where(s => Crypto.SHA256(s.Email) == hash).FirstOrDefault();
+        }
     }
 }

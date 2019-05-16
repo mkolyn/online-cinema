@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -121,6 +123,32 @@ namespace OnlineCinema.Models
             }
 
             return html;
+        }
+
+        public static void SendEmail(string email, string subject, string message)
+        {
+            var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+            var emailMessage = new MailMessage();
+            emailMessage.To.Add(new MailAddress(email));
+            emailMessage.From = new MailAddress(Config.SMTP_FROM);
+            emailMessage.Subject = subject;
+            emailMessage.Body = string.Format(body, "OnlineCinema", "online-cinema.com.ua", message);
+            emailMessage.IsBodyHtml = true;
+
+            using (var smtp = new SmtpClient())
+            {
+                var credential = new NetworkCredential
+                {
+                    UserName = Config.SMTP_USER,
+                    Password = Config.SMTP_PASSWORD
+                };
+
+                smtp.Credentials = credential;
+                smtp.Host = Config.SMTP_HOST;
+                smtp.Port = Config.SMTP_PORT;
+                smtp.EnableSsl = Config.SMTP_SSL;
+                smtp.SendMailAsync(emailMessage);
+            }
         }
     }
 }
