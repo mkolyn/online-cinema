@@ -194,6 +194,7 @@
     <Compile Include="Controllers\AdministratorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -278,6 +279,14 @@
     <Compile Include="Migrations\201905021640100_CinemaMovieGroupPrice.Designer.cs">
       <DependentUpon>201905021640100_CinemaMovieGroupPrice.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905161925290_UserEmail.cs" />
+    <Compile Include="Migrations\201905161925290_UserEmail.Designer.cs">
+      <DependentUpon>201905161925290_UserEmail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905161930286_UserIsEmailConfirmed.cs" />
+    <Compile Include="Migrations\201905161930286_UserIsEmailConfirmed.Designer.cs">
+      <DependentUpon>201905161930286_UserIsEmailConfirmed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaMovieGroupPrice.cs" />
     <Compile Include="Models\CinemaPlaceGroup.cs" />
@@ -286,6 +295,7 @@
     <Compile Include="Models\CinemaHallMovie.cs" />
     <Compile Include="Models\CinemaHallPlace.cs" />
     <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Config.cs" />
     <Compile Include="Models\LiqpayResult.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Movie.cs" />
@@ -392,6 +402,7 @@
     <Content Include="Views\CinemaPlaceGroups\Delete.cshtml" />
     <Content Include="Views\CinemaPlaceGroups\Edit.cshtml" />
     <Content Include="Views\CinemaHallSchedule\Hours.cshtml" />
+    <Content Include="Views\Registration\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -469,6 +480,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905021640100_CinemaMovieGroupPrice.resx">
       <DependentUpon>201905021640100_CinemaMovieGroupPrice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905161925290_UserEmail.resx">
+      <DependentUpon>201905161925290_UserEmail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905161930286_UserIsEmailConfirmed.resx">
+      <DependentUpon>201905161930286_UserIsEmailConfirmed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
