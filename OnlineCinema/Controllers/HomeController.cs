@@ -13,9 +13,12 @@ namespace OnlineCinema.Controllers
     {
         private UserContext userDb = new UserContext();
         private CinemaHallMovieContext cinemaHallMovieDb = new CinemaHallMovieContext();
+        private CinemaContext cinemaDb = new CinemaContext();
 
-        public ActionResult Index(int year = 0, int month = 0, int day = 0)
+        public ActionResult Index(int year = 0, int month = 0, int day = 0, int cinemaId = 0)
         {
+            ViewBag.Scripts.Add("home");
+
             DateTime date;
             if (year > 0 && month > 0 && day > 0)
             {
@@ -27,12 +30,12 @@ namespace OnlineCinema.Controllers
             }
             ViewBag.date = date;
 
-            List<CinemaHallScheduleMovie> movies = cinemaHallMovieDb.GetList(date.Year, date.Month, date.Day);
+            List<CinemaHallScheduleMovie> movies = cinemaHallMovieDb.GetList(date.Year, date.Month, date.Day, cinemaId);
 
             ViewBag.movies = movies;
             ViewBag.dates = Core.GetNextDates(DateTime.Now);
-
             ViewBag.cityId = Core.GetCityId();
+            ViewBag.CinemaID = cinemaDb.GetSelectList(cinemaId, Core.GetCityId());
 
             return View();
         }

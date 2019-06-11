@@ -43,6 +43,15 @@
 
     @if (ViewBag.cityId > 0)
     {
+        <div class="cinema">
+            <input type="hidden" class="cinema-year" value="@ViewBag.date.Year" />
+            <input type="hidden" class="cinema-month" value="@ViewBag.date.Month" />
+            <input type="hidden" class="cinema-day" value="@ViewBag.date.Day" />
+            <p>
+                Кінотеатр: @Html.DropDownList("CinemaID", "All")
+            </p>
+        </div>
+
         <div class="dates">
             @foreach (var date in ViewBag.dates)
             {

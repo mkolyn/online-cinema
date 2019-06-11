@@ -24,6 +24,8 @@ namespace OnlineCinema.Models
         public int CinemaHallMovieID { get; set; }
         // cinema movie ID
         public int CinemaHallID { get; set; }
+        // cinema ID
+        public int CinemaID { get; set; }
         // city id
         public int CityID { get; set; }
         // movie ID
@@ -56,7 +58,7 @@ namespace OnlineCinema.Models
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<Movie> Movies { get; set; }
 
-        public List<CinemaHallScheduleMovie> GetList(int year, int month, int day)
+        public List<CinemaHallScheduleMovie> GetList(int year, int month, int day, int cinemaId = 0)
         {
             var movies = from chm in CinemaHallMovies
                          join cm in CinemaMovies on chm.MovieID equals cm.MovieID
@@ -73,6 +75,7 @@ namespace OnlineCinema.Models
                              CityID = c.CityID,
                              Image = cm.Image,
                              CinemaHallMovieID = chm.ID,
+                             CinemaID = c.ID,
                          };
 
             int cityId = Core.GetCityId();
@@ -81,6 +84,11 @@ namespace OnlineCinema.Models
                 .Where(m => m.Date.Year == year)
                 .Where(m => m.Date.Month == month)
                 .Where(m => m.Date.Day == day);
+
+            if (cinemaId > 0)
+            {
+                movies = movies.Where(m => m.CinemaID == cinemaId);
+            }
 
             return movies.ToList();
         }

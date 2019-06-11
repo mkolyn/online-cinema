@@ -25,14 +25,15 @@ namespace OnlineCinema.Models
 
         public DbSet<Cinema> Cinemas { get; set; }
 
-        public IEnumerable<SelectListItem> GetSelectList(int ID = 0)
+        public IEnumerable<SelectListItem> GetSelectList(int ID = 0, int cityID = 0)
         {
             return from d in Cinemas
+                   where d.CityID == cityID || cityID == 0
                    select new SelectListItem
                    {
                        Text = d.Name,
                        Value = d.ID.ToString(),
-                       Selected = d.ID == ID
+                       Selected = d.ID == ID,
                    };
         }
 

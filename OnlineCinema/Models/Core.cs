@@ -147,7 +147,7 @@ namespace OnlineCinema.Models
                 smtp.Host = Config.SMTP_HOST;
                 smtp.Port = Config.SMTP_PORT;
                 smtp.EnableSsl = Config.SMTP_SSL;
-                smtp.SendMailAsync(emailMessage);
+                smtp.Send(emailMessage);
             }
         }
     }

@@ -342,6 +342,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\admin.js" />
     <Content Include="Scripts\book.js" />
+    <Content Include="Scripts\home.js" />
     <Content Include="Scripts\places.js" />
     <Content Include="Scripts\script.js" />
     <Content Include="Web.config">
