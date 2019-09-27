@@ -1,0 +1,154 @@
+﻿.ajax-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('img/loading.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 25%;
+    z-index: 2;
+}
+
+.cineme-hall {
+    text-align: center;
+}
+
+.joined.border-top {
+    border-top: 2px solid #000000;
+}
+
+.joined.border-bottom {
+    border-bottom: 2px solid #000000;
+}
+
+.joined.border-left {
+    border-left: 2px solid #000000;
+}
+
+.joined.border-right {
+    border-right: 2px solid #000000;
+}
+
+.schedule-movie {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    cursor: pointer;
+    text-align: center;
+    z-index: 2;
+}
+
+.schedule-movie-edit, .schedule-movie-remove {
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.schedule-movie-edit {
+    right: 2px;
+}
+
+.schedule-movie-remove {
+    right: 12px;
+}
+
+.schedule {
+    width: 100%;
+    display: inline-block;
+}
+
+.schedule-title {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.prev-day, .next-day, .prev-week, .next-week, .save-schedule, .copy-schedule {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: center;
+}
+
+.prev-day, .prev-week {
+    float: left;
+}
+
+.next-day, .next-week {
+    float: right;
+    cursor: pointer;
+}
+
+.schedule-table {
+    margin-top: 10px;
+    display: inline-block;
+    width: 100%;
+}
+
+.schedule-table-hours {
+    width: 100%;
+    position: relative;
+}
+
+.schedule-table-hour {
+    width: 100%;
+    height: 24px;
+}
+
+.schedule-table-hour.disabled {
+    background-color: #ccc;
+}
+
+.schedule-table-hour-title {
+    width: 50px;
+}
+
+.schedule-movie-choose-minute {
+    position: absolute;
+}
+
+.save-schedule, .copy-schedule {
+    cursor: pointer;
+    margin: auto;
+    width: 100px;
+    font-weight: bold;
+}
+
+.movie-image {
+    width: 200px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.popup {
+    position: absolute;
+    display: table;
+    width: 300px;
+    height: 300px;
+    top: calc(50% - 150px);
+    left: calc(50% - 150px);
+    padding: 10px;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 6px 3px rgba(0, 0, 0, 0.06);
+    z-index: 2;
+}
+
+.save-places-group-form {
+    text-align: center;
+}
+
+.save-places-group {
+    margin-top: 10px;
+}
+
+.popup-actions {
+    display: table-row;
+    vertical-align: bottom;
+    text-align: center;
+}

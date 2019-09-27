@@ -1,0 +1,32 @@
+﻿@model OnlineCinema.Models.CinemaPlaceGroup
+
+@{
+    ViewBag.Title = "Вилучення групи місць";
+}
+
+<h2>Вилучення групи місць</h2>
+
+<h3>Вилучити групу місць?</h3>
+<div>
+    <h4>Вилучення групи місць</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Назва
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Вилучити" class="btn btn-default" /> |
+            @Html.RouteLink("До списку", new { controller = "Cinemas", action = "PlaceGroups", id = Model.CinemaID })
+        </div>
+    }
+</div>

@@ -1,0 +1,32 @@
+﻿@model CinemaTickets.Models.Cinema
+
+@{
+    ViewBag.Title = "Вилучити кінотеатр";
+}
+
+<h2>Вилучення кінотеатру</h2>
+
+<h3>Вилучити кінотеатр?</h3>
+<div>
+    <h4>Кінотеатр</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Назва
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Вилучити" class="btn btn-default" /> |
+            @Html.ActionLink("До списку", "Index")
+        </div>
+    }
+</div>

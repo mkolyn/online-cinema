@@ -1,0 +1,68 @@
+﻿@model CinemaTickets.Models.Movie
+
+@{
+    ViewBag.Title = "Редагування фільму";
+    var i = 0;
+}
+
+<h2>Редагування фільму</h2>
+
+
+@using (Html.BeginForm("Edit", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Фільм</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ID)
+
+    @if (ViewBag.Image != null && ViewBag.Image != "")
+    {
+        <img src="/images/@ViewBag.Image" class="movie-image" />
+    }
+
+    <div class="form-group">
+        @Html.Label("Зображення", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="file" name="image" id="image" accept="image/jpeg,image/png" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Ціна", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.Editor("Ціна", new { htmlAttributes = new { @Name = "price", @Value = ViewBag.price, @class = "form-control" } })
+            @Html.ValidationMessage("Ціна", "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @foreach (OnlineCinema.Models.CinemaPlaceGroup cinemaPlaceGroup in ViewBag.cinemaPlaceGroups)
+    {
+        <div class="form-group">
+            @Html.Label("Ціна (" + cinemaPlaceGroup.Name + ")", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Hidden("GroupPrices[" + i + "][key]", cinemaPlaceGroup.ID)
+                @Html.Editor("Ціна", new { htmlAttributes = new { @Name = "GroupPrices[" + i + "][value]", @Value = ViewBag.groupPrices[cinemaPlaceGroup.ID], @class = "form-control" } })
+                @Html.ValidationMessage("Ціна", "", new { @class = "text-danger" })
+            </div>
+        </div>
+        i++;
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Зберегти" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("До списку", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

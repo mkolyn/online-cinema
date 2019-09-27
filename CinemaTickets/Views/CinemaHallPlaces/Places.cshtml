@@ -1,0 +1,49 @@
+﻿<div class="cinema-hall-rows">
+    @for (var i = 0; i < ViewBag.maxRow; i++)
+    {
+        <div class="cinema-hall-row-title">
+            Ряд @(i  + 1)
+        </div>
+    }
+</div>
+
+<div class="cinema-hall-places">
+    @for (var i = 0; i < ViewBag.maxRow; i++)
+    {
+        <div class="cinema-hall-row">
+            @for (var j = 0; j < ViewBag.maxCell; j++)
+            {
+                if (ViewBag.cinemaHallRows[i, j] == null)
+                {
+                    <div class="cinema-hall-cell removed"></div>
+                }
+                else
+                {
+                    var group = "";
+                    var data = "";
+                    var cellClass = "";
+                    if (ViewBag.cinemaHallRows[i, j].GetIsJoined())
+                    {
+                        data = " data-rows=" + ViewBag.cinemaHallRows[i, j].Rows + " data-cells=" + ViewBag.cinemaHallRows[i, j].Cells;
+                        cellClass = " joined";
+                    }
+                    if (ViewBag.cinemaHallRows[i, j].GetJoinedGroupName() != "")
+                    {
+                        group = " data-group=" + ViewBag.cinemaHallRows[i, j].GetJoinedGroupName();
+                    }
+                    if (ViewBag.cinemaHallRows[i, j].GetIsBooked())
+                    {
+                        cellClass += " booked";
+                    }
+                    if (ViewBag.cinemaHallRows[i, j].GetPrice() > 0)
+                    {
+                        data += " data-price=" + ViewBag.cinemaHallRows[i, j].GetPrice();
+                    }
+                    <div class="cinema-hall-cell@{@cellClass}" data-id="@ViewBag.cinemaHallRows[i, j].ID"@data@group>
+                        @(j + 1)
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>

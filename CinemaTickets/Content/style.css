@@ -1,0 +1,59 @@
+﻿.movie {
+    display: inline-block;
+    width: 200px;
+    height: 300px;
+    box-shadow: 0 2px 6px 3px rgba(0, 0, 0, 0.06);
+    padding: 5px;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.movie-title {
+    text-align: center;
+    font-size: 16px;
+}
+
+.movie-image {
+    width: 190px;
+    height: 200px;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.dates {
+    margin: 10px 0;
+}
+
+.date {
+    display: inline-block;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.date.active {
+    font-weight: bold;
+}
+
+.cities {
+    display: none;
+    position: absolute;
+    background-color: #FFFFFF;
+    width: 200px;
+    padding: 5px;
+    box-shadow: 0 2px 6px 3px rgba(0, 0, 0, 0.06);
+}
+
+.cities.active {
+    display: block;
+}
+
+.choose-city {
+    color: #FFFFFF;
+    float: right;
+    position: relative;
+}
+
+.choose-city-title {
+    line-height: 40px;
+}

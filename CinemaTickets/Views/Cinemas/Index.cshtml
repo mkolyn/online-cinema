@@ -1,0 +1,45 @@
+﻿@model PagedList.IPagedList<CinemaTickets.Models.Cinema>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Кінотеатри";
+}
+
+<h2>Кінотеатри</h2>
+
+<div>
+    @Html.ActionLink("Створити", "Create")
+
+    @using (Html.BeginForm("Index", "Cinemas", FormMethod.Get))
+    {
+        <p>
+            Назва: @Html.TextBox("SearchString")
+            Місто: @Html.DropDownList("CityID", "All")
+            <input type="submit" value="Фільтр" />
+        </p>
+    }
+</div>
+<table class="table">
+    <tr>
+        <th>
+            Назва
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Редагувати", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Вилучити", "Delete", new { id = item.ID }) |
+                @Html.ActionLink("Зали", "Halls", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

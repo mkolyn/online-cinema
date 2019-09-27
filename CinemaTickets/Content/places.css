@@ -1,0 +1,75 @@
+﻿.cinema-hall-places {
+    display: inline-block;
+    text-align: center;
+}
+
+.cinema-hall-rows {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.cinema-hall-row-title {
+    width: 50px;
+    line-height: 50px;
+}
+
+.cinema-hall-cell {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border: 1px solid #808080;
+    /*display: inline-block;*/
+    float: left;
+    background-color: cornflowerblue;
+    /*margin-left: 10px;*/
+    color: #FFFFFF;
+}
+
+.cinema-hall-cell.removed {
+    opacity: 0.5;
+}
+
+.cinema-hall-cell.joined {
+    background-color: blue;
+}
+
+.cinema-hall-cell.booked {
+    background-color: #000000;
+}
+
+.cinema-hall-cell:hover, .cinema-hall-cell.active, .cinema-hall-cell.grouped {
+    background-color: #6467ed;
+    cursor: pointer;
+}
+
+.cinema-hall-cell.booked:hover {
+    background-color: #000000;
+}
+
+.legend > div {
+    display: inline-block;
+    line-height: 50px;
+    vertical-align: top;
+}
+
+.legend > div:nth-child(2n+1) {
+    width: 50px;
+    height: 50px;
+}
+
+.legend .booked {
+    background-color: #000000;
+}
+
+.legend .free {
+    background-color: cornflowerblue;
+}
+
+.book-ticket {
+    text-align: center;
+}
+
+.total-price {
+    text-align: right;
+    font-size: 20px;
+}

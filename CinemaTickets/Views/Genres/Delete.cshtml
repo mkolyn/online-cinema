@@ -1,0 +1,32 @@
+﻿@model CinemaTickets.Models.Genre
+
+@{
+    ViewBag.Title = "Вилучити жанр";
+}
+
+<h2>Вилучення жанру</h2>
+
+<h3>Вилучити жанр?</h3>
+<div>
+    <h4>Жанр</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Назва
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Вилучити" class="btn btn-default" /> |
+            @Html.ActionLink("До списку", "Index")
+        </div>
+    }
+</div>
