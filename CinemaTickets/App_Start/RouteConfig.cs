@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -17,13 +14,6 @@ namespace CinemaTickets
 
             routes.MapRoute(
                 name: "Administrator",
-                url: "administrator/{controller}/{action}",
-                defaults: new { controller = "Administrator", action = "Index" },
-                namespaces: namespaces
-            );
-
-            routes.MapRoute(
-                name: "AdministratorWithId",
                 url: "administrator/{controller}/{action}/{id}",
                 defaults: new { controller = "Administrator", action = "Index", id = UrlParameter.Optional },
                 namespaces: namespaces

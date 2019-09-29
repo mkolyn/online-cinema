@@ -8,5 +8,11 @@
         public const string SMTP_FROM = "info@cinematickets.com.ua";
         public const int SMTP_PORT = 465;
         public const bool SMTP_SSL = true;
+
+        public const string migrationDbDataSource = "DESKTOP-NVEBCLL";
+        public const string migrationDbName = "CinemaTickets";
+        public const string migrationDbUserId = "mkolyn_admin";
+        public const string migrationDbUserPassword = "223973";
+        public const string migrationDbConnectTimeout = "10";
     }
 }

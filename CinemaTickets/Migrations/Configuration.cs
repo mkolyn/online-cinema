@@ -1,10 +1,8 @@
 namespace CinemaTickets.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
     using System.Data.Entity.Infrastructure;
+    using CinemaTickets.Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<CinemaTickets.Models.GenreContext>
     {
@@ -13,8 +11,12 @@ namespace CinemaTickets.Migrations
             AutomaticMigrationsEnabled = false;
             ContextKey = "OnlineCinema.Models.GenreContext";
             CommandTimeout = 5;
-            //TargetDatabase = new DbConnectionInfo("Data Source=MKOLYN\\MSSQLSERVER3;Initial Catalog=onlinecinema;User ID=mkolyn;Password=111111;Connect Timeout=10;", "System.Data.SqlClient");
-            TargetDatabase = new DbConnectionInfo("Data Source=DESKTOP-NVEBCLL;Initial Catalog=CinemaTickets;User ID=mkolyn_admin;Password=223973;Connect Timeout=10;", "System.Data.SqlClient");
+            string connectionString = "Data Source=" + Config.migrationDbDataSource + ";";
+            connectionString += "Initial Catalog=" + Config.migrationDbName + ";";
+            connectionString += "User ID=" + Config.migrationDbUserId + ";";
+            connectionString += "Password=" + Config.migrationDbUserPassword + ";";
+            connectionString += "Connect Timeout=" + Config.migrationDbConnectTimeout + ";";
+            TargetDatabase = new DbConnectionInfo(connectionString, "System.Data.SqlClient");
         }
 
         protected override void Seed(CinemaTickets.Models.GenreContext context)

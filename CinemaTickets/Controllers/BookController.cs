@@ -116,11 +116,8 @@ namespace CinemaTickets.Controllers
             string description = "Оплата квитка (квитків) на фільм " + orderItems.First().MovieName + ".";
             description += " К-ть місць: " + orderItems.Count;
 
-            UrlHelper urlHelper = new UrlHelper(HttpContext.Request.RequestContext);
-            string serverUrl = urlHelper.Action("Result", "Liqpay");
-            Liqpay liqpay = new Liqpay(totalPrice, id.ToString(), description, serverUrl);
-
-            string liqpayData = Core.Base64Encode(Core.ToJson(liqpay));
+            Liqpay liqpay = new Liqpay(totalPrice, id.ToString(), description, GetUrl("Liqpay/Result"));
+            string liqpayData = Core.Base64Encode(Core.ToJson(liqpay.GetData()));
             string liqpaySignature = Liqpay.GetSignature(liqpayData);
 
             ViewBag.totalPrice = totalPrice;

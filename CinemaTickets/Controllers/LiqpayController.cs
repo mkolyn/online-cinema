@@ -3,6 +3,7 @@ using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
@@ -82,7 +83,7 @@ namespace CinemaTickets.Controllers
             if (success)
             {
                 orderDb.SetSuccessfullOrder(orderId);
-                //SendEmail(orderId);
+                SendEmail(orderId);
             }
 
             if (failed)
@@ -119,7 +120,11 @@ namespace CinemaTickets.Controllers
         {
             var imageSrc = Convert.ToBase64String(GenerateQRCode(orderId));
             var message = "<img src='data:image/png;base64," + imageSrc + "' />";
-            Core.SendEmail("recipient@gmail.com", "Your email subject", message);
+            StreamReader sr = System.IO.File.OpenText(Server.MapPath("EmailTemplates/SuccessfulOrder.html"));
+            string emailTemplate = sr.ReadToEnd();
+            sr.Close();
+            emailTemplate.Replace("{CONTENT}", message);
+            Core.SendEmail("mkolyn@gmail.com", "Your email subject", emailTemplate);
         }
     }
 }

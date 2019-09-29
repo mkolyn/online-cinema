@@ -21,5 +21,10 @@ namespace CinemaTickets.Controllers
             ViewBag.Styles = new List<string>() { "style" };
             ViewBag.Scripts = new List<string>() { "script" };
         }
+
+        public string GetUrl(string url)
+        {
+            return Request.Url.Scheme + "://" + Request.Url.Host + url;
+        }
     }
 }
