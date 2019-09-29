@@ -120,7 +120,8 @@ namespace CinemaTickets.Controllers
         {
             var imageSrc = Convert.ToBase64String(GenerateQRCode(orderId));
             var message = "<img src='data:image/png;base64," + imageSrc + "' />";
-            StreamReader sr = System.IO.File.OpenText(Server.MapPath("EmailTemplates/SuccessfulOrder.html"));
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplates", "SuccessfulOrder.html");
+            StreamReader sr = System.IO.File.OpenText(filePath);
             string emailTemplate = sr.ReadToEnd();
             sr.Close();
             emailTemplate.Replace("{CONTENT}", message);

@@ -132,7 +132,7 @@ namespace CinemaTickets.Models
             emailMessage.To.Add(new MailAddress(email));
             emailMessage.From = new MailAddress(Config.SMTP_FROM);
             emailMessage.Subject = subject;
-            emailMessage.Body = string.Format(body, "OnlineCinema", "online-cinema.com.ua", message);
+            emailMessage.Body = string.Format(body, "CinemaTickets", "cinematickets.com.ua", message);
             emailMessage.IsBodyHtml = true;
 
             using (var smtp = new SmtpClient())
@@ -147,6 +147,7 @@ namespace CinemaTickets.Models
                 smtp.Host = Config.SMTP_HOST;
                 smtp.Port = Config.SMTP_PORT;
                 smtp.EnableSsl = Config.SMTP_SSL;
+                smtp.Timeout = 10;
                 smtp.Send(emailMessage);
             }
         }
