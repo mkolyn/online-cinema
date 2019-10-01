@@ -119,13 +119,12 @@ namespace CinemaTickets.Controllers
         public void SendEmail(int orderId)
         {
             var imageSrc = Convert.ToBase64String(GenerateQRCode(orderId));
-            var message = "<img src='data:image/png;base64," + imageSrc + "' />";
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplates", "SuccessfulOrder.html");
             StreamReader sr = System.IO.File.OpenText(filePath);
             string emailTemplate = sr.ReadToEnd();
             sr.Close();
-            emailTemplate.Replace("{CONTENT}", message);
-            Core.SendEmail("mkolyn@gmail.com", "Your email subject", emailTemplate);
+            emailTemplate = emailTemplate.Replace("{IMG_BASE64_SRC}", imageSrc);
+            Core.SendEmail("mkolyn@gmail.com", "Бронювання квитка", emailTemplate);
         }
     }
 }

@@ -145,9 +145,9 @@ namespace CinemaTickets.Models
 
                 smtp.Credentials = credential;
                 smtp.Host = Config.SMTP_HOST;
-                smtp.Port = Config.SMTP_PORT;
-                smtp.EnableSsl = Config.SMTP_SSL;
-                smtp.Timeout = 10;
+                //smtp.Port = Config.SMTP_PORT;
+                //smtp.EnableSsl = Config.SMTP_SSL;
+                smtp.Timeout = 10000;
                 smtp.Send(emailMessage);
             }
         }
