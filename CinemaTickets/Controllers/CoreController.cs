@@ -24,7 +24,7 @@ namespace CinemaTickets.Controllers
 
         public string GetUrl(string url)
         {
-            return Request.Url.Scheme + "://" + Request.Url.Host + url;
+            return Request.Url.Scheme + "://" + Request.Url.Host + "/" + url;
         }
     }
 }

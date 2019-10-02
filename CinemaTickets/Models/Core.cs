@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -127,12 +128,11 @@ namespace CinemaTickets.Models
 
         public static void SendEmail(string email, string subject, string message)
         {
-            var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
             var emailMessage = new MailMessage();
             emailMessage.To.Add(new MailAddress(email));
             emailMessage.From = new MailAddress(Config.SMTP_FROM);
             emailMessage.Subject = subject;
-            emailMessage.Body = string.Format(body, "CinemaTickets", "cinematickets.com.ua", message);
+            emailMessage.Body = message;
             emailMessage.IsBodyHtml = true;
 
             using (var smtp = new SmtpClient())
@@ -149,6 +149,15 @@ namespace CinemaTickets.Models
                 //smtp.EnableSsl = Config.SMTP_SSL;
                 smtp.Timeout = 10000;
                 smtp.Send(emailMessage);
+            }
+        }
+
+        public static Byte[] BitmapToBytes(Bitmap img)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                return stream.ToArray();
             }
         }
     }

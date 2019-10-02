@@ -1,6 +1,8 @@
 ﻿using CinemaTickets.Models;
+using QRCoder;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -139,6 +141,28 @@ namespace CinemaTickets.Controllers
             orderDb.SetFailedOrder(id);
 
             return Json("ok", JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetQRCode(int id)
+        {
+            string qrCodeMessage = "";
+
+            List<OrderItemInfo> orderItems = orderDb.GetOrderItems(id);
+            foreach (OrderItemInfo orderItem in orderItems)
+            {
+                CinemaHallMoviePlace cinemaHallMoviePlace = cinemaHallMoviePlaceDb.GetCinemaHallMoviePlace(
+                    orderItem.CinemaHallMovieID, orderItem.CinemaHallPlaceID);
+
+                CinemaHallPlace cinemaHallPlace = cinemaHallPlaceDb.CinemaHallPlaces.Find(cinemaHallMoviePlace.CinemaHallPlaceID);
+
+                qrCodeMessage += "Ряд: " + cinemaHallPlace.Row + " Місце: " + cinemaHallPlace.Cell + "\n";
+            }
+
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrCodeMessage, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+            return File(Core.BitmapToBytes(qrCodeImage), "image/jpeg");
         }
     }
 }

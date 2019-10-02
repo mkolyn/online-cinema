@@ -3,6 +3,7 @@ using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
@@ -10,7 +11,7 @@ using System.Web.Mvc;
 
 namespace CinemaTickets.Controllers
 {
-    public class LiqpayController : Controller
+    public class LiqpayController : CoreController
     {
         private OrderContext orderDb = new OrderContext();
         private LiqpayResultContext liqpayResultDb = new LiqpayResultContext();
@@ -94,36 +95,14 @@ namespace CinemaTickets.Controllers
             return Json(new { success }, JsonRequestBehavior.AllowGet);
         }
 
-        public byte[] GenerateQRCode(int orderId)
-        {
-            string qrCodeMessage = "";
-
-            List<OrderItemInfo> orderItems = orderDb.GetOrderItems(orderId);
-            foreach (OrderItemInfo orderItem in orderItems)
-            {
-                CinemaHallMoviePlace cinemaHallMoviePlace = cinemaHallMoviePlaceDb.GetCinemaHallMoviePlace(
-                    orderItem.CinemaHallMovieID, orderItem.CinemaHallPlaceID);
-
-                CinemaHallPlace cinemaHallPlace = cinemaHallPlaceDb.CinemaHallPlaces.Find(cinemaHallMoviePlace.CinemaHallPlaceID);
-
-                qrCodeMessage += "Ряд: " + cinemaHallPlace.Row + " Місце: " + cinemaHallPlace.Cell + "\n";
-            }
-
-            QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrCodeMessage, QRCodeGenerator.ECCLevel.Q);
-            BitmapByteQRCode qrCode = new BitmapByteQRCode(qrCodeData);
-            byte[] qrCodeImage = qrCode.GetGraphic(20);
-            return qrCodeImage;
-        }
-
         public void SendEmail(int orderId)
         {
-            var imageSrc = Convert.ToBase64String(GenerateQRCode(orderId));
+            var imageSrc = GetUrl("Book/GetQRCode/" + orderId);
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplates", "SuccessfulOrder.html");
             StreamReader sr = System.IO.File.OpenText(filePath);
             string emailTemplate = sr.ReadToEnd();
             sr.Close();
-            emailTemplate = emailTemplate.Replace("{IMG_BASE64_SRC}", imageSrc);
+            emailTemplate = emailTemplate.Replace("{IMG_SRC}", imageSrc);
             Core.SendEmail("mkolyn@gmail.com", "Бронювання квитка", emailTemplate);
         }
     }
