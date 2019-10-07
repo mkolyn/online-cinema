@@ -18,7 +18,7 @@ namespace CinemaTickets.Controllers
         private CinemaHallMoviePlaceContext cinemaHallMoviePlaceDb = new CinemaHallMoviePlaceContext();
         private CinemaHallPlaceContext cinemaHallPlaceDb = new CinemaHallPlaceContext();
 
-        public ActionResult Result(
+        public ActionResult TestResult(
             string data,
             string signature,
             int amount,
