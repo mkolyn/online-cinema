@@ -132,7 +132,8 @@ $(document).ready(function () {
     $('.cinema-hall-movie').autocomplete({
         source: '/Movies/Find',
         select: function (event, ui) {
-            ajax(ADMIN_BASE_URL + 'CinemaHallSchedule/GetMovieItemHtml', { id: ui.item.id }, function (data) {
+            var data = { id: ui.item.id, cinemaId: $('.cinema-hall-movie').data('cinema-id') };
+            ajax(ADMIN_BASE_URL + 'CinemaHallSchedule/GetMovieItemHtml', data, function (data) {
                 $('.schedule-movies').append(data);
 
                 addDraggableEvents($('.schedule-movie:last'));

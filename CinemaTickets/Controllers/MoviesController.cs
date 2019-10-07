@@ -133,14 +133,6 @@ namespace CinemaTickets.Controllers
 
                 return RedirectToAction("Index");
             }
-            else
-            {
-                AddModelStateErrors(ModelState.Values);
-                foreach (string key in ModelState.Keys)
-                {
-                    AddMessage(key);
-                }
-            }
 
             PopulateCreateMovieData();
             return View("Create", movie);

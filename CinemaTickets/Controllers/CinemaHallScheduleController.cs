@@ -27,6 +27,7 @@ namespace CinemaTickets.Controllers
 
             ViewBag.CinemaHallID = id;
             ViewBag.CinemaHallName = cinemaHall.Name;
+            ViewBag.CinemaID = Core.GetCinemaId() == 0 ? cinemaHall.CinemaID : 0;
 
             DateTime date = DateTime.Now;
 
@@ -79,10 +80,21 @@ namespace CinemaTickets.Controllers
             return Json("ok");
         }
 
-        public ActionResult GetMovieItemHtml(int id)
+        public ActionResult GetMovieItemHtml(int id, int cinemaId = 0)
         {
             Movie movie = movieDb.Movies.Find(id);
-            CinemaMovie cinemaMovie = cinemaMovieDb.Get(Core.GetCinemaId(), id);
+            cinemaId = Core.GetCinemaId() > 0 ? Core.GetCinemaId() : cinemaId;
+            CinemaMovie cinemaMovie = cinemaMovieDb.Get(cinemaId, id);
+            if (cinemaMovie == null)
+            {
+                cinemaMovie = new CinemaMovie
+                {
+                    CinemaID = cinemaId,
+                    MovieID = id
+                };
+                cinemaMovieDb.CinemaMovies.Add(cinemaMovie);
+                cinemaMovieDb.SaveChanges();
+            }
 
             ViewData["CinemaHallMovieID"] = 0;
             ViewData["MovieID"] = movie.ID;

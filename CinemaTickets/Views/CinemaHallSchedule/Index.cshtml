@@ -12,7 +12,7 @@
 
 <div class="form-group">
     <label class="control-label col-md-2">Пошук фільму</label>
-    <input type="text" class="form-control text-box single-line valid cinema-hall-movie" />
+    <input type="text" class="form-control text-box single-line valid cinema-hall-movie" @if (ViewBag.CinemaID > 0) { @Html.Raw("data-cinema-id='" + @ViewBag.CinemaID + "'") } />
 </div>
 
 <div class="schedule-movies">

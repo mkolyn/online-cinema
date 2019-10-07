@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    @foreach (OnlineCinema.Models.CinemaPlaceGroup cinemaPlaceGroup in ViewBag.cinemaPlaceGroups)
+    @foreach (CinemaTickets.Models.CinemaPlaceGroup cinemaPlaceGroup in ViewBag.cinemaPlaceGroups)
     {
         <div class="form-group">
             @Html.Label("Ціна (" + cinemaPlaceGroup.Name + ")", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -49,6 +49,12 @@
             </div>
         </div>
         i++;
+    }
+
+    @if (i == 0)
+    {
+        @Html.Hidden("GroupPrices[" + @i + "][key]", "0")
+        @Html.Hidden("GroupPrices[" + @i + "][value]", "0")
     }
 
     <div class="form-group">
