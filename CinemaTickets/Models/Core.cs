@@ -103,10 +103,21 @@ namespace CinemaTickets.Models
             return serializer.Serialize(data);
         }
 
+        public static T FromJson<T>(string data)
+        {
+            var serializer = new JavaScriptSerializer();
+            return serializer.Deserialize<T>(data);
+        }
+
         public static string Base64Encode(string plainText)
         {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
             return Convert.ToBase64String(plainTextBytes);
+        }
+
+        public static string Base64Decode(string plainText)
+        {
+            return System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(plainText));
         }
 
         public static string GetHtmlString(string viewName, ViewDataDictionary viewData, ControllerContext context)

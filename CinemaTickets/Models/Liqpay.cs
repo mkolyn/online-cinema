@@ -1,10 +1,28 @@
 ﻿using System;
+using System.Collections;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Helpers;
 
 namespace CinemaTickets.Models
 {
+    public class LiqpayData
+    {
+        public string public_key;
+        public int version;
+        public string action;
+        public int amount;
+        public string currency;
+        public string description;
+        public string order_id;
+        public string server_url;
+        public string liqpay_order_id;
+        public int payment_id;
+        public string status;
+        public string err_code;
+        public string err_description;
+    }
+
     public class Liqpay
     {
         public const int API_VERSION = 3;
@@ -61,19 +79,20 @@ namespace CinemaTickets.Models
             return Convert.ToBase64String(encodedData);
         }
 
-        public object GetData()
+        public LiqpayData GetData()
         {
-            return new
+            LiqpayData liqpayData = new LiqpayData
             {
-                public_key,
-                version,
-                action,
-                amount,
-                currency,
-                description,
-                order_id,
-                server_url
+                public_key = public_key,
+                action = action,
+                amount = amount,
+                currency = currency,
+                description = description,
+                order_id = order_id,
+                server_url = server_url
             };
+
+            return liqpayData;
         }
     }
 }

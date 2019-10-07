@@ -95,6 +95,75 @@ namespace CinemaTickets.Controllers
             return Json(new { success }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult Result(string data, string signature)
+        {
+            bool success = false;
+            bool failed = false;
+
+            LiqpayData liqpayData = Core.FromJson<LiqpayData>(Core.Base64Decode(data));
+            Int32.TryParse(liqpayData.order_id, out int orderId);
+
+            LiqpayResult liqpayResult = liqpayResultDb.Get(orderId);
+            if (liqpayResult != null)
+            {
+                liqpayResultDb.Entry(liqpayResult).State = EntityState.Modified;
+            }
+            else
+            {
+                liqpayResult = new LiqpayResult();
+                liqpayResultDb.LiqpayResults.Add(liqpayResult);
+            }
+
+            liqpayResult.Amount = liqpayData.amount;
+            liqpayResult.LiqpayOrderId = liqpayData.liqpay_order_id;
+            liqpayResult.OrderId = liqpayData.order_id;
+            liqpayResult.PaymentId = liqpayData.payment_id;
+            liqpayResult.Status = liqpayData.status;
+            liqpayResult.Description = liqpayData.description;
+            liqpayResult.ErrorCode = liqpayData.err_code;
+            liqpayResult.ErrorDescription = liqpayData.err_description;
+            liqpayResult.Date = DateTime.Now;
+
+            liqpayResultDb.SaveChanges();
+
+            if (signature == Liqpay.GetSignature(data))
+            {
+                switch (liqpayResult.Status)
+                {
+                    case LiqpayResult.STATUS_SUCCESSFULL:
+                        success = true;
+                        break;
+                    case LiqpayResult.STATUS_TEST:
+                        success = true;
+                        break;
+                    case LiqpayResult.STATUS_FAILED:
+                        failed = true;
+                        break;
+                    case LiqpayResult.STATUS_WRONG_DATA:
+                        failed = true;
+                        break;
+                }
+            }
+            else
+            {
+                success = false;
+                failed = true;
+            }
+
+            if (success)
+            {
+                orderDb.SetSuccessfullOrder(orderId);
+                SendEmail(orderId);
+            }
+
+            if (failed)
+            {
+                orderDb.SetFailedOrder(orderId);
+            }
+
+            return Json(new { success }, JsonRequestBehavior.AllowGet);
+        }
+
         public void SendEmail(int orderId)
         {
             var imageSrc = GetUrl("Book/GetQRCode/" + orderId);
