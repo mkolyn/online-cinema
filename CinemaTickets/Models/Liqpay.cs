@@ -11,7 +11,7 @@ namespace CinemaTickets.Models
         public string public_key;
         public int version;
         public string action;
-        public int amount;
+        public float amount;
         public string currency;
         public string description;
         public string order_id;
