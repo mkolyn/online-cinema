@@ -20,6 +20,7 @@ namespace CinemaTickets.Controllers
             ViewBag.City = Core.GetCityId() > 0 ? cityDb.Cities.Find(Core.GetCityId()).Name : "";
             ViewBag.Styles = new List<string>() { "style" };
             ViewBag.Scripts = new List<string>() { "script" };
+            ViewBag.SiteDisabled = Config.SITE_DISABLED;
         }
 
         public string GetUrl(string url)

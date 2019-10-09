@@ -70,15 +70,23 @@
         @if (ViewBag.messages != null && ViewBag.messages.Count > 0)
         {
             <div class="messages">
-            @foreach (string message in ViewBag.messages)
-            {
-                <div class="message">
-                    @message
-                </div>
-            }
+                @foreach (string message in ViewBag.messages)
+                {
+                    <div class="message">
+                        @message
+                    </div>
+                }
             </div>
         }
-        @RenderBody()
+
+        @if (!ViewBag.SiteDisabled)
+        {
+            @RenderBody()
+        }
+        else
+        {
+            RenderBody();
+        }
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - Online Cinema</p>
