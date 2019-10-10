@@ -59,6 +59,7 @@ namespace CinemaTickets.Controllers
             ViewBag.Styles = new List<string>() { "admin" };
             ViewBag.Scripts = new List<string>() { "core", "admin" };
             ViewBag.messages = new List<string>();
+            ViewBag.SiteDisabled = Config.SITE_DISABLED;
         }
 
         public void AddMessage(string message)

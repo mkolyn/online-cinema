@@ -17,6 +17,7 @@ namespace CinemaTickets.Controllers
         public ActionResult Index()
         {
             ViewBag.UserId = Core.GetUserId();
+            ViewBag.SiteDisabled = Config.SITE_DISABLED;
 
             return View();
         }

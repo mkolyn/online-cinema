@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -17,6 +18,7 @@ namespace CinemaTickets.Models
         // movie duration
         public int Duration { get; set; }
         // movie description
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
     }
 

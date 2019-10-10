@@ -24,12 +24,17 @@ namespace CinemaTickets.Models
 
         public DbSet<CinemaHall> CinemaHalls { get; set; }
 
-        public IEnumerable<CinemaHall> GetList(int cinemaId)
+        public IEnumerable<CinemaHall> GetList(int cinemaId, string searchString = "")
         {
             var cinemaHalls = from ch in CinemaHalls
                               select ch;
 
             cinemaHalls = cinemaHalls.Where(c => c.CinemaID == cinemaId);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                cinemaHalls = cinemaHalls.Where(s => s.Name.Contains(searchString));
+            }
 
             return cinemaHalls;
         }

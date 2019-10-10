@@ -121,7 +121,7 @@ namespace CinemaTickets.Controllers
         }
 
         // GET: Cinemas/Halls/5
-        public ActionResult Halls(int? id)
+        public ActionResult Halls(int id, string searchString = "")
         {
             if (id == null)
             {
@@ -140,12 +140,10 @@ namespace CinemaTickets.Controllers
             }
 
             CinemaHallContext cinemaHallDb = new CinemaHallContext();
-            var cinemaHalls = from ch in cinemaHallDb.CinemaHalls
-                          select ch;
-
-            cinemaHalls = cinemaHalls.Where(s => s.CinemaID == id);
+            var cinemaHalls = cinemaHallDb.GetList(id, searchString);
 
             ViewBag.CinemaID = id;
+            ViewBag.searchString = searchString;
 
             return View(cinemaHalls);
         }

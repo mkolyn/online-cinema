@@ -11,7 +11,7 @@
 
     @using (Html.BeginForm()) {
     <p>
-        Назва: @Html.TextBox("SearchString")
+        Назва: @Html.TextBox("SearchString", ViewBag.searchString as string)
         <input type="submit" value="Фільтр" />
     </p>
     }

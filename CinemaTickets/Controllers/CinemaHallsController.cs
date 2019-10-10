@@ -62,6 +62,7 @@ namespace CinemaTickets.Controllers
                 return HttpNotFound();
             }
             CheckCinemaRights(cinemaHall.CinemaID);
+            ViewBag.CinemaId = id;
 
             return View(cinemaHall);
         }

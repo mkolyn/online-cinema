@@ -33,7 +33,7 @@
 }
 
 <div>
-    @Html.ActionLink("До списку", "Index")
+    @Html.RouteLink("До списку", new { controller = "Cinemas", action = "Halls", id = ViewBag.CinemaId })
 </div>
 
 @section Scripts {
