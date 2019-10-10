@@ -36,8 +36,8 @@ namespace CinemaTickets.Controllers
 
             if (Core.GetCinemaId() > 0)
             {
-                string controllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
-                string actionName = this.ControllerContext.RouteData.Values["action"].ToString();
+                string controllerName = ControllerContext.RouteData.Values["controller"].ToString();
+                string actionName = ControllerContext.RouteData.Values["action"].ToString();
 
                 if (cinemaRightsAllowPages.ContainsKey(controllerName) && !cinemaRightsAllowPages[controllerName].Contains(actionName))
                 {

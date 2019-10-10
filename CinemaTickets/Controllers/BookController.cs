@@ -11,6 +11,7 @@ namespace CinemaTickets.Controllers
     public class BookController : CoreController
     {
         private UserContext userDb = new UserContext();
+        private GenreContext genreDb = new GenreContext();
         private CinemaMovieContext cinemaMovieDb = new CinemaMovieContext();
         private CinemaHallMovieContext cinemaHallMovieDb = new CinemaHallMovieContext();
         private CinemaHallPlaceContext cinemaHallPlaceDb = new CinemaHallPlaceContext();
@@ -33,12 +34,14 @@ namespace CinemaTickets.Controllers
             CinemaHall cinemaHall = cinemaHallMovieDb.CinemaHalls.Find(cinemaHallMovie.CinemaHallID);
             Cinema cinema = cinemaHallMovieDb.Cinemas.Find(cinemaHall.CinemaID);
             Movie movie = cinemaHallMovieDb.Movies.Find(cinemaHallMovie.MovieID);
+            Genre genre = genreDb.Genres.Find(movie.GenreID);
 
             DateTime date = cinemaHallMovie.Date;
 
             ViewBag.cinemaName = cinema.Name;
             ViewBag.cinemaHallName = cinemaHall.Name;
             ViewBag.movieName = movie.Name;
+            ViewBag.genreName = genre.Name;
             ViewBag.date = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0);
 
             CinemaHallPlaceData cinemaHallPlaceData = cinemaHallPlaceDb.GetCinemaHallPlacesData(cinemaHall.ID, cinemaHallMovie.ID);

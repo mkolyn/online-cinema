@@ -11,6 +11,11 @@ namespace CinemaTickets.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            object isAdmin = ControllerContext.RouteData.Values["isAdmin"];
+            if (isAdmin != null && isAdmin.ToString() == "true")
+            {
+                Response.Redirect("/");
+            }
             SetViewBagData();
         }
 

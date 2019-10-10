@@ -28,6 +28,8 @@ namespace CinemaTickets.Models
         public int CinemaID { get; set; }
         // city id
         public int CityID { get; set; }
+        // genre id
+        public int GenreID { get; set; }
         // movie ID
         public int MovieID { get; set; }
         // movie name
@@ -58,7 +60,7 @@ namespace CinemaTickets.Models
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<Movie> Movies { get; set; }
 
-        public List<CinemaHallScheduleMovie> GetList(int year, int month, int day, int cinemaId = 0)
+        public List<CinemaHallScheduleMovie> GetList(int year, int month, int day, int cinemaId = 0, int genreId = 0, string searchString = "")
         {
             var movies = from chm in CinemaHallMovies
                          join cm in CinemaMovies on chm.MovieID equals cm.MovieID
@@ -76,6 +78,7 @@ namespace CinemaTickets.Models
                              Image = cm.Image,
                              CinemaHallMovieID = chm.ID,
                              CinemaID = c.ID,
+                             GenreID = m.GenreID,
                          };
 
             int cityId = Core.GetCityId();
@@ -88,6 +91,16 @@ namespace CinemaTickets.Models
             if (cinemaId > 0)
             {
                 movies = movies.Where(m => m.CinemaID == cinemaId);
+            }
+
+            if (genreId > 0)
+            {
+                movies = movies.Where(m => m.GenreID == genreId);
+            }
+
+            if (searchString != "")
+            {
+                movies = movies.Where(m => m.MovieName.ToString().Contains(searchString));
             }
 
             return movies.ToList();

@@ -14,8 +14,16 @@ namespace CinemaTickets.Controllers
         private UserContext userDb = new UserContext();
         private CinemaHallMovieContext cinemaHallMovieDb = new CinemaHallMovieContext();
         private CinemaContext cinemaDb = new CinemaContext();
+        private GenreContext genreDb = new GenreContext();
 
-        public ActionResult Index(int year = 0, int month = 0, int day = 0, int cinemaId = 0)
+        public ActionResult Index(
+            int year = 0,
+            int month = 0,
+            int day = 0,
+            int cinemaId = 0,
+            int genreId = 0,
+            string searchString = ""
+        )
         {
             ViewBag.Scripts.Add("home");
 
@@ -30,12 +38,13 @@ namespace CinemaTickets.Controllers
             }
             ViewBag.date = date;
 
-            List<CinemaHallScheduleMovie> movies = cinemaHallMovieDb.GetList(date.Year, date.Month, date.Day, cinemaId);
+            List<CinemaHallScheduleMovie> movies = cinemaHallMovieDb.GetList(date.Year, date.Month, date.Day, cinemaId, genreId, searchString);
 
             ViewBag.movies = movies;
             ViewBag.dates = Core.GetNextDates(DateTime.Now);
             ViewBag.cityId = Core.GetCityId();
             ViewBag.CinemaID = cinemaDb.GetSelectList(cinemaId, Core.GetCityId());
+            ViewBag.GenreID = genreDb.GetSelectList(genreId);
 
             return View();
         }

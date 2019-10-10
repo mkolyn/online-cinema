@@ -15,7 +15,7 @@ namespace CinemaTickets
             routes.MapRoute(
                 name: "Administrator",
                 url: "administrator/{controller}/{action}/{id}",
-                defaults: new { controller = "Administrator", action = "Index", id = UrlParameter.Optional },
+                defaults: new { controller = "Administrator", action = "Index", id = UrlParameter.Optional, isAdmin = "true" },
                 namespaces: namespaces
             );
 
@@ -43,6 +43,13 @@ namespace CinemaTickets
             routes.MapRoute(
                 name: "DateAndCinema",
                 url: "date/{year}/{month}/{day}/{cinemaId}",
+                defaults: new { controller = "Home", action = "Index" },
+                namespaces: namespaces
+            );
+
+            routes.MapRoute(
+                name: "DateAndCinemaAndGenre",
+                url: "date/{year}/{month}/{day}/{cinemaId}/{genreId}",
                 defaults: new { controller = "Home", action = "Index" },
                 namespaces: namespaces
             );

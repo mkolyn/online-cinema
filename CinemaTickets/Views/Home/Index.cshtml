@@ -48,7 +48,14 @@
             <input type="hidden" class="cinema-month" value="@ViewBag.date.Month" />
             <input type="hidden" class="cinema-day" value="@ViewBag.date.Day" />
             <p>
-                Кінотеатр: @Html.DropDownList("CinemaID", "All")
+                Кінотеатр: @Html.DropDownList("CinemaID", "Всі")
+            </p>
+            <p>
+                Жанр: @Html.DropDownList("GenreID", "Всі")
+            </p>
+            <p>
+                Назва: @Html.TextBox("SearchString", "", new { @class = "cinema-movie-name" })
+                <input type="submit" class="search" value="Фільтр" />
             </p>
         </div>
 
