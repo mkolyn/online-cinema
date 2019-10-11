@@ -33,7 +33,7 @@
     <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -288,6 +288,10 @@
     <Compile Include="Migrations\201905161930286_UserIsEmailConfirmed.Designer.cs">
       <DependentUpon>201905161930286_UserIsEmailConfirmed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910111340231_LiqpayResultChangeAmountType.cs" />
+    <Compile Include="Migrations\201910111340231_LiqpayResultChangeAmountType.Designer.cs">
+      <DependentUpon>201910111340231_LiqpayResultChangeAmountType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaMovieGroupPrice.cs" />
     <Compile Include="Models\CinemaPlaceGroup.cs" />
@@ -330,6 +334,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\cinematickets.com.ua - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -422,6 +427,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Errors\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903171145349_Cinema.resx">
@@ -489,6 +495,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905161930286_UserIsEmailConfirmed.resx">
       <DependentUpon>201905161930286_UserIsEmailConfirmed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910111340231_LiqpayResultChangeAmountType.resx">
+      <DependentUpon>201910111340231_LiqpayResultChangeAmountType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

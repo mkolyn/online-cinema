@@ -171,7 +171,11 @@ namespace CinemaTickets.Controllers
             StreamReader sr = System.IO.File.OpenText(filePath);
             string emailTemplate = sr.ReadToEnd();
             sr.Close();
+
             emailTemplate = emailTemplate.Replace("{IMG_SRC}", imageSrc);
+            string emailMessage = orderDb.GetOrderItemDetails(orderId).Replace("\n", "<br/>");
+            emailTemplate = emailTemplate.Replace("{DETAILS}", emailMessage);
+
             Core.SendEmail("mkolyn@gmail.com", "Бронювання квитка", emailTemplate);
         }
     }

@@ -46,6 +46,10 @@ namespace CinemaTickets.Models
         public bool IsRemoved { get; set; }
         // price
         public int Price { get; set; }
+        // movie formatted date
+        public string FormattedDate { get; set; }
+        // movie formatted time
+        public string FormattedTime { get; set; }
     }
 
     public class CinemaHallMovieContext : DbContext
@@ -103,7 +107,15 @@ namespace CinemaTickets.Models
                 movies = movies.Where(m => m.MovieName.ToString().Contains(searchString));
             }
 
-            return movies.ToList();
+            List<CinemaHallScheduleMovie> cinemaHallScheduleMovies = movies.ToList();
+            for (var i = 0; i < cinemaHallScheduleMovies.Count; i++)
+            {
+                CinemaHallScheduleMovie cinemaHallScheduleMovie = cinemaHallScheduleMovies.ElementAt(i);
+                cinemaHallScheduleMovies.ElementAt(i).FormattedDate = Core.GetFormatedDate(cinemaHallScheduleMovie.Date);
+                cinemaHallScheduleMovies.ElementAt(i).FormattedTime = Core.GetFormatedTime(cinemaHallScheduleMovie.Date);
+            }
+
+            return cinemaHallScheduleMovies;
         }
 
         public List<CinemaHallScheduleMovie> GetListByCinemaHallId(int cinemaHallId, int year, int month, int day)

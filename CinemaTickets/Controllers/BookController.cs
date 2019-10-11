@@ -42,7 +42,7 @@ namespace CinemaTickets.Controllers
             ViewBag.cinemaHallName = cinemaHall.Name;
             ViewBag.movieName = movie.Name;
             ViewBag.genreName = genre.Name;
-            ViewBag.date = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0);
+            ViewBag.formattedDate = Core.GetFormatedDate(new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0));
 
             CinemaHallPlaceData cinemaHallPlaceData = cinemaHallPlaceDb.GetCinemaHallPlacesData(cinemaHall.ID, cinemaHallMovie.ID);
 
@@ -109,7 +109,7 @@ namespace CinemaTickets.Controllers
             List<OrderItemInfo> orderItems = orderDb.GetOrderItems(id);
 
             ViewBag.orderItems = orderItems;
-            ViewBag.date = order.Date;
+            ViewBag.formattedDate = Core.GetFormatedDate(order.Date);
             ViewBag.isPaid = order.IsPaid;
             ViewBag.orderId = order.ID;
 
@@ -148,18 +148,7 @@ namespace CinemaTickets.Controllers
 
         public ActionResult GetQRCode(int id)
         {
-            string qrCodeMessage = "";
-
-            List<OrderItemInfo> orderItems = orderDb.GetOrderItems(id);
-            foreach (OrderItemInfo orderItem in orderItems)
-            {
-                CinemaHallMoviePlace cinemaHallMoviePlace = cinemaHallMoviePlaceDb.GetCinemaHallMoviePlace(
-                    orderItem.CinemaHallMovieID, orderItem.CinemaHallPlaceID);
-
-                CinemaHallPlace cinemaHallPlace = cinemaHallPlaceDb.CinemaHallPlaces.Find(cinemaHallMoviePlace.CinemaHallPlaceID);
-
-                qrCodeMessage += "Ряд: " + cinemaHallPlace.Row + " Місце: " + cinemaHallPlace.Cell + "\n";
-            }
+            string qrCodeMessage = orderDb.GetOrderItemDetails(id);
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrCodeMessage, QRCodeGenerator.ECCLevel.Q);

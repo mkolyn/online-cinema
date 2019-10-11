@@ -171,5 +171,23 @@ namespace CinemaTickets.Models
                 return stream.ToArray();
             }
         }
+
+        public static string GetFormatedDate(DateTime date)
+        {
+            string day = date.Day < 10 ? "0" + date.Day.ToString() : date.Day.ToString();
+            string month = date.Month < 10 ? "0" + date.Month.ToString() : date.Month.ToString();
+            string hour = date.Hour < 10 ? "0" + date.Hour.ToString() : date.Hour.ToString();
+            string minute = date.Minute < 10 ? "0" + date.Minute.ToString() : date.Minute.ToString();
+
+            return day + "." + month + "." + date.Year + " " + hour + ":" + minute;
+        }
+
+        public static string GetFormatedTime(DateTime date)
+        {
+            string hour = date.Hour < 10 ? "0" + date.Hour.ToString() : date.Hour.ToString();
+            string minute = date.Minute < 10 ? "0" + date.Minute.ToString() : date.Minute.ToString();
+
+            return hour + ":" + minute;
+        }
     }
 }

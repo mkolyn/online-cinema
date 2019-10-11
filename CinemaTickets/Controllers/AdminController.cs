@@ -31,7 +31,7 @@ namespace CinemaTickets.Controllers
             Dictionary<string, List<string>> cinemaRightsAllowPages = new Dictionary<string, List<string>>();
             cinemaRightsAllowPages.Add("Cinemas", new List<string>() { "Halls", "PlaceGroups" });
             cinemaRightsAllowPages.Add("Genres", new List<string>());
-            cinemaRightsAllowPages.Add("Movies", new List<string>() { "Index", "Create", "CreateCinemaMovie", "Edit", "Delete", "DeleteConfirmed", "Find" });
+            cinemaRightsAllowPages.Add("Movies", new List<string>() { "Index", "Create", "CreateCinemaMovie", "Edit", "Delete", "DeleteConfirmed", "Find", "Details" });
             cinemaRightsAllowPages.Add("Users", new List<string>());
 
             if (Core.GetCinemaId() > 0)

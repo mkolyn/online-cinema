@@ -50,6 +50,12 @@ namespace CinemaTickets.Models
         public int CinemaHallPlaceID { get; set; }
         // price
         public int Price { get; set; }
+        // duration
+        public int Duration { get; set; }
+        // date
+        public DateTime Date { get; set; }
+        // formatted date
+        public string FormattedDate { get; set; }
     }
 
     public class OrderContext : DbContext
@@ -59,6 +65,7 @@ namespace CinemaTickets.Models
         }
 
         private CinemaHallMoviePlaceContext cinemaHallMoviePlaceDb = new CinemaHallMoviePlaceContext();
+        private CinemaHallPlaceContext cinemaHallPlaceDb = new CinemaHallPlaceContext();
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
@@ -91,9 +98,17 @@ namespace CinemaTickets.Models
                                  CinemaHallMovieID = chm.ID,
                                  CinemaHallPlaceID = chp.ID,
                                  Price = oi.Price,
+                                 Duration = m.Duration,
+                                 Date = chm.Date,
                              };
 
-            return orderItems.ToList();
+            List<OrderItemInfo> items = orderItems.ToList();
+            for (var i = 0; i < items.Count; i++)
+            {
+                items.ElementAt(i).FormattedDate = Core.GetFormatedDate(items.ElementAt(i).Date);
+            }
+
+            return items;
         }
 
         public void SetSuccessfullOrder(int id)
@@ -124,6 +139,27 @@ namespace CinemaTickets.Models
                 cinemaHallMoviePlaceDb.CinemaHallMoviePlaces.Remove(cinemaHallMoviePlace);
             }
             cinemaHallMoviePlaceDb.SaveChanges();
+        }
+
+        public string GetOrderItemDetails(int id)
+        {
+            string details = "";
+
+            List<OrderItemInfo> orderItems = GetOrderItems(id);
+            foreach (OrderItemInfo orderItem in orderItems)
+            {
+                CinemaHallMoviePlace cinemaHallMoviePlace = cinemaHallMoviePlaceDb.GetCinemaHallMoviePlace(
+                    orderItem.CinemaHallMovieID, orderItem.CinemaHallPlaceID);
+
+                CinemaHallPlace cinemaHallPlace = cinemaHallPlaceDb.CinemaHallPlaces.Find(cinemaHallMoviePlace.CinemaHallPlaceID);
+
+                details += "Кінотеатр: " + orderItem.CinemaName + ", Зал: " + orderItem.CinemaHallName + "\n";
+                details += "Ряд: " + cinemaHallPlace.Row + ", Місце: " + cinemaHallPlace.Cell + "\n";
+                details += "Фільм: " + orderItem.MovieName + ", Тривалість: " + orderItem.Duration + "\n";
+                details += "Дата: " + orderItem.FormattedDate + ", Ціна: " + orderItem.Price;
+            }
+
+            return details;
         }
     }
 }
