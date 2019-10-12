@@ -74,7 +74,6 @@ namespace CinemaTickets.Controllers
                 foreach (ModelError error in modelState.Errors)
                 {
                     ViewBag.messages.Add(error.ErrorMessage + " " + error.Exception);
-                    //ViewBag.messages.Add(error.ErrorMessage.ToString());
                 }
             }
         }

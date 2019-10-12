@@ -35,9 +35,9 @@ namespace CinemaTickets.Models
 
         public DbSet<User> Users { get; set; }
 
-        public User GetByHash(string hash)
+        public User GetByEmail(string email)
         {
-            return Users.Where(s => Crypto.SHA256(s.Email) == hash).FirstOrDefault();
+            return Users.Where(s => s.Email == email).FirstOrDefault();
         }
     }
 }

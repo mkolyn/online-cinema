@@ -129,6 +129,11 @@ namespace CinemaTickets.Controllers
             ViewBag.liqpayData = liqpayData;
             ViewBag.liqpaySignature = liqpaySignature;
 
+            if (Config.DEBUG)
+            {
+                AddDebugInfo("liqpay data: " + liqpayData + ", liqpay signature: " + liqpaySignature);
+            }
+
             return View();
         }
 

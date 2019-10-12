@@ -67,16 +67,17 @@
         </div>
     </div>
     <div class="container body-content">
-        @if (ViewBag.messages != null && ViewBag.messages.Count > 0)
+        @if (Session["Messages"] != null && (Session["Messages"] as List<string>).Count > 0)
         {
             <div class="messages">
-                @foreach (string message in ViewBag.messages)
+                @foreach (string message in Session["Messages"] as List<string>)
                 {
                     <div class="message">
                         @message
                     </div>
                 }
             </div>
+            Session["Messages"] = null;
         }
 
         @if (!ViewBag.SiteDisabled)

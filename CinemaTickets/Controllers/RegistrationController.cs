@@ -23,24 +23,48 @@ namespace CinemaTickets.Controllers
         {
             if (ModelState.IsValid)
             {
-                user.Password = Crypto.SHA256(user.Password);
-                db.Users.Add(user);
-                db.SaveChanges();
-                string url = Url.Action("ConfirmEmail", "Registration", new { hash = Crypto.SHA256(user.Email) });
-                string message = "<a href='" + url + "'>Підтвердити пошту</a>";
-                Core.SendEmail(user.Email, "Registration", message);
-                return RedirectToAction("Index");
+                if (db.GetByEmail(user.Email) == null)
+                {
+                    user.Password = Crypto.SHA256(user.Password);
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    string url = GetUrl("Registration/ConfirmEmail?email=" + user.Email + "&hash=" + Crypto.SHA256(user.Email));
+                    string message = "<a href='" + url + "'>Підтвердити пошту</a>";
+                    Core.SendEmail(user.Email, "Registration", message);
+                    AddMessage("Для підтвердження реєстрації перейдіть по посиланню, що було відправлено на пошту");
+                    return RedirectToRoute("Default", new { controller = "Registration", action = "Index" });
+                }
+                else
+                {
+                    AddMessage("Користувач вже зареєстрований");
+                }
             }
 
             return View(user);
         }
 
-        public ActionResult ConfirmEmail(string hash)
+        public ActionResult ConfirmEmail(string email, string hash)
         {
-            User user = db.GetByHash(hash);
-            user.IsEmailConfirmed = true;
-            db.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            User user = db.GetByEmail(email);
+            if (user != null)
+            {
+                if (hash == Crypto.SHA256(user.Email))
+                {
+                    user.IsEmailConfirmed = true;
+                    db.SaveChanges();
+                    AddMessage("Пошта була успішно підтверджена");
+                }
+                else
+                {
+                    AddMessage("Сталася помилка під час підтвердження пошти");
+                }
+            }
+            else
+            {
+                AddMessage("Сталася помилка під час підтвердження пошти");
+            }
+
+            return RedirectToRoute("Default", new { controller = "Home", action = "Index" });
         }
 
         protected override void Dispose(bool disposing)

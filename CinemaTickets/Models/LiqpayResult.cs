@@ -17,7 +17,7 @@ namespace CinemaTickets.Models
         // liqpay result ID
         public int ID { get; set; }
         // payment amount
-        public float Amount { get; set; }
+        public double Amount { get; set; }
         // liqpay order id
         public string LiqpayOrderId { get; set; }
         // website order id
