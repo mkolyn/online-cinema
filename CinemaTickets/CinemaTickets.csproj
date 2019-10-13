@@ -324,6 +324,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\admin.css" />
+    <Content Include="EmailTemplates\ConfirmRegistration.html" />
     <Content Include="EmailTemplates\SuccessfulOrder.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

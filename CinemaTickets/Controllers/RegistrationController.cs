@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
 using CinemaTickets.Models;
 using System.Web.Helpers;
+using System.IO;
+using System;
 
 namespace CinemaTickets.Controllers
 {
@@ -28,9 +30,16 @@ namespace CinemaTickets.Controllers
                     user.Password = Crypto.SHA256(user.Password);
                     db.Users.Add(user);
                     db.SaveChanges();
+
+                    string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplates", "ConfirmRegistration.html");
+                    StreamReader sr = System.IO.File.OpenText(filePath);
+                    string emailTemplate = sr.ReadToEnd();
+                    sr.Close();
+
                     string url = GetUrl("Registration/ConfirmEmail?email=" + user.Email + "&hash=" + Crypto.SHA256(user.Email));
-                    string message = "<a href='" + url + "'>Підтвердити пошту</a>";
-                    Core.SendEmail(user.Email, "Registration", message);
+                    emailTemplate = emailTemplate.Replace("{CONFIRM_EMAIL_URL}", url);
+                    Core.SendEmail(user.Email, "Реєстрація", emailTemplate);
+
                     AddMessage("Для підтвердження реєстрації перейдіть по посиланню, що було відправлено на пошту");
                     return RedirectToRoute("Default", new { controller = "Registration", action = "Index" });
                 }
