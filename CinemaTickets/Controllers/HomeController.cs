@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace CinemaTickets.Controllers
 {
-    public class HomeController : CoreController
+    public class HomeController : BaseController
     {
         private UserContext userDb = new UserContext();
         private CinemaHallMovieContext cinemaHallMovieDb = new CinemaHallMovieContext();

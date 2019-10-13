@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace CinemaTickets.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController : CoreController
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -60,22 +60,6 @@ namespace CinemaTickets.Controllers
             ViewBag.Scripts = new List<string>() { "core", "admin" };
             ViewBag.messages = new List<string>();
             ViewBag.SiteDisabled = Config.SITE_DISABLED;
-        }
-
-        public void AddMessage(string message)
-        {
-            ViewBag.messages.Add(message);
-        }
-
-        public void AddModelStateErrors(ICollection<ModelState> modelStates)
-        {
-            foreach (ModelState modelState in modelStates)
-            {
-                foreach (ModelError error in modelState.Errors)
-                {
-                    ViewBag.messages.Add(error.ErrorMessage + " " + error.Exception);
-                }
-            }
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Web.Helpers;
 
 namespace CinemaTickets.Controllers
 {
-    public class RegistrationController : CoreController
+    public class RegistrationController : BaseController
     {
         private UserContext db = new UserContext();
 

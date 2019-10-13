@@ -10,7 +10,7 @@ using System.Web.Helpers;
 
 namespace CinemaTickets.Controllers
 {
-    public class AdministratorController : Controller
+    public class AdministratorController : CoreController
     {
         private UserContext userDb = new UserContext();
 
@@ -39,6 +39,10 @@ namespace CinemaTickets.Controllers
                     Session["CinemaID"] = currentUser.CinemaID.ToString();
                     Session["UserFirstName"] = currentUser.FirstName.ToString();
                     Session["UserLastName"] = currentUser.LastName.ToString();
+                }
+                else
+                {
+                    AddMessage("Невірний логін або пароль");
                 }
             }
 

@@ -56,7 +56,9 @@ namespace CinemaTickets.Models
 
         public IEnumerable<SelectListItem> GetSelectList(int ID = 0)
         {
+            int cinemaId = Core.GetCinemaId();
             return from d in CinemaPlaceGroups
+                             where d.CinemaID == cinemaId
                    select new SelectListItem
                    {
                        Text = d.Name,

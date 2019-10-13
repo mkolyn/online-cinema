@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace CinemaTickets.Controllers
 {
-    public class LiqpayController : CoreController
+    public class LiqpayController : BaseController
     {
         private OrderContext orderDb = new OrderContext();
         private LiqpayResultContext liqpayResultDb = new LiqpayResultContext();

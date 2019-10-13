@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace CinemaTickets.Controllers
 {
-    public class BookController : CoreController
+    public class BookController : BaseController
     {
         private UserContext userDb = new UserContext();
         private GenreContext genreDb = new GenreContext();
