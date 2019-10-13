@@ -103,6 +103,7 @@ namespace CinemaTickets.Controllers
         public ActionResult Confirm(int id)
         {
             ViewBag.Styles.Add("book");
+            ViewBag.Scripts.Add("book");
 
             Order order = orderDb.Orders.Find(id);
 
@@ -121,7 +122,7 @@ namespace CinemaTickets.Controllers
             string description = "Оплата квитка (квитків) на фільм " + orderItems.First().MovieName + ".";
             description += " К-ть місць: " + orderItems.Count;
 
-            Liqpay liqpay = new Liqpay(totalPrice, id.ToString(), description, GetUrl("Liqpay/Result"));
+            Liqpay liqpay = new Liqpay(totalPrice, id.ToString(), description, GetUrl("Liqpay/Result"), GetUrl("Home/Thankyou"));
             string liqpayData = Core.Base64Encode(Core.ToJson(liqpay.GetData()));
             string liqpaySignature = Liqpay.GetSignature(liqpayData);
 

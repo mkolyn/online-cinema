@@ -1,9 +1,13 @@
 ﻿$(document).ready(function () {
-    var cities = $('.cities');
+    $('.liqpay-pay').click(function () {
+        $.ajax({
+            url: '/Home/AllowShowThankyouPage',
+            method: "POST",
+            success: function () {
+                $('.liqpay-form').submit();
+            }
+        });
 
-    $('.choose-city').mouseenter(function () {
-        cities.addClass('active');
-    }).mouseleave(function () {
-        cities.removeClass('active');
+        return false;
     });
 });

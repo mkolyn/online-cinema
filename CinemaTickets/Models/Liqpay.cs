@@ -16,6 +16,7 @@ namespace CinemaTickets.Models
         public string description;
         public string order_id;
         public string server_url;
+        public string result_url;
         public string liqpay_order_id;
         public int payment_id;
         public string status;
@@ -53,8 +54,10 @@ namespace CinemaTickets.Models
         public int sandbox { get; set; }
         // liqpay server url
         public string server_url { get; set; }
+        // liqpay result url
+        public string result_url { get; set; }
 
-        public Liqpay(int amount, string orderId, string description, string serverUrl, int sandbox = 0)
+        public Liqpay(int amount, string orderId, string description, string serverUrl, string resultUrl, int sandbox = 0)
         {
             version = API_VERSION;
             public_key = API_PUBLIC_KEY;
@@ -65,6 +68,7 @@ namespace CinemaTickets.Models
             order_id = orderId;
             this.description = description;
             server_url = serverUrl;
+            result_url = resultUrl;
 
             if (sandbox == 1)
             {
@@ -89,7 +93,8 @@ namespace CinemaTickets.Models
                 currency = currency,
                 description = description,
                 order_id = order_id,
-                server_url = server_url
+                server_url = server_url,
+                result_url = result_url
             };
 
             return liqpayData;

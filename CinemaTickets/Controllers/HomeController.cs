@@ -68,5 +68,22 @@ namespace CinemaTickets.Controllers
             Session["CityID"] = id;
             return RedirectToRoute("Default", new { controller = "Home", action = "Index" });
         }
+
+        public ActionResult AllowShowThankyouPage()
+        {
+            Session["showThankyouPage"] = true;
+            return Json("ok", JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Thankyou()
+        {
+            if (Session["showThankyouPage"] == null)
+            {
+                return Redirect("/");
+            }
+
+            Session["showThankyouPage"] = null;
+            return View();
+        }
     }
 }
