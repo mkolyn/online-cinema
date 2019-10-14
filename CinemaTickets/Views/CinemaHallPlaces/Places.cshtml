@@ -1,8 +1,15 @@
-﻿<div class="cinema-hall-rows">
+﻿@if (ViewBag.isPlacesFromScreen)
+{
+    <div class="cinema-hall-screen">
+        Екран
+    </div>
+}
+
+<div class="cinema-hall-rows">
     @for (var i = 0; i < ViewBag.maxRow; i++)
     {
         <div class="cinema-hall-row-title">
-            Ряд @(i  + 1)
+            Ряд @(i + 1)
         </div>
     }
 </div>
@@ -39,7 +46,7 @@
                     {
                         data += " data-price=" + ViewBag.cinemaHallRows[i, j].GetPrice();
                     }
-                    <div class="cinema-hall-cell@{@cellClass}" data-id="@ViewBag.cinemaHallRows[i, j].ID"@data@group>
+                    <div class="cinema-hall-cell@{@cellClass}" data-id="@ViewBag.cinemaHallRows[i, j].ID" @data @group>
                         @(j + 1)
                     </div>
                 }
@@ -47,3 +54,10 @@
         </div>
     }
 </div>
+
+@if (!ViewBag.isPlacesFromScreen)
+{
+    <div class="cinema-hall-screen">
+        Екран
+    </div>
+}

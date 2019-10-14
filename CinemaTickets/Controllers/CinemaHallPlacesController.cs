@@ -40,6 +40,7 @@ namespace CinemaTickets.Controllers
             ViewBag.maxRow = cinemaHallPlaceData.MaxRow;
             ViewBag.maxCell = cinemaHallPlaceData.MaxCell;
             ViewBag.cinemaHallRows = cinemaHallPlaceData.CinemaHallRows;
+            ViewBag.isPlacesFromScreen = cinemaHall.IsPlacesFromScreen;
 
             return View();
         }

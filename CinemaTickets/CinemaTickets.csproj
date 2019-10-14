@@ -293,6 +293,10 @@
     <Compile Include="Migrations\201910111340231_LiqpayResultChangeAmountType.Designer.cs">
       <DependentUpon>201910111340231_LiqpayResultChangeAmountType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910141306310_CinemaHallPlacesFromScreen.cs" />
+    <Compile Include="Migrations\201910141306310_CinemaHallPlacesFromScreen.Designer.cs">
+      <DependentUpon>201910141306310_CinemaHallPlacesFromScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaMovieGroupPrice.cs" />
     <Compile Include="Models\CinemaPlaceGroup.cs" />
@@ -501,6 +505,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910111340231_LiqpayResultChangeAmountType.resx">
       <DependentUpon>201910111340231_LiqpayResultChangeAmountType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910141306310_CinemaHallPlacesFromScreen.resx">
+      <DependentUpon>201910141306310_CinemaHallPlacesFromScreen.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

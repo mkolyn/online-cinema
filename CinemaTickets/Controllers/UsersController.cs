@@ -53,7 +53,10 @@ namespace CinemaTickets.Controllers
         {
             if (ModelState.IsValid)
             {
-                user.Password = Crypto.SHA256(user.Password);
+                if (user.Password != null)
+                {
+                    user.Password = Crypto.SHA256(user.Password);
+                }
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -89,9 +92,17 @@ namespace CinemaTickets.Controllers
         {
             if (ModelState.IsValid)
             {
-                user.Password = Crypto.SHA256(user.Password);
+                if (user.Password != null)
+                {
+                    user.Password = Crypto.SHA256(user.Password);
+                }
+                else if (user.ID != null && user.ID > 0)
+                {
+                    user.Password = db.GetById(user.ID).Password;
+                }
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 

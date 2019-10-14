@@ -39,5 +39,10 @@ namespace CinemaTickets.Models
         {
             return Users.Where(s => s.Email == email).FirstOrDefault();
         }
+
+        public User GetById(int id)
+        {
+            return Users.AsNoTracking().Where(s => s.ID == id).FirstOrDefault();
+        }
     }
 }

@@ -35,7 +35,7 @@ namespace CinemaTickets.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,CinemaID,Name")] CinemaHall cinemaHall)
+        public ActionResult Create([Bind(Include = "ID,CinemaID,Name,IsPlacesFromScreen")] CinemaHall cinemaHall)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace CinemaTickets.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,CinemaID,Name")] CinemaHall cinemaHall)
+        public ActionResult Edit([Bind(Include = "ID,CinemaID,Name,IsPlacesFromScreen")] CinemaHall cinemaHall)
         {
             if (ModelState.IsValid)
             {

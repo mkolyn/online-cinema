@@ -14,6 +14,8 @@ namespace CinemaTickets.Models
         public int CinemaID { get; set; }
         // cinema name
         public string Name { get; set; }
+        // is places start from screen
+        public bool IsPlacesFromScreen { get; set; }
     }
 
     public class CinemaHallContext : DbContext
