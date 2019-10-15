@@ -242,6 +242,23 @@ $(document).ready(function () {
             });
         });
     });
+
+    $('.btn').click(function () {
+        var isValid = true;
+        var requiredInputs = $(this).closest('form').find('.required');
+        requiredInputs.removeClass('error');
+
+        for (var i = 0; i < requiredInputs.length; i++) {
+            if (requiredInputs.eq(i).val().trim() == '') {
+                requiredInputs.eq(i).addClass('error');
+                isValid = false;
+            }
+        }
+
+        if (!isValid) {
+            return false;
+        }
+    });
 });
 
 function setScheduleMoviePosition(scheduleMovie, startMinute) {
