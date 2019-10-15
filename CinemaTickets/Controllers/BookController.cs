@@ -51,6 +51,7 @@ namespace CinemaTickets.Controllers
             ViewBag.cinemaHallRows = cinemaHallPlaceData.CinemaHallRows;
             ViewBag.cinemaHallMovieId = cinemaHallMovie.ID;
             ViewBag.price = cinemaHallMovieDb.GetPrice(cinemaHallMovie.ID);
+            ViewBag.isPlacesFromScreen = cinemaHall.IsPlacesFromScreen;
 
             return View();
         }
