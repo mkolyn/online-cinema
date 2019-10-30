@@ -183,6 +183,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CinemaPlaceGroupsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CronController.cs" />
     <Compile Include="Controllers\LiqpayController.cs" />
     <Compile Include="Controllers\CinemasController.cs" />
     <Compile Include="Controllers\Cities.cs" />
@@ -296,6 +297,10 @@
     <Compile Include="Migrations\201910141306310_CinemaHallPlacesFromScreen.cs" />
     <Compile Include="Migrations\201910141306310_CinemaHallPlacesFromScreen.Designer.cs">
       <DependentUpon>201910141306310_CinemaHallPlacesFromScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910301224250_OrdersEmail.cs" />
+    <Compile Include="Migrations\201910301224250_OrdersEmail.Designer.cs">
+      <DependentUpon>201910301224250_OrdersEmail.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaMovieGroupPrice.cs" />
@@ -508,6 +513,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910141306310_CinemaHallPlacesFromScreen.resx">
       <DependentUpon>201910141306310_CinemaHallPlacesFromScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301224250_OrdersEmail.resx">
+      <DependentUpon>201910301224250_OrdersEmail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

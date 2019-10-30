@@ -130,7 +130,11 @@ namespace CinemaTickets.Models
                 List<CinemaHallMoviePlaceInfo> cinemaHallMoviePlaces = cinemaHallMoviePlaceDb.GetCinemaHallMoviePlaces(cinemaHallMovieId);
                 foreach (CinemaHallMoviePlaceInfo cinemaHallMoviePlace in cinemaHallMoviePlaces)
                 {
-                    cinemaHallIsBookedPlaces[cinemaHallMoviePlace.Row - 1, cinemaHallMoviePlace.Cell - 1] = true;
+                    int status = cinemaHallMoviePlace.Status;
+                    if (status == CinemaHallMoviePlace.STATUS_PROCESSING || status == CinemaHallMoviePlace.STATUS_SUCCESSFULL)
+                    {
+                        cinemaHallIsBookedPlaces[cinemaHallMoviePlace.Row - 1, cinemaHallMoviePlace.Cell - 1] = true;
+                    }
                 }
 
                 if (cinemaMovie != null)

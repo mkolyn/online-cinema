@@ -115,6 +115,16 @@ namespace CinemaTickets.Controllers
             ViewBag.isPaid = order.IsPaid;
             ViewBag.orderId = order.ID;
 
+            DateTime confirmToDate = order.Date.AddMinutes(15);
+            ViewBag.ScriptTexts.Add("var YEAR = " + confirmToDate.Year + ";");
+            ViewBag.ScriptTexts.Add("var MONTH = " + confirmToDate.Month + ";");
+            ViewBag.ScriptTexts.Add("var DAY = " + confirmToDate.Day + ";");
+            ViewBag.ScriptTexts.Add("var HOUR = " + confirmToDate.Hour + ";");
+            ViewBag.ScriptTexts.Add("var MINUTE = " + confirmToDate.Minute + ";");
+            ViewBag.ScriptTexts.Add("var SECOND = " + confirmToDate.Second + ";");
+
+            ViewBag.canConfirmBooking = confirmToDate.CompareTo(DateTime.Now) > 0;
+
             int totalPrice = 0;
             foreach (OrderItemInfo orderItem in orderItems)
             {
@@ -162,6 +172,16 @@ namespace CinemaTickets.Controllers
             QRCode qrCode = new QRCode(qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(20);
             return File(Core.BitmapToBytes(qrCodeImage), "image/jpeg");
+        }
+
+        [HttpPost]
+        public ActionResult SaveEmail(int id, string email)
+        {
+            Order order = orderDb.Orders.Find(id);
+            order.Email = email;
+            orderDb.SaveChanges();
+
+            return Json("ok");
         }
     }
 }

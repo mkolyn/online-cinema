@@ -15,6 +15,8 @@ namespace CinemaTickets.Models
         public DateTime Date { get; set; }
         // is paid
         public bool IsPaid { get; set; }
+        // email
+        public string Email { get; set; }
     }
 
     public class OrderItem
@@ -76,6 +78,7 @@ namespace CinemaTickets.Models
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<CinemaHallMoviePlace> CinemaHallMoviePlaces { get; set; }
 
         public List<OrderItemInfo> GetOrderItems(int id)
         {
@@ -161,6 +164,24 @@ namespace CinemaTickets.Models
             }
 
             return details;
+        }
+
+        public List<OrderItemInfo> GetUnpaidPlaces()
+        {
+            DateTime date = DateTime.Now;
+            date = date.AddMinutes(-15);
+
+            var orderItems = from o in Orders
+                             join oi in OrderItems on o.ID equals oi.OrderID
+                             join chmp in CinemaHallMoviePlaces on oi.CinemaHallMovieID equals chmp.CinemaHallMovieID
+                             where o.Date <= date && chmp.CinemaHallPlaceID == oi.CinemaHallPlaceID && chmp.Status == CinemaHallMoviePlace.STATUS_PROCESSING
+                             select new OrderItemInfo
+                             {
+                                 CinemaHallMovieID = chmp.CinemaHallMovieID,
+                                 CinemaHallPlaceID = chmp.CinemaHallPlaceID,
+                             };
+
+            return orderItems.ToList();
         }
     }
 }

@@ -166,6 +166,8 @@ namespace CinemaTickets.Controllers
 
         public void SendEmail(int orderId)
         {
+            Order order = orderDb.Orders.Find(orderId);
+
             var imageSrc = GetUrl("Book/GetQRCode/" + orderId);
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplates", "SuccessfulOrder.html");
             StreamReader sr = System.IO.File.OpenText(filePath);
@@ -176,7 +178,7 @@ namespace CinemaTickets.Controllers
             string emailMessage = orderDb.GetOrderItemDetails(orderId).Replace("\n", "<br/>");
             emailTemplate = emailTemplate.Replace("{DETAILS}", emailMessage);
 
-            Core.SendEmail("mkolyn@gmail.com", "Бронювання квитка", emailTemplate);
+            Core.SendEmail(order.Email, "Бронювання квитка", emailTemplate);
         }
     }
 }

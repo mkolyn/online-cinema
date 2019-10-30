@@ -10,6 +10,17 @@
         @ViewBag.formattedDate
     </h3>
 
+    @if (ViewBag.canConfirmBooking)
+    {
+        <div>
+            У Вас залишилося <span class="time-left"></span> хв. щоб забронювати квиток
+        </div>
+    }
+    else
+    {
+        @Html.Raw("Час для бронювання вичерпано");
+    }
+
     @if (ViewBag.isPaid)
     {
         <h4>
@@ -66,7 +77,7 @@
         Разом: @ViewBag.totalPrice грн.
     </div>
 
-    @if (!ViewBag.isPaid)
+    @if (!ViewBag.isPaid && ViewBag.canConfirmBooking)
     {
     <div class="">
         @using (Html.BeginRouteForm("Default", new { Controller = "Book", Action = "Success", Id = @ViewBag.orderId }))
@@ -77,10 +88,13 @@
                 </div>
             </div>
         }
+        <input type="hidden" class="order-id" value="@ViewBag.orderId" />
         <form method="POST" class="liqpay-form" action="https://www.liqpay.ua/api/3/checkout" accept-charset="utf-8">
             <input type="hidden" name="data" value="@ViewBag.liqpayData" />
             <input type="hidden" name="signature" value="@ViewBag.liqpaySignature" />
-            <input type="image" src="//static.liqpay.ua/buttons/p1ru.radius.png" class="liqpay-pay" />
+            <label for="email">E-mail</label>
+            <input type="text" class="form-control required text-box email" />
+            <input type="image" src="//static.liqpay.ua/buttons/p1ru.radius.png" class="btn liqpay-pay" />
         </form>
     </div>
     }

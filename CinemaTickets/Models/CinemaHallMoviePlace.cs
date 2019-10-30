@@ -10,7 +10,7 @@ namespace CinemaTickets.Models
     {
         public const int STATUS_PROCESSING = 0;
         public const int STATUS_SUCCESSFULL = 1;
-        public const int STATUS_FAILED = 1;
+        public const int STATUS_FAILED = -1;
         // cinema hall movie place ID
         public int ID { get; set; }
         // cinema hall movie ID
@@ -27,6 +27,8 @@ namespace CinemaTickets.Models
         public int Row;
         // cinema hall movie cell
         public int Cell;
+        // cinema hall movie status
+        public int Status;
     }
 
     public class CinemaHallMoviePlaceContext : DbContext
@@ -54,6 +56,7 @@ namespace CinemaTickets.Models
                                         {
                                             Row = chp.Row,
                                             Cell = chp.Cell,
+                                            Status = chmp.Status,
                                         };
 
             return cinemaHallMoviePlaces.ToList();
