@@ -14,7 +14,7 @@
     }
     @Styles.Render("~/Content/jquery-ui.min.css")
     @Scripts.Render("~/bundles/modernizr")
-    @if (ViewBag.Scripts != null)
+    @if (ViewBag.ScriptTexts != null)
     {
         <script>
             @foreach (string script in ViewBag.ScriptTexts)

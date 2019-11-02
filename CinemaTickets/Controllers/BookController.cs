@@ -107,6 +107,7 @@ namespace CinemaTickets.Controllers
             ViewBag.Scripts.Add("book");
 
             Order order = orderDb.Orders.Find(id);
+            string expiredDate = order.Date.AddMinutes(15).ToString("Y-m-d H:i:s");
 
             List<OrderItemInfo> orderItems = orderDb.GetOrderItems(id);
 
@@ -130,10 +131,10 @@ namespace CinemaTickets.Controllers
             {
                 totalPrice += orderItem.Price;
             }
-            string description = "Оплата квитка (квитків) на фільм " + orderItems.First().MovieName + ".";
-            description += " К-ть місць: " + orderItems.Count;
+            string description = "Оплата квитка (квитків) на фільм." + "\n";
+            description += orderDb.GetOrderItemDetailsGrouped(orderItems);
 
-            Liqpay liqpay = new Liqpay(totalPrice, id.ToString(), description, GetUrl("Liqpay/Result"), GetUrl("Home/Thankyou"));
+            Liqpay liqpay = new Liqpay(totalPrice, id.ToString(), description, GetUrl("Liqpay/Result"), GetUrl("Home/Thankyou"), expiredDate);
             string liqpayData = Core.Base64Encode(Core.ToJson(liqpay.GetData()));
             string liqpaySignature = Liqpay.GetSignature(liqpayData);
 

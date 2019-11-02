@@ -166,6 +166,28 @@ namespace CinemaTickets.Models
             return details;
         }
 
+        public string GetOrderItemDetailsGrouped(List<OrderItemInfo> orderItems)
+        {
+            string details = "";
+            int placesCount = 0;
+            Dictionary<string, string> groupedDetails = new Dictionary<string, string>();
+
+            foreach (OrderItemInfo orderItem in orderItems)
+            {
+                groupedDetails["cinema"] = orderItem.CinemaName;
+                groupedDetails["hall"] = orderItem.CinemaHallName;
+                groupedDetails["movie"] = orderItem.MovieName;
+                groupedDetails["date"] = orderItem.FormattedDate;
+                placesCount++;
+            }
+
+            details += "Кінотеатр: " + groupedDetails["cinema"] + ", Зал: " + groupedDetails["hall"] + "\n";
+            details += "Фільм: " + groupedDetails["movie"] + ", Дата: " + groupedDetails["date"] + "\n";
+            details += "К-ть місць: " + placesCount.ToString() + ".";
+
+            return details;
+        }
+
         public List<OrderItemInfo> GetUnpaidPlaces()
         {
             DateTime date = DateTime.Now;

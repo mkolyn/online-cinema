@@ -22,6 +22,7 @@ namespace CinemaTickets.Models
         public string status;
         public string err_code;
         public string err_description;
+        public string expired_date;
     }
 
     public class Liqpay
@@ -56,8 +57,10 @@ namespace CinemaTickets.Models
         public string server_url { get; set; }
         // liqpay result url
         public string result_url { get; set; }
+        // liqpay expired date
+        public string expired_date { get; set; }
 
-        public Liqpay(int amount, string orderId, string description, string serverUrl, string resultUrl, int sandbox = 0)
+        public Liqpay(int amount, string orderId, string description, string serverUrl, string resultUrl, string expiredDate, int sandbox = 0)
         {
             version = API_VERSION;
             public_key = API_PUBLIC_KEY;
@@ -69,6 +72,7 @@ namespace CinemaTickets.Models
             this.description = description;
             server_url = serverUrl;
             result_url = resultUrl;
+            expired_date = expiredDate;
 
             if (sandbox == 1)
             {
@@ -94,7 +98,8 @@ namespace CinemaTickets.Models
                 description = description,
                 order_id = order_id,
                 server_url = server_url,
-                result_url = result_url
+                result_url = result_url,
+                expired_date = expired_date,
             };
 
             return liqpayData;
