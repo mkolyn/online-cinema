@@ -3,6 +3,11 @@
 @{
     ViewBag.Title = "Додати фільм";
     var i = 0;
+    var priceClass = "form-control";
+    if (ViewBag.cinemaId != 0)
+    {
+        priceClass += " required";
+    }
 }
 
 <h2>Додати фільм</h2>
@@ -20,7 +25,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.GenreID, "Жанр", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("GenreID", "Вибрати")
+            @Html.DropDownList("GenreID", null, "Вибрати", new { @class = "required" })
             @Html.ValidationMessageFor(model => model.GenreID, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -52,7 +57,7 @@
     <div class="form-group @if (ViewBag.cinemaId == 0) { @Html.Raw(" hidden"); }">
         @Html.Label("Ціна", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.Editor("Ціна", new { htmlAttributes = new { @Name = "Price", @class = "form-control required", @type = "number" } })
+            @Html.Editor("Ціна", new { htmlAttributes = new { @Name = "Price", @class = priceClass, @type = "number" } })
             @Html.ValidationMessage("Ціна", "", new { @class = "text-danger" })
         </div>
     </div>
