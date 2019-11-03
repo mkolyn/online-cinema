@@ -1,10 +1,17 @@
 ﻿$(document).ready(function () {
     $('.liqpay-pay').click(function () {
-        if ($('.email').hasClass('error')) {
+        var email = $('.email');
+
+        if (email.hasClass('error')) {
             return false;
         }
 
-        ajax('/Book/SaveEmail/' + $('.order-id').val(), { email: $('.email').val() }, function () {
+        if (!isValidEmail(email.val())) {
+            email.addClass('error');
+            return false;
+        }
+
+        ajax('/Book/SaveEmail/' + $('.order-id').val(), { email: email.val() }, function () {
             ajax('/Home/AllowShowThankyouPage', {}, function () {
                 $('.liqpay-form').submit();
             });

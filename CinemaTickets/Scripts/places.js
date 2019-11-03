@@ -37,19 +37,16 @@
     });
 
     $('.book-places').click(function () {
-        $.ajax({
-            url: '/Book/Create/' + $('.cinema-hall-movie-id').val(),
-            method: "POST",
-            data: {
-                cinemaHallPlaces: $.map($('.cinema-hall-cell.active'), function (item) {
-                    if (!$(item).hasClass('joined') || $(item).attr('data-rows') > 0 && $(item).attr('data-cells') > 0) {
-                        return $(item).attr('data-id');
-                    }
-                }),
-            },
-            success: function (data) {
-                window.location.href = '/Book/Confirm/' + data.id;
-            }
+        var data = {
+            cinemaHallPlaces: $.map($('.cinema-hall-cell.active'), function (item) {
+                if (!$(item).hasClass('joined') || $(item).attr('data-rows') > 0 && $(item).attr('data-cells') > 0) {
+                    return $(item).attr('data-id');
+                }
+            })
+        };
+
+        ajax('/Book/Create/' + $('.cinema-hall-movie-id').val(), data, function (data) {
+            window.location.href = '/Book/Confirm/' + data.id;
         });
     });
 

@@ -73,3 +73,9 @@
     text-align: right;
     font-size: 20px;
 }
+
+.cinema-hall-screen {
+    background-color: #6467ed;
+    padding: 10px;
+    margin: 10px;
+}

@@ -18,6 +18,8 @@ namespace CinemaTickets.Controllers
         {
             ViewBag.UserId = Core.GetUserId();
             ViewBag.SiteDisabled = Config.SITE_DISABLED;
+            ViewBag.Styles = new List<string>() { "admin" };
+            ViewBag.Scripts = new List<string>() { "core" };
 
             return View();
         }
@@ -37,8 +39,8 @@ namespace CinemaTickets.Controllers
                 {
                     Session["UserID"] = currentUser.ID.ToString();
                     Session["CinemaID"] = currentUser.CinemaID.ToString();
-                    Session["UserFirstName"] = currentUser.FirstName.ToString();
-                    Session["UserLastName"] = currentUser.LastName.ToString();
+                    Session["UserFirstName"] = currentUser.FirstName != null ? currentUser.FirstName.ToString() : "";
+                    Session["UserLastName"] = currentUser.LastName != null ? currentUser.LastName.ToString() : "";
                 }
                 else
                 {

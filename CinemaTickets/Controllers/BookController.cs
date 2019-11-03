@@ -43,6 +43,7 @@ namespace CinemaTickets.Controllers
             ViewBag.movieName = movie.Name;
             ViewBag.genreName = genre.Name;
             ViewBag.formattedDate = Core.GetFormatedDate(new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0));
+            ViewBag.Duration = movie.Duration;
 
             CinemaHallPlaceData cinemaHallPlaceData = cinemaHallPlaceDb.GetCinemaHallPlacesData(cinemaHall.ID, cinemaHallMovie.ID);
 
@@ -107,7 +108,7 @@ namespace CinemaTickets.Controllers
             ViewBag.Scripts.Add("book");
 
             Order order = orderDb.Orders.Find(id);
-            string expiredDate = order.Date.AddMinutes(15).ToString("Y-m-d H:i:s");
+            string expiredDate = order.Date.AddMinutes(Config.CONFIRM_PAYMENT_MINUTES_TIMEOUT).ToUniversalTime().ToString("yyyy-MM-dd hh:mm:ss");
 
             List<OrderItemInfo> orderItems = orderDb.GetOrderItems(id);
 
@@ -116,7 +117,7 @@ namespace CinemaTickets.Controllers
             ViewBag.isPaid = order.IsPaid;
             ViewBag.orderId = order.ID;
 
-            DateTime confirmToDate = order.Date.AddMinutes(15);
+            DateTime confirmToDate = order.Date.AddMinutes(Config.CONFIRM_PAYMENT_MINUTES_TIMEOUT);
             ViewBag.ScriptTexts.Add("var YEAR = " + confirmToDate.Year + ";");
             ViewBag.ScriptTexts.Add("var MONTH = " + confirmToDate.Month + ";");
             ViewBag.ScriptTexts.Add("var DAY = " + confirmToDate.Day + ";");
@@ -144,7 +145,7 @@ namespace CinemaTickets.Controllers
 
             if (Config.DEBUG)
             {
-                AddDebugInfo("liqpay data: " + liqpayData + ", liqpay signature: " + liqpaySignature);
+                AddDebugInfo("liqpay json data: " + Core.ToJson(liqpay.GetData()) + ", liqpay data: " + liqpayData + ", liqpay signature: " + liqpaySignature);
             }
 
             return View();

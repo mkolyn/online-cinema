@@ -93,6 +93,7 @@ namespace CinemaTickets.Models
             {
                 public_key = public_key,
                 action = action,
+                version = version,
                 amount = amount,
                 currency = currency,
                 description = description,

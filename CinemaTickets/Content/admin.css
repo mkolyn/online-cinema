@@ -162,3 +162,10 @@
 .error {
     border: 1px solid red;
 }
+
+.messages {
+    border: 1px solid #808080;
+    padding: 5px;
+    background-color: #9a9898;
+    color: #FFFFFF;
+}

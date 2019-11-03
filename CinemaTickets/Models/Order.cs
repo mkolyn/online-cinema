@@ -191,7 +191,7 @@ namespace CinemaTickets.Models
         public List<OrderItemInfo> GetUnpaidPlaces()
         {
             DateTime date = DateTime.Now;
-            date = date.AddMinutes(-15);
+            date = date.AddMinutes(-Config.CONFIRM_PAYMENT_MINUTES_TIMEOUT);
 
             var orderItems = from o in Orders
                              join oi in OrderItems on o.ID equals oi.OrderID

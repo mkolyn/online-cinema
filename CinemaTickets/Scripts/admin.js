@@ -242,6 +242,22 @@ $(document).ready(function () {
             });
         });
     });
+
+    $('.create-user').click(function () {
+        var userPassword = $('.user-password');
+        if (userPassword.val().trim().length < 6) {
+            userPassword.addClass('error');
+            return false;
+        }
+    });
+
+    $('.edit-user').click(function () {
+        var userPassword = $('.user-password');
+        if (userPassword.val().trim() != '' && userPassword.val().trim().length < 6) {
+            userPassword.addClass('error');
+            return false;
+        }
+    });
 });
 
 function setScheduleMoviePosition(scheduleMovie, startMinute) {
