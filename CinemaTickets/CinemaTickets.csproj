@@ -324,6 +324,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\book.css" />
+    <Content Include="Content\img\loading.gif" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\places.css" />
     <Content Include="Content\style.css" />
