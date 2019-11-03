@@ -160,7 +160,7 @@ namespace CinemaTickets.Models
                 details += "Кінотеатр: " + orderItem.CinemaName + ", Зал: " + orderItem.CinemaHallName + "\n";
                 details += "Ряд: " + cinemaHallPlace.Row + ", Місце: " + cinemaHallPlace.Cell + "\n";
                 details += "Фільм: " + orderItem.MovieName + ", Тривалість: " + orderItem.Duration + " хв." + "\n";
-                details += "Дата: " + orderItem.FormattedDate + ", Ціна: " + orderItem.Price + " грн.";
+                details += "Дата: " + orderItem.FormattedDate + ", Ціна: " + orderItem.Price + " грн." + "\n\n";
             }
 
             return details;
