@@ -108,7 +108,7 @@ namespace CinemaTickets.Controllers
             ViewBag.Scripts.Add("book");
 
             Order order = orderDb.Orders.Find(id);
-            string expiredDate = order.Date.AddMinutes(Config.CONFIRM_PAYMENT_MINUTES_TIMEOUT).ToUniversalTime().ToString("yyyy-MM-dd hh:mm:ss");
+            string expiredDate = order.Date.AddMinutes(Config.CONFIRM_PAYMENT_MINUTES_TIMEOUT).ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss");
 
             List<OrderItemInfo> orderItems = orderDb.GetOrderItems(id);
 
@@ -172,7 +172,7 @@ namespace CinemaTickets.Controllers
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrCodeMessage, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
-            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+            Bitmap qrCodeImage = qrCode.GetGraphic(Config.QR_CODE_SIZE);
             return File(Core.BitmapToBytes(qrCodeImage), "image/jpeg");
         }
 
