@@ -100,6 +100,7 @@ namespace CinemaTickets.Controllers
             }
             CheckCinemaRights(cinemaHall.CinemaID);
 
+            ViewBag.CinemaId = cinemaHall.CinemaID;
             return View(cinemaHall);
         }
 

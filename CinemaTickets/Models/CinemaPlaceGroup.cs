@@ -44,6 +44,21 @@ namespace CinemaTickets.Models
             return cinemaHallPlaceGroups.FirstOrDefault();
         }
 
+        public string GetName(int cinemaHallPlaceID)
+        {
+            var cinemaHallPlaceGroups = from c in CinemaHallPlaceGroups
+                                        join cpg in CinemaPlaceGroups on c.CinemaPlaceGroupID equals cpg.ID
+                                        select new
+                                        {
+                                            CinemaHallPlaceID = c.CinemaHallPlaceID,
+                                            Name = cpg.Name,
+                                        };
+
+            cinemaHallPlaceGroups = cinemaHallPlaceGroups.Where(s => s.CinemaHallPlaceID == cinemaHallPlaceID);
+
+            return cinemaHallPlaceGroups.FirstOrDefault() != null ? cinemaHallPlaceGroups.FirstOrDefault().Name : "";
+        }
+
         public List<CinemaPlaceGroup> GetList(int ID = 0)
         {
             var cinemaPlaceGroups = from d in CinemaPlaceGroups

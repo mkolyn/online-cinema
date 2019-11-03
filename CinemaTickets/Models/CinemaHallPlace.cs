@@ -20,6 +20,8 @@ namespace CinemaTickets.Models
         public int Cells { get; set; }
         // is joined place
         private bool IsJoined { get; set; }
+        // joined gpoup id
+        private string JoinedGroupId { get; set; }
         // joined gpoup name
         private string JoinedGroupName { get; set; }
         // is booked
@@ -35,6 +37,16 @@ namespace CinemaTickets.Models
         public void SetIsJoined(bool IsJoined)
         {
             this.IsJoined = IsJoined;
+        }
+
+        public string GetJoinedGroupId()
+        {
+            return JoinedGroupId;
+        }
+
+        public void SetJoinedGroupId(string JoinedGroupId)
+        {
+            this.JoinedGroupId = JoinedGroupId;
         }
 
         public string GetJoinedGroupName()
@@ -86,6 +98,7 @@ namespace CinemaTickets.Models
         private CinemaMovieGroupPriceContext cinemaMovieGroupPriceDb = new CinemaMovieGroupPriceContext();
         private CinemaHallMovieContext cinemaHallMovieDb = new CinemaHallMovieContext();
         private CinemaMovieContext cinemaMovieDb = new CinemaMovieContext();
+        private CinemaPlaceGroupContext cinemaPlaceGroupDb = new CinemaPlaceGroupContext();
 
         public DbSet<CinemaHallPlace> CinemaHallPlaces { get; set; }
 
@@ -120,6 +133,7 @@ namespace CinemaTickets.Models
 
             CinemaHallPlace[,] cinemaHallRows = new CinemaHallPlace[maxRow, maxCell];
             bool[,] cinemaHallIsJoinedPlaces = new bool[maxRow, maxCell];
+            string[,] cinemaHallJoinedPlacesGroupId = new string[maxRow, maxCell];
             string[,] cinemaHallJoinedPlacesGroupName = new string[maxRow, maxCell];
             bool[,] cinemaHallIsBookedPlaces = new bool[maxRow, maxCell];
             int cinemaHallJoinedPlacesGroupNumber = 0;
@@ -147,13 +161,16 @@ namespace CinemaTickets.Models
             {
                 if (cinemaHallPlace.Rows > 1 || cinemaHallPlace.Cells > 1)
                 {
+                    string cinemaHallPlaceGroupName = cinemaPlaceGroupDb.GetName(cinemaHallPlace.ID);
+
                     cinemaHallJoinedPlacesGroupNumber++;
                     for (var i = cinemaHallPlace.Row - 1; i < cinemaHallPlace.Row - 1 + cinemaHallPlace.Rows; i++)
                     {
                         for (var j = cinemaHallPlace.Cell - 1; j < cinemaHallPlace.Cell - 1 + cinemaHallPlace.Cells; j++)
                         {
                             cinemaHallIsJoinedPlaces[i, j] = true;
-                            cinemaHallJoinedPlacesGroupName[i, j] = "group" + cinemaHallJoinedPlacesGroupNumber;
+                            cinemaHallJoinedPlacesGroupId[i, j] = "group" + cinemaHallJoinedPlacesGroupNumber;
+                            cinemaHallJoinedPlacesGroupName[i, j] = cinemaHallPlaceGroupName;
                         }
                     }
                 }
@@ -161,6 +178,7 @@ namespace CinemaTickets.Models
                 if (cinemaHallIsJoinedPlaces[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] == true)
                 {
                     cinemaHallPlace.SetIsJoined(true);
+                    cinemaHallPlace.SetJoinedGroupId(cinemaHallJoinedPlacesGroupId[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1]);
                     cinemaHallPlace.SetJoinedGroupName(cinemaHallJoinedPlacesGroupName[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1]);
                 }
 

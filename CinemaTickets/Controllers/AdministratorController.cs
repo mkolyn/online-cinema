@@ -16,10 +16,18 @@ namespace CinemaTickets.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.UserId = Core.GetUserId();
+            int userId = Core.GetUserId();
+
+            ViewBag.UserId = userId;
             ViewBag.SiteDisabled = Config.SITE_DISABLED;
             ViewBag.Styles = new List<string>() { "admin" };
             ViewBag.Scripts = new List<string>() { "core" };
+
+            if (userId > 0)
+            {
+                User user = userDb.Users.Find(userId);
+                ViewBag.Login = user.Login;
+            }
 
             return View();
         }

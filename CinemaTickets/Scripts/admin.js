@@ -5,6 +5,7 @@ $(document).ready(function () {
     var scheduleMovieChooseMinute = $('.schedule-movie-choose-minute');
 
     $('.generate-places').click(function () {
+        $('.cinema-hall-rows').html('');
         $('.cinema-hall-places').html('');
 
         for (var i = 0; i < $('.cinema-hall-rows').val(); i++) {

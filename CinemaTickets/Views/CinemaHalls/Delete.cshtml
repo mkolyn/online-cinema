@@ -26,7 +26,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Вилучити" class="btn btn-default" /> |
-            @Html.ActionLink("До списку", "Index")
+            @Html.RouteLink("До списку", new { controller = "Cinemas", action = "Halls", id = ViewBag.CinemaId })
         </div>
     }
 </div>

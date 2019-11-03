@@ -30,6 +30,8 @@ namespace CinemaTickets.Models
         public int CityID { get; set; }
         // genre id
         public int GenreID { get; set; }
+        // genre id
+        public string GenreName { get; set; }
         // movie ID
         public int MovieID { get; set; }
         // movie name
@@ -63,6 +65,7 @@ namespace CinemaTickets.Models
         public DbSet<CinemaHall> CinemaHalls { get; set; }
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<Genre> Genres { get; set; }
 
         public List<CinemaHallScheduleMovie> GetList(int year, int month, int day, int cinemaId = 0, int genreId = 0, string searchString = "")
         {
@@ -71,6 +74,7 @@ namespace CinemaTickets.Models
                          join ch in CinemaHalls on chm.CinemaHallID equals ch.ID
                          join c in Cinemas on ch.CinemaID equals c.ID
                          join m in Movies on chm.MovieID equals m.ID
+                         join g in Genres on m.GenreID equals g.ID
                          where cm.CinemaID == ch.CinemaID
                          orderby chm.Date
                          select new CinemaHallScheduleMovie
@@ -83,6 +87,7 @@ namespace CinemaTickets.Models
                              CinemaHallMovieID = chm.ID,
                              CinemaID = c.ID,
                              GenreID = m.GenreID,
+                             GenreName = g.Name,
                          };
 
             int cityId = Core.GetCityId();
