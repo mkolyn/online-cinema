@@ -151,6 +151,49 @@ namespace CinemaTickets.Controllers
             return View();
         }
 
+        public ActionResult RemovePlace(int id)
+        {
+            OrderItem orderItem = orderDb.OrderItems.Find(id);
+            int orderId = orderItem.OrderID;
+            orderDb.OrderItems.Remove(orderItem);
+            orderDb.SaveChanges();
+
+            CinemaHallMoviePlace cinemaHallMoviePlace = cinemaHallMoviePlaceDb.GetCinemaHallMoviePlace(orderItem.CinemaHallMovieID, orderItem.CinemaHallPlaceID);
+            cinemaHallMoviePlaceDb.CinemaHallMoviePlaces.Remove(cinemaHallMoviePlace);
+            cinemaHallMoviePlaceDb.SaveChanges();
+
+            if (orderDb.OrderItems.Count() == 0)
+            {
+                orderDb.Orders.Remove(orderDb.Orders.Find(orderId));
+            }
+
+            return RedirectToRoute("Default", new { Controller = "Book", Action = "Confirm", Id = orderItem.OrderID });
+        }
+
+        public ActionResult CheckOrder(int id, int[] orderItemIds)
+        {
+            string message = "";
+            bool success = true;
+
+            // if order item was removed
+            if (orderDb.GetOrderItemsByIds(orderItemIds).Count != orderItemIds.Length)
+            {
+                success = false;
+                message = Messages.ORDER_HAS_BEEN_CHANGED;
+            }
+            else
+            {
+                Order order = orderDb.Orders.Find(id);
+                if (order.IsProcessing)
+                {
+                    success = false;
+                    message = Messages.ORDER_IS_BEING_PROCESSED;
+                }
+            }
+
+            return Json(new { success = success, message = message });
+        }
+
         public ActionResult Success(int id)
         {
             orderDb.SetSuccessfullOrder(id);
@@ -177,10 +220,11 @@ namespace CinemaTickets.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveEmail(int id, string email)
+        public ActionResult UpdateOrder(int id, string email)
         {
             Order order = orderDb.Orders.Find(id);
             order.Email = email;
+            order.IsProcessing = true;
             orderDb.SaveChanges();
 
             return Json("ok");

@@ -17,6 +17,8 @@ namespace CinemaTickets.Models
         public bool IsPaid { get; set; }
         // email
         public string Email { get; set; }
+        // is processing
+        public bool IsProcessing { get; set; }
     }
 
     public class OrderItem
@@ -35,6 +37,8 @@ namespace CinemaTickets.Models
 
     public class OrderItemInfo
     {
+        // order item id
+        public int OrderItemId { get; set; }
         // cinema hall place row
         public int Row { get; set; }
         // cinema hall place cell
@@ -93,6 +97,7 @@ namespace CinemaTickets.Models
                              where o.ID == id
                              select new OrderItemInfo
                              {
+                                 OrderItemId = oi.ID,
                                  Row = chp.Row,
                                  Cell = chp.Cell,
                                  MovieName = m.Name,
@@ -202,6 +207,16 @@ namespace CinemaTickets.Models
                                  CinemaHallMovieID = chmp.CinemaHallMovieID,
                                  CinemaHallPlaceID = chmp.CinemaHallPlaceID,
                              };
+
+            return orderItems.ToList();
+        }
+
+        public List<OrderItem> GetOrderItemsByIds(int[] orderItemIds)
+        {
+            var orderItems = from oi in OrderItems
+                             select oi;
+
+            orderItems = orderItems.Where(s => orderItemIds.Contains(s.ID));
 
             return orderItems.ToList();
         }

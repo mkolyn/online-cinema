@@ -31,7 +31,10 @@
     <div class="order-items">
         @foreach (var orderItem in ViewBag.orderItems)
         {
-            <div class="order-item">
+            <div class="order-item" data-id="@orderItem.OrderItemId">
+                <div class="order-item-row">
+                    @Html.RouteLink("Вилучити", "Default", new { Controller = "Book", Action = "RemovePlace", Id = orderItem.OrderItemId })
+                </div>
                 <div class="order-item-row">
                     <div class="order-item-info">
                         Кінотеатр: @orderItem.CinemaName

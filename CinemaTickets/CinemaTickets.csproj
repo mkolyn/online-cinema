@@ -302,6 +302,10 @@
     <Compile Include="Migrations\201910301224250_OrdersEmail.Designer.cs">
       <DependentUpon>201910301224250_OrdersEmail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911091208083_OrderIsProcessing.cs" />
+    <Compile Include="Migrations\201911091208083_OrderIsProcessing.Designer.cs">
+      <DependentUpon>201911091208083_OrderIsProcessing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaMovieGroupPrice.cs" />
     <Compile Include="Models\CinemaPlaceGroup.cs" />
@@ -311,6 +315,7 @@
     <Compile Include="Models\CinemaHallPlace.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Config.cs" />
+    <Compile Include="Models\Messages.cs" />
     <Compile Include="Models\LiqpayResult.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Movie.cs" />
@@ -517,6 +522,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910301224250_OrdersEmail.resx">
       <DependentUpon>201910301224250_OrdersEmail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911091208083_OrderIsProcessing.resx">
+      <DependentUpon>201911091208083_OrderIsProcessing.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

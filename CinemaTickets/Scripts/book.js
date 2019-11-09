@@ -11,10 +11,21 @@
             return false;
         }
 
-        ajax('/Book/SaveEmail/' + $('.order-id').val(), { email: email.val() }, function () {
-            ajax('/Home/AllowShowThankyouPage', {}, function () {
-                $('.liqpay-form').submit();
-            });
+        // validate order, then save user email (to send qr code later), then pay for tickets
+        var orderItemIds = $.map($('.order-item'), function (item) {
+            return $(item).data('id');
+        });
+
+        ajax('/Book/CheckOrder/' + $('.order-id').val(), { orderItemIds: orderItemIds }, function (data) {
+            if (data.success) {
+                ajax('/Book/UpdateOrder/' + $('.order-id').val(), { email: email.val() }, function () {
+                    ajax('/Home/AllowShowThankyouPage', {}, function () {
+                        $('.liqpay-form').submit();
+                    });
+                });
+            } else {
+                alert(data.message);
+            }
         });
 
         return false;
