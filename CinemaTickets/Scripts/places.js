@@ -1,4 +1,33 @@
 ﻿$(document).ready(function () {
+    addCinemaHallPlacesEvents();
+
+    $('.book-places').click(function () {
+        var data = {
+            cinemaHallPlaces: getCinemaHallPlaceIds()
+        };
+
+        ajax('/Book/Create/' + $('.cinema-hall-movie-id').val(), data, function (data) {
+            if (data.success) {
+                window.location.href = '/Book/Confirm/' + data.id;
+            } else {
+                alert(data.message);
+            }
+        });
+    });
+
+    setInterval(function () {
+        var data = {
+            cinemaHallPlaces: getCinemaHallPlaceIds()
+        };
+
+        ajax('/Book/UpdatePlaces/' + $('.cinema-hall-movie-id').val(), data, function (data) {
+            $('.cinema-hall-book-places').html(data);
+            addCinemaHallPlacesEvents();
+        }, true);
+    }, 5000);
+});
+
+function addCinemaHallPlacesEvents() {
     $('.cinema-hall-places').on('click', '.cinema-hall-cell', function () {
         if ($(this).hasClass('booked')) {
             return false;
@@ -36,20 +65,6 @@
         $('.total-price-value').html(totalPrice);
     });
 
-    $('.book-places').click(function () {
-        var data = {
-            cinemaHallPlaces: $.map($('.cinema-hall-cell.active'), function (item) {
-                if (!$(item).hasClass('joined') || $(item).attr('data-rows') > 0 && $(item).attr('data-cells') > 0) {
-                    return $(item).attr('data-id');
-                }
-            })
-        };
-
-        ajax('/Book/Create/' + $('.cinema-hall-movie-id').val(), data, function (data) {
-            window.location.href = '/Book/Confirm/' + data.id;
-        });
-    });
-
     $('.cinema-hall-cell.joined.booked').each(function () {
         $('.cinema-hall-cell.joined[data-group="' + $(this).attr('data-group') + '"]').addClass('booked');
     });
@@ -59,4 +74,12 @@
     }).mouseleave(function () {
         $('.cinema-hall-cell.joined').removeClass('grouped');
     });
-});
+}
+
+function getCinemaHallPlaceIds() {
+    return $.map($('.cinema-hall-cell.active'), function (item) {
+        if (!$(item).hasClass('joined') || $(item).attr('data-rows') > 0 && $(item).attr('data-cells') > 0) {
+            return $(item).attr('data-id');
+        }
+    });
+}

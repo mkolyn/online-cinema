@@ -30,6 +30,7 @@
                     var data = "";
                     var cellClass = "";
                     var title = "";
+
                     if (ViewBag.cinemaHallRows[i, j].GetIsJoined())
                     {
                         data = " data-rows=" + ViewBag.cinemaHallRows[i, j].Rows + " data-cells=" + ViewBag.cinemaHallRows[i, j].Cells;
@@ -43,10 +44,16 @@
                     {
                         title = " title=" + ViewBag.cinemaHallRows[i, j].GetJoinedGroupName();
                     }
+
                     if (ViewBag.cinemaHallRows[i, j].GetIsBooked())
                     {
                         cellClass += " booked";
                     }
+                    else if (ViewBag.cinemaHallRows[i, j].GetIsSelected())
+                    {
+                        cellClass += " active";
+                    }
+
                     if (ViewBag.cinemaHallRows[i, j].GetPrice() > 0)
                     {
                         data += " data-price=" + ViewBag.cinemaHallRows[i, j].GetPrice();

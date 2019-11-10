@@ -26,6 +26,8 @@ namespace CinemaTickets.Models
         private string JoinedGroupName { get; set; }
         // is booked
         private bool IsBooked { get; set; }
+        // is selected
+        private bool IsSelected { get; set; }
         // group price
         private int Price { get; set; }
 
@@ -69,6 +71,16 @@ namespace CinemaTickets.Models
             this.IsBooked = IsBooked;
         }
 
+        public bool GetIsSelected()
+        {
+            return IsSelected;
+        }
+
+        public void SetIsSelected(bool IsSelected)
+        {
+            this.IsSelected = IsSelected;
+        }
+
         public int GetPrice()
         {
             return Price;
@@ -102,7 +114,7 @@ namespace CinemaTickets.Models
 
         public DbSet<CinemaHallPlace> CinemaHallPlaces { get; set; }
 
-        public CinemaHallPlaceData GetCinemaHallPlacesData(int id, int cinemaHallMovieId = 0)
+        public CinemaHallPlaceData GetCinemaHallPlacesData(int id, int cinemaHallMovieId = 0, int[] cinemaHallPlaceIds = null)
         {
             CinemaMovie cinemaMovie = null;
             if (cinemaHallMovieId > 0)
@@ -185,6 +197,10 @@ namespace CinemaTickets.Models
                 if (cinemaHallIsBookedPlaces[cinemaHallPlace.Row - 1, cinemaHallPlace.Cell - 1] == true)
                 {
                     cinemaHallPlace.SetIsBooked(true);
+                }
+                else if (cinemaHallPlaceIds != null && cinemaHallPlaceIds.Contains(cinemaHallPlace.ID))
+                {
+                    cinemaHallPlace.SetIsSelected(true);
                 }
 
                 if (prices.ContainsKey(cinemaHallPlace.ID) && prices[cinemaHallPlace.ID] > 0)

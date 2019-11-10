@@ -17,5 +17,6 @@ namespace CinemaTickets.Models
     {
         public const string ORDER_HAS_BEEN_CHANGED = "Були зроблені зміни у бронюванні";
         public const string ORDER_IS_BEING_PROCESSED = "Ви вже перейшли на сторінку оплати";
+        public const string ORDER_HAS_BEEN_BOOKED = "Місця вже були заброньовані";
     }
 }

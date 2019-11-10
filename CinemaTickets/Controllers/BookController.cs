@@ -58,14 +58,35 @@ namespace CinemaTickets.Controllers
         }
 
         [HttpPost]
+        public ActionResult UpdatePlaces(int id, int[] cinemaHallPlaces)
+        {
+            CinemaHallMovie cinemaHallMovie = cinemaHallMovieDb.CinemaHallMovies.Find(id);
+            CinemaHall cinemaHall = cinemaHallMovieDb.CinemaHalls.Find(cinemaHallMovie.CinemaHallID);
+            CinemaHallPlaceData cinemaHallPlaceData = cinemaHallPlaceDb.GetCinemaHallPlacesData(cinemaHall.ID, cinemaHallMovie.ID, cinemaHallPlaces);
+
+            ViewData["isPlacesFromScreen"] = cinemaHall.IsPlacesFromScreen;
+            ViewData["maxRow"] = cinemaHallPlaceData.MaxRow;
+            ViewData["maxCell"] = cinemaHallPlaceData.MaxCell;
+            ViewData["cinemaHallRows"] = cinemaHallPlaceData.CinemaHallRows;
+
+            return PartialView("../CinemaHallPlaces/Places");
+        }
+
+        [HttpPost]
         public ActionResult Create(int id, int[] cinemaHallPlaces)
         {
+            bool success = true;
+            bool canCreateOrder = true;
+            string message = "";
+            int orderId = 0;
+
             Order order = new Order()
             {
                 Date = DateTime.Now,
             };
             orderDb.Orders.Add(order);
             orderDb.SaveChanges();
+            orderId = order.ID;
 
             int price = cinemaHallMovieDb.GetPrice(id);
             CinemaHallMovie cinemaHallMovie = cinemaHallMovieDb.CinemaHallMovies.Find(id);
@@ -74,32 +95,58 @@ namespace CinemaTickets.Controllers
 
             for (var i = 0; i < cinemaHallPlaces.Length; i++)
             {
+                // check if places were booked before
                 int cinemaHallPlaceId = cinemaHallPlaces[i];
-                int cinemaPlaceGroupID = cinemaPlaceGroupDb.GetCinemaPlaceGroupId(cinemaHallPlaceId);
-                CinemaMovieGroupPrice cinemaMovieGroupPrice = cinemaMovieGroupPriceDb.Get(cinemaMovie.ID, cinemaPlaceGroupID);
-                int orderItemPrice = cinemaMovieGroupPrice != null ? cinemaMovieGroupPrice.Price : price;
-
-                OrderItem orderItem = new OrderItem()
+                CinemaHallMoviePlace cinemaHallMoviePlace = cinemaHallMoviePlaceDb.GetCinemaHallMoviePlace(id, cinemaHallPlaceId);
+                if (cinemaHallMoviePlace == null)
                 {
-                    OrderID = order.ID,
-                    CinemaHallMovieID = id,
-                    CinemaHallPlaceID = cinemaHallPlaceId,
-                    Price = orderItemPrice,
-                };
-                orderDb.OrderItems.Add(orderItem);
+                    int cinemaPlaceGroupID = cinemaPlaceGroupDb.GetCinemaPlaceGroupId(cinemaHallPlaceId);
+                    CinemaMovieGroupPrice cinemaMovieGroupPrice = cinemaMovieGroupPriceDb.Get(cinemaMovie.ID, cinemaPlaceGroupID);
+                    int orderItemPrice = cinemaMovieGroupPrice != null ? cinemaMovieGroupPrice.Price : price;
 
-                CinemaHallMoviePlace cinemaHallMoviePlace = new CinemaHallMoviePlace()
+                    OrderItem orderItem = new OrderItem()
+                    {
+                        OrderID = orderId,
+                        CinemaHallMovieID = id,
+                        CinemaHallPlaceID = cinemaHallPlaceId,
+                        Price = orderItemPrice,
+                    };
+                    orderDb.OrderItems.Add(orderItem);
+
+                    cinemaHallMoviePlace = new CinemaHallMoviePlace()
+                    {
+                        CinemaHallMovieID = id,
+                        CinemaHallPlaceID = cinemaHallPlaceId,
+                        Status = CinemaHallMoviePlace.STATUS_PROCESSING,
+                    };
+                    cinemaHallMoviePlaceDb.CinemaHallMoviePlaces.Add(cinemaHallMoviePlace);
+                }
+                else
                 {
-                    CinemaHallMovieID = id,
-                    CinemaHallPlaceID = cinemaHallPlaceId,
-                    Status = CinemaHallMoviePlace.STATUS_PROCESSING,
-                };
-                cinemaHallMoviePlaceDb.CinemaHallMoviePlaces.Add(cinemaHallMoviePlace);
+                    canCreateOrder = false;
+                }
+
+                if (!canCreateOrder)
+                {
+                    break;
+                }
+            }
+
+            if (canCreateOrder)
+            {
+                cinemaHallMoviePlaceDb.SaveChanges();
+            }
+            else
+            {
+                orderDb.OrderItems = null;
+                orderDb.Orders.Remove(order);
+                orderId = 0;
+                success = false;
+                message = Messages.ORDER_HAS_BEEN_BOOKED;
             }
             orderDb.SaveChanges();
-            cinemaHallMoviePlaceDb.SaveChanges();
 
-            return Json(new { id = order.ID });
+            return Json(new { success = success, message = message, id = orderId });
         }
 
         public ActionResult Confirm(int id)

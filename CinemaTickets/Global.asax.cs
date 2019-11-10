@@ -18,7 +18,7 @@ namespace CinemaTickets
             {
                 using (StreamWriter sw = new StreamWriter(Server.MapPath("~/Errors/errors.txt"), true))
                 {
-                    sw.WriteLine(exception.StackTrace);
+                    sw.WriteLine(exception.Source + " " + exception.Message + " " + exception.StackTrace);
                 }
             }
         }

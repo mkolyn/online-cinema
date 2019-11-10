@@ -154,6 +154,8 @@ namespace CinemaTickets.Models
         {
             string details = "";
 
+            Order order = Orders.Find(id);
+
             List<OrderItemInfo> orderItems = GetOrderItems(id);
             foreach (OrderItemInfo orderItem in orderItems)
             {
@@ -163,9 +165,10 @@ namespace CinemaTickets.Models
                 CinemaHallPlace cinemaHallPlace = cinemaHallPlaceDb.CinemaHallPlaces.Find(cinemaHallMoviePlace.CinemaHallPlaceID);
 
                 details += "Кінотеатр: " + orderItem.CinemaName + ", Зал: " + orderItem.CinemaHallName + "\n";
-                details += "Ряд: " + cinemaHallPlace.Row + ", Місце: " + cinemaHallPlace.Cell + "\n";
                 details += "Фільм: " + orderItem.MovieName + ", Тривалість: " + orderItem.Duration + " хв." + "\n";
-                details += "Дата: " + orderItem.FormattedDate + ", Ціна: " + orderItem.Price + " грн." + "\n\n";
+                details += "Ряд: " + cinemaHallPlace.Row + ", Місце: " + cinemaHallPlace.Cell + "\n";
+                details += "Дата: " + orderItem.FormattedDate + ", Ціна: " + orderItem.Price + " грн." + "\n";
+                details += "Оплачено: " + (order.IsPaid ? "Так" : "Ні") + "\n\n";
             }
 
             return details;

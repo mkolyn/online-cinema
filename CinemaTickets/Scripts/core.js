@@ -1,12 +1,18 @@
-﻿function ajax(url, data, func) {
-    $('body').append('<div class="ajax-loading"></div>');
+﻿function ajax(url, data, func, disableAnimation) {
+    disableAnimation = typeof disableAnimation != 'undefined' ? disableAnimation : false;
+    if (!disableAnimation) {
+        $('body').append('<div class="ajax-loading"></div>');
+    }
 
     $.ajax({
         url: url,
         method: "POST",
         data: data,
         success: function (data) {
-            $('.ajax-loading').remove();
+            if (!disableAnimation) {
+                $('.ajax-loading').remove();
+            }
+            
             if (typeof func == 'function') {
                 func(data);
             }
