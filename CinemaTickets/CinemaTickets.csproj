@@ -429,6 +429,7 @@
     <Content Include="Views\CinemaHallSchedule\Hours.cshtml" />
     <Content Include="Views\Registration\Index.cshtml" />
     <Content Include="Views\Home\Thankyou.cshtml" />
+    <Content Include="Views\Shared\Header.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
