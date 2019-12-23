@@ -430,6 +430,7 @@
     <Content Include="Views\Registration\Index.cshtml" />
     <Content Include="Views\Home\Thankyou.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
+    <Content Include="Views\Shared\Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
