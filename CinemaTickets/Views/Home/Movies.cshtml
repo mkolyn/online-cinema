@@ -1,0 +1,23 @@
+﻿<div class="movies">
+    @foreach (var movie in ViewData["movies"] as List<CinemaTickets.Models.CinemaHallScheduleMovie>)
+    {
+        <div class="movie-item">
+            <div class="movie">
+                <div class="movie-tickets">
+                    <div class="movie-tickets-icon">
+                        <span class="glyphicon glyphicon-star"></span>
+                    </div>
+                    <div class="movie-tickets-label">
+                        Квитки
+                    </div>
+                    <div class="movie-tickets-button">
+                        <span class="glyphicon glyphicon-play"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="movie-name">
+                @movie.MovieName
+            </div>
+        </div>
+    }
+</div>

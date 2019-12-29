@@ -332,6 +332,7 @@
     <Content Include="Content\img\loading.gif" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\places.css" />
+    <Content Include="Content\home.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -431,6 +432,10 @@
     <Content Include="Views\Home\Thankyou.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Home\Filter.cshtml" />
+    <Content Include="Views\Home\Calendar.cshtml" />
+    <Content Include="Views\Home\Movies.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

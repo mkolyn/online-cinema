@@ -25,6 +25,7 @@ namespace CinemaTickets.Controllers
             string searchString = ""
         )
         {
+            ViewBag.Styles.Add("home");
             ViewBag.Scripts.Add("home");
 
             DateTime date;
@@ -45,6 +46,7 @@ namespace CinemaTickets.Controllers
             ViewBag.cityId = Core.GetCityId();
             ViewBag.CinemaID = cinemaDb.GetSelectList(cinemaId, Core.GetCityId());
             ViewBag.GenreID = genreDb.GetSelectList(genreId);
+            ViewBag.monthList = Core.GetMonthList();
 
             return View();
         }

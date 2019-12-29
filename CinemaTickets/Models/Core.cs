@@ -189,5 +189,24 @@ namespace CinemaTickets.Models
 
             return hour + ":" + minute;
         }
+
+        public static Dictionary<int, string> GetMonthList()
+        {
+            return new Dictionary<int, string>
+            {
+                { 1, "Січ" },
+                { 2, "Лют" },
+                { 3, "Бер" },
+                { 4, "Кві" },
+                { 5, "Тра" },
+                { 6, "Чер" },
+                { 7, "Лип" },
+                { 8, "Сер" },
+                { 9, "Вер" },
+                { 10, "Жов" },
+                { 11, "Лис" },
+                { 12, "Гру" },
+            };
+        }
     }
 }

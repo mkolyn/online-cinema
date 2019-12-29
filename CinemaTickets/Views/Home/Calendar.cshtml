@@ -1,0 +1,22 @@
+﻿<div class="calendar">
+    <div class="calendar-slider-prev">
+        <span class="glyphicon glyphicon-menu-left"></span>
+    </div>
+    <div class="calendar-slider">
+        @foreach (var date in ViewBag.dates)
+        {
+            <div class="calendar-date active">
+                <div class="calendar-date-weekday">
+                    Сьогодні
+                </div>
+                <div class="calendar-date-day">
+                    <div class="calendar-date-month">@ViewBag.monthList[date.Month]</div>
+                    <div class="calendar-date-number">@date.Day</div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="calendar-slider-next">
+        <span class="glyphicon glyphicon-menu-right"></span>
+    </div>
+</div>

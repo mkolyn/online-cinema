@@ -1,3 +1,21 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"].ToString();
+    switch (controller)
+    {
+        case "Administrator":
+        case "Cities":
+        case "Movies":
+        case "Users":
+        case "Genres":
+        case "Cinemas":
+        case "CinemaHalls":
+        case "CinemaHallPlaces":
+        case "CinemaHallSchedule":
+            Layout = "~/Views/Shared/_AdminLayout.cshtml";
+            break;
+        default:
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+    }
 }

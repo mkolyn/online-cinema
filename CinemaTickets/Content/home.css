@@ -1,0 +1,88 @@
+﻿.calendar {
+    margin-top: 10px;
+    padding: 10px 60px;
+    background-color: #ebebeb;
+    position: relative;
+}
+
+.calendar-date {
+    width: 155px;
+    display: inline-block;
+    background-color: #FFFFFF;
+}
+
+.calendar-date-weekday {
+    border-bottom: 1px solid #ebebeb;
+    text-align: center;
+    color: #929292;
+    height: 30px;
+    padding: 5px;
+}
+
+.calendar-date.active .calendar-date-weekday {
+    color: #FFFFFF;
+    background-color: #720f95;
+    border-bottom: none;
+}
+
+.calendar-date-day {
+    height: 120px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    padding: 15px;
+    color: #929292;
+}
+
+.calendar-date.active .calendar-date-day {
+    background-color: #ffc72f;
+    color: #720f95;
+}
+
+.calendar-slider-prev, .calendar-slider-next {
+    position: absolute;
+    top: calc(50% - 10px);
+    z-index: 2;
+    border-radius: 50px;
+    background-color: #ebebeb;
+    width: 40px;
+    height: 40px;
+}
+
+.calendar-slider-prev {
+    left: 0;
+}
+
+.calendar-slider-next {
+    right: 0;
+}
+
+    .calendar-slider-prev .glyphicon, .calendar-slider-next .glyphicon {
+        color: #929292;
+        font-size: 22px;
+        cursor: pointer;
+        top: 8px;
+    }
+
+.calendar-slider-prev .glyphicon {
+    left: 19px;
+}
+
+.calendar .lSSlideOuter, .calendar .lSSlideWrapper {
+    width: calc(100% + 80px);
+}
+
+.calendar .lSSlideOuter {
+    margin-left: -40px;
+}
+
+.calendar .lSSlideWrapper {
+    padding: 0 40px;
+}
+
+.how-to {
+    background-image: url('img/how-to.png');
+    background-size: contain;
+    width: 100%;
+    height: 186px;
+}
