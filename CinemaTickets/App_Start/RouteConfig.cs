@@ -27,13 +27,6 @@ namespace CinemaTickets
             );
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                namespaces: namespaces
-            );
-
-            routes.MapRoute(
                 name: "Date",
                 url: "date/{year}/{month}/{day}",
                 defaults: new { controller = "Home", action = "Index", year = DateTime.Now.Year, month = DateTime.Now.Month, day = DateTime.Now.Day },
@@ -51,6 +44,13 @@ namespace CinemaTickets
                 name: "DateAndCinemaAndGenre",
                 url: "date/{year}/{month}/{day}/{cinemaId}/{genreId}",
                 defaults: new { controller = "Home", action = "Index" },
+                namespaces: namespaces
+            );
+
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                 namespaces: namespaces
             );
         }

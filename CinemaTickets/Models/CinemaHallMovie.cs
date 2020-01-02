@@ -83,11 +83,12 @@ namespace CinemaTickets.Models
                              MovieName = m.Name,
                              Duration = m.Duration,
                              CityID = c.CityID,
-                             Image = cm.Image,
+                             Image = m.Image,
                              CinemaHallMovieID = chm.ID,
                              CinemaID = c.ID,
                              GenreID = m.GenreID,
                              GenreName = g.Name,
+                             MovieID = m.ID,
                          };
 
             int cityId = Core.GetCityId();

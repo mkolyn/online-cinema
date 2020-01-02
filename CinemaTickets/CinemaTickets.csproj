@@ -196,6 +196,7 @@
     <Compile Include="Controllers\GenresController.cs" />
     <Compile Include="Controllers\AdministratorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -305,6 +306,10 @@
     <Compile Include="Migrations\201911091208083_OrderIsProcessing.cs" />
     <Compile Include="Migrations\201911091208083_OrderIsProcessing.Designer.cs">
       <DependentUpon>201911091208083_OrderIsProcessing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001021153065_MovieImage.cs" />
+    <Compile Include="Migrations\202001021153065_MovieImage.Designer.cs">
+      <DependentUpon>202001021153065_MovieImage.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaMovieGroupPrice.cs" />
@@ -436,6 +441,7 @@
     <Content Include="Views\Home\Calendar.cshtml" />
     <Content Include="Views\Home\Movies.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Movie\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -532,6 +538,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911091208083_OrderIsProcessing.resx">
       <DependentUpon>201911091208083_OrderIsProcessing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001021153065_MovieImage.resx">
+      <DependentUpon>202001021153065_MovieImage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

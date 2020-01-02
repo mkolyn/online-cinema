@@ -1,0 +1,10 @@
+﻿@model CinemaTickets.Models.Movie
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<div class="movie">
+    <div class="movie-image" style="background-image: url(/images/@Html.Raw(Model.Image))"></div>
+</div>

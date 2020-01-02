@@ -11,7 +11,9 @@
                         Квитки
                     </div>
                     <div class="movie-tickets-button">
-                        <span class="glyphicon glyphicon-play"></span>
+                        <a href="@Url.RouteUrl("Default", new { controller = "Movie", action = "Details", id = movie.MovieID })">
+                            <span class="glyphicon glyphicon-play"></span>
+                        </a>
                     </div>
                 </div>
             </div>

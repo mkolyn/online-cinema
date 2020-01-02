@@ -1,8 +1,8 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
     var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"].ToString();
     switch (controller)
     {
+        case "administrator":
         case "Administrator":
         case "Cities":
         case "Movies":

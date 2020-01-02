@@ -23,20 +23,26 @@
         <img src="/images/@ViewBag.Image" class="movie-image" />
     }
 
-    <div class="form-group">
-        @Html.Label("Зображення", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" name="image" id="image" accept="image/jpeg,image/png" />
+    @if (ViewBag.cinemaId == 0)
+    {
+        <div class="form-group">
+            @Html.Label("Зображення", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="image" id="image" accept="image/jpeg,image/png" />
+            </div>
         </div>
-    </div>
+    }
 
-    <div class="form-group">
-        @Html.Label("Ціна", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.Editor("Ціна", new { htmlAttributes = new { @Name = "price", @Value = ViewBag.price, @class = "form-control required", @type = "number" } })
-            @Html.ValidationMessage("Ціна", "", new { @class = "text-danger" })
+    @if (ViewBag.cinemaId > 0)
+    {
+        <div class="form-group">
+            @Html.Label("Ціна", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("Ціна", new { htmlAttributes = new { @Name = "price", @Value = ViewBag.price, @class = "form-control required", @type = "number" } })
+                @Html.ValidationMessage("Ціна", "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
+    }
 
     @foreach (CinemaTickets.Models.CinemaPlaceGroup cinemaPlaceGroup in ViewBag.cinemaPlaceGroups)
     {

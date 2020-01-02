@@ -96,6 +96,13 @@ namespace CinemaTickets.Controllers
                     movieId = existedMovie.ID;
                 }
 
+                string imageFileName = Core.UploadImage(image, Server.MapPath("~/Images"), movieId.ToString());
+                if (imageFileName != "")
+                {
+                    existedMovie.Image = imageFileName;
+                    db.SaveChanges();
+                }
+
                 if (cinemaId > 0)
                 {
                     CinemaMovie cinemaMovie = cinemaMovieDb.Get(cinemaId, movieId);
@@ -115,12 +122,6 @@ namespace CinemaTickets.Controllers
                     else
                     {
                         cinemaMovie.Price = price;
-                    }
-
-                    string imageFileName = Core.UploadImage(image, Server.MapPath("~/Images"), cinemaMovie.ID.ToString());
-                    if (imageFileName != "")
-                    {
-                        cinemaMovie.Image = imageFileName;
                     }
 
                     cinemaMovieDb.SaveChanges();
@@ -147,33 +148,37 @@ namespace CinemaTickets.Controllers
                 return HttpNotFound();
             }
 
-            CinemaMovie cinemaMovie = cinemaMovieDb.Get(Core.GetCinemaId(), id);
-            if (cinemaMovie == null)
-            {
-                return HttpNotFound();
-            }
-
-            List<CinemaPlaceGroup> cinemaPlaceGroups = new List<CinemaPlaceGroup>();
+            CinemaMovie cinemaMovie = null;
             Dictionary<int, int> groupPrices = new Dictionary<int, int>();
-            if (Core.GetCinemaId() > 0)
+            int cinemaId = Core.GetCinemaId();
+            int moviePrice = 0;
+            if (cinemaId > 0)
             {
-                cinemaPlaceGroups = cinemaPlaceGroupDb.GetList(Core.GetCinemaId());
+                cinemaMovie = cinemaMovieDb.Get(cinemaId, id);
+                if (cinemaMovie == null)
+                {
+                    return HttpNotFound();
+                }
+
+                moviePrice = cinemaMovie.Price;
+                List<CinemaPlaceGroup> cinemaPlaceGroups = new List<CinemaPlaceGroup>();
+                cinemaPlaceGroups = cinemaPlaceGroupDb.GetList(cinemaId);
                 foreach (CinemaPlaceGroup cinemaPlaceGroup in cinemaPlaceGroups)
                 {
                     groupPrices[cinemaPlaceGroup.ID] = 0;
                 }
-            }
 
-            List<CinemaMovieGroupPrice> cinemaMovieGroupPrices = cinemaMovieGroupPriceDb.GetList(cinemaMovie.ID);
-            foreach (CinemaMovieGroupPrice cinemaMovieGroupPrice in cinemaMovieGroupPrices)
-            {
-                groupPrices[cinemaMovieGroupPrice.CinemaPlaceGroupID] = cinemaMovieGroupPrice.Price;
+                List<CinemaMovieGroupPrice> cinemaMovieGroupPrices = cinemaMovieGroupPriceDb.GetList(cinemaMovie.ID);
+                foreach (CinemaMovieGroupPrice cinemaMovieGroupPrice in cinemaMovieGroupPrices)
+                {
+                    groupPrices[cinemaMovieGroupPrice.CinemaPlaceGroupID] = cinemaMovieGroupPrice.Price;
+                }
             }
 
             ViewBag.GenreID = genreDb.GetSelectList(movie.GenreID);
-            ViewBag.cinemaId = Core.GetCinemaId();
-            ViewBag.Image = cinemaMovie.Image;
-            ViewBag.price = cinemaMovie.Price;
+            ViewBag.cinemaId = cinemaId;
+            ViewBag.Image = movie.Image;
+            ViewBag.price = moviePrice;
             ViewBag.cinemaPlaceGroups = cinemaPlaceGroups;
             ViewBag.groupPrices = groupPrices;
 
@@ -185,20 +190,28 @@ namespace CinemaTickets.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, HttpPostedFileBase image, int price, Dictionary<int, int> GroupPrices)
+        public ActionResult Edit(int id, HttpPostedFileBase image, Dictionary<int, int> GroupPrices, int price = 0)
         {
             if (ModelState.IsValid)
             {
+                Movie movie = db.Movies.Find(id);
+                if (movie == null)
+                {
+                    return HttpNotFound();
+                }
+
+                string imageFileName = Core.UploadImage(image, Server.MapPath("~/Images"), movie.ID.ToString());
+                if (imageFileName != "")
+                {
+                    Core.RemoveImage(Server.MapPath("~/Images"), movie.Image);
+                    movie.Image = imageFileName;
+                    db.SaveChanges();
+                }
+
                 CinemaMovie cinemaMovie = cinemaMovieDb.Get(Core.GetCinemaId(), id);
 
                 if (cinemaMovie != null)
                 {
-                    string imageFileName = Core.UploadImage(image, Server.MapPath("~/Images"), cinemaMovie.ID.ToString());
-                    if (imageFileName != "")
-                    {
-                        Core.RemoveImage(Server.MapPath("~/Images"), cinemaMovie.Image);
-                        cinemaMovie.Image = imageFileName;
-                    }
                     cinemaMovie.Price = price;
                     cinemaMovieDb.SaveChanges();
 
@@ -206,7 +219,7 @@ namespace CinemaTickets.Controllers
                 }
             }
 
-            return RedirectToAction("Index");
+            return RedirectToRoute("Administrator", new { Action = "Index", Controller = "Movies" });
         }
 
         // GET: Movies/Delete/5
@@ -247,6 +260,7 @@ namespace CinemaTickets.Controllers
 
             if (Core.GetCinemaId() == 0)
             {
+                Core.RemoveImage(Server.MapPath("~/Images"), movie.Image);
                 db.Movies.Remove(movie);
                 db.SaveChanges();
             }

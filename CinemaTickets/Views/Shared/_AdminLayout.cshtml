@@ -43,17 +43,17 @@
                     {
                         if (Session["CinemaID"] == null || Session["CinemaID"].ToString() == "")
                         {
-                            <li>@Html.ActionLink("Міста", "Index", "Cities")</li>
-                            <li>@Html.ActionLink("Кінотеатри", "Index", "Cinemas")</li>
-                            <li>@Html.ActionLink("Жанри", "Index", "Genres")</li>
-                            <li>@Html.ActionLink("Користувачі", "Index", "Users")</li>
+                            <li>@Html.RouteLink("Міста", "Administrator", new { controller = "Cities", action = "Index" })</li>
+                            <li>@Html.RouteLink("Кінотеатри", "Administrator", new { controller = "Cinemas", action = "Index" })</li>
+                            <li>@Html.RouteLink("Жанри", "Administrator", new { controller = "Genres", action = "Index" })</li>
+                            <li>@Html.RouteLink("Користувачі", "Administrator", new { controller = "Users", action = "Index" })</li>
                         }
                         else
                         {
-                            <li>@Html.RouteLink("Зали", new { controller = "Cinemas", action = "Halls", id = Session["CinemaID"].ToString() })</li>
-                            <li>@Html.RouteLink("Групи місць", new { controller = "Cinemas", action = "PlaceGroups", id = Session["CinemaID"].ToString() })</li>
+                            <li>@Html.RouteLink("Зали", "Administrator", new { controller = "Cinemas", action = "Halls", id = Session["CinemaID"].ToString() })</li>
+                            <li>@Html.RouteLink("Групи місць", "Administrator", new { controller = "Cinemas", action = "PlaceGroups", id = Session["CinemaID"].ToString() })</li>
                         }
-                        <li>@Html.ActionLink("Фільми", "Index", "Movies")</li>
+                        <li>@Html.RouteLink("Фільми", "Administrator", new { controller = "Movies", action = "Index" })</li>
                         <li>@Html.ActionLink("Вийти", "Logout", "Administrator")</li>
                     }
                 </ul>
