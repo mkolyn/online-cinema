@@ -287,7 +287,7 @@ namespace CinemaTickets.Models
 
             foreach (CinemaHallScheduleMovie movieScheduleData in movieScheduleDataList)
             {
-                string time = movieScheduleData.Date.Hour.ToString() + ":" + movieScheduleData.Date.Minute.ToString();
+                string time = Core.GetFormatedTime(movieScheduleData.Date);
                 string cinemaName = movieScheduleData.CinemaName;
                 string day = Core.GetFormatedDay(movieScheduleData.Date);
 

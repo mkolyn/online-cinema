@@ -24,6 +24,7 @@ namespace CinemaTickets.Controllers
         {
             ViewBag.Styles.Add("places");
             ViewBag.Scripts.Add("places");
+            ViewBag.Styles.Add("book");
 
             CinemaHallMovie cinemaHallMovie = cinemaHallMovieDb.CinemaHallMovies.Find(id);
             if (cinemaHallMovie == null)

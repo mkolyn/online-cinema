@@ -24,3 +24,30 @@
 .order-item-row:last-child .order-item-info {
     border-bottom: 1px dotted #808080;
 }
+
+.book-info, .book-places-info, .book-confirm {
+    margin-top: 10px;
+}
+
+.book-info {
+    padding: 10px;
+}
+
+.book-places .cinema-hall-screen-left, .book-places .cinema-hall-screen-right, .book-places .cinema-hall-screen-center {
+    float: left;
+    height: 25px;
+}
+
+.book-places .cinema-hall-screen-left, .book-places .cinema-hall-screen-right {
+    background-color: #c1c1c1;
+    width: calc(50% - 50px);
+}
+
+.book-places .cinema-hall-screen-center {
+    width: 100px;
+    text-align: center;
+}
+
+.book-places .cinema-hall-screen {
+    background-color: none;
+}

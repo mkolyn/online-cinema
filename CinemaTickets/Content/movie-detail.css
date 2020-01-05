@@ -78,6 +78,7 @@
     line-height: 30px;
     margin-top: 10px;
     cursor: pointer;
+    display: block;
 }
 
 .time-table-movie-type {

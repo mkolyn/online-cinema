@@ -4,6 +4,36 @@
     ViewBag.Title = ViewBag.Message;
 }
 
+<div class="col-lg-4 book-info bg-grey">
+    <div class="book-info-name grey bold">
+        @ViewBag.movieName
+    </div>
+    <div class="book-info-detail light-grey">
+        @ViewBag.cinemaName | @ViewBag.formattedDate
+    </div>
+</div>
+
+<div class="col-lg-4 book-places-info">
+    <div class="book-places-info-total grey">
+        <span class="bold">
+            Сума до сплати:
+        </span>
+        <span class="violet bold">
+            <span class="total-price">100</span> грн.
+        </span>
+    </div>
+</div>
+
+<div class="col-lg-4 book-confirm">
+    <div class="button bg-orange violet bold">
+        Забронювати
+    </div>
+</div>
+
+<div class="book-places">
+    @Html.Partial("../CinemaHallPlaces/Places")
+</div>
+
 <div class="row">
     <h2>Забронювати квиток</h2>
 

@@ -30,9 +30,9 @@
                     </div>
                     @foreach (KeyValuePair<string, int> time in schedule[cinemaName][day])
                     {
-                        <div class="time-table-day-time">
+                        <a class="time-table-day-time" href="@Url.RouteUrl("Default", new { controller = "Book", action = "Index", id = @time.Value })">
                             @time.Key
-                        </div>
+                        </a>
                     }
                 </div>
             }

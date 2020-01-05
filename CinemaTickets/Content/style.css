@@ -370,3 +370,43 @@
 .movie-name {
     color: #929292;
 }
+
+.grey {
+    color: #929292;
+}
+
+.light-grey {
+    color: #adadad;
+}
+
+.bg-grey {
+    background-color: #ebebeb;
+}
+
+.bg-dark-grey {
+    background-color: #c1c1c1;
+}
+
+.violet {
+    color: #720f95;
+}
+
+.bg-violet {
+    background-color: #720f95;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.bg-orange {
+    background-color: #ffc72f;
+}
+
+.button {
+    width: 150px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+}

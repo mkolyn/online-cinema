@@ -1,7 +1,11 @@
 ﻿@if (ViewBag.isPlacesFromScreen)
 {
-    <div class="cinema-hall-screen">
-        Екран
+    <div class="col-lg-12 cinema-hall-screen">
+        <div class="cinema-hall-screen-left"></div>
+        <div class="cinema-hall-screen-center">
+            Екран
+        </div>
+        <div class="cinema-hall-screen-right"></div>
     </div>
 }
 
@@ -69,7 +73,11 @@
 
 @if (!ViewBag.isPlacesFromScreen)
 {
-    <div class="cinema-hall-screen">
-        Екран
+    <div class="col-lg-12 cinema-hall-screen">
+        <div class="cinema-hall-screen-left"></div>
+        <div class="cinema-hall-screen-center">
+            Екран
+        </div>
+        <div class="cinema-hall-screen-right"></div>
     </div>
 }
