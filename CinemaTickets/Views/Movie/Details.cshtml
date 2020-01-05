@@ -4,7 +4,12 @@
     ViewBag.Title = "Details";
 }
 
-
-<div class="movie">
-    <div class="movie-image" style="background-image: url(/images/@Html.Raw(Model.Image))"></div>
+<div class="movie-detail">
+    <div class="movie-detail-image" style="background-image: url(/images/@Html.Raw(Model.Image))"></div>
+    <div class="movie-detail-name">
+        @Model.Name
+    </div>
 </div>
+
+@Html.Partial("../Home/Calendar")
+@Html.Partial("Time")

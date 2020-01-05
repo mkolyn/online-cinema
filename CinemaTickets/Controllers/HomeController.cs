@@ -26,6 +26,7 @@ namespace CinemaTickets.Controllers
         )
         {
             ViewBag.Styles.Add("home");
+            ViewBag.Styles.Add("calendar");
             ViewBag.Scripts.Add("home");
 
             DateTime date;

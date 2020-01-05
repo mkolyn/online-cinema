@@ -1,0 +1,41 @@
+﻿@{
+    Dictionary<string, Dictionary<string, Dictionary<string, int>>> schedule = ViewBag.schedule;
+}
+
+<div class="time-table">
+    @foreach (string cinemaName in schedule.Keys)
+    {
+        <div class="time-table-cinema">
+            <div class="time-table-cinema-icon">
+                <span class="glyphicon glyphicon-facetime-video"></span>
+            </div>
+            <div class="time-table-cinema-detail">
+                <div class="time-table-cinema-name">
+                    @cinemaName
+                </div>
+                <div class="time-table-cinema-address">
+                    вул. Героїв Майдану, 176
+                </div>
+            </div>
+        </div>
+        <div class="time-table-select">
+            <div class="time-table-movie-type">
+                2D
+            </div>
+            @foreach (string day in schedule[cinemaName].Keys)
+            {
+                <div class="time-table-day">
+                    <div class="time-table-day-name">
+                        @day
+                    </div>
+                    @foreach (KeyValuePair<string, int> time in schedule[cinemaName][day])
+                    {
+                        <div class="time-table-day-time">
+                            @time.Key
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>

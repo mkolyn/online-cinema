@@ -1,0 +1,98 @@
+﻿.movie-detail {
+    width: 200px;
+    height: 300px;
+}
+
+.movie-detail-name {
+    color: #720f95;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: #ffc72f;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px 0;
+    border-top: 5px solid #720f95;
+}
+
+.movie-detail-image {
+    background-size: contain;
+    background-position: center center;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+
+.time-table {
+    margin-top: 20px;
+}
+
+.time-table-cinema {
+    background-color: #ebebeb;
+    padding: 10px;
+}
+
+.time-table-cinema-name {
+    color: #929292;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.time-table-cinema-address {
+    color: #b8b8b8;
+}
+
+.time-table-cinema-icon, .time-table-cinema-detail {
+    display: inline-block;
+}
+
+.time-table-cinema-icon {
+    vertical-align: top;
+}
+
+.time-table-cinema-icon .glyphicon {
+    color: #c7c7c7;
+    font-size: 24px;
+    line-height: 40px;
+}
+
+.time-table-cinema-detail {
+    margin-left: 25px;
+}
+
+.time-table-day {
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: top;
+}
+
+.time-table-day-name {
+    color: #929292;
+}
+
+.time-table-day-time {
+    background-color: #858585;
+    color: #FFFFFF;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.time-table-movie-type {
+    display: inline-block;
+    background-color: #ebebeb;
+    color: #929292;
+    width: 50px;
+    height: 300px;
+    vertical-align: top;
+    line-height: 300px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.time-table-select {
+    margin-top: 20px;
+}

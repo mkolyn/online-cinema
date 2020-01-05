@@ -26,6 +26,8 @@ namespace CinemaTickets.Models
         public int CinemaHallID { get; set; }
         // cinema ID
         public int CinemaID { get; set; }
+        // cinema name
+        public string CinemaName { get; set; }
         // city id
         public int CityID { get; set; }
         // genre id
@@ -254,6 +256,54 @@ namespace CinemaTickets.Models
             };
 
             return Core.GetHtmlString("Hours", viewData, controllerContext);
+        }
+
+        public List<CinemaHallScheduleMovie> GetMovieScheduleList(int movieId)
+        {
+            var cinemaHallScheduleMovie = from chm in CinemaHallMovies
+                                          join ch in CinemaHalls on chm.CinemaHallID equals ch.ID
+                                          join c in Cinemas on ch.CinemaID equals c.ID
+                                          join m in Movies on chm.MovieID equals m.ID
+                                          where chm.MovieID == movieId
+                                          select new CinemaHallScheduleMovie
+                                          {
+                                              CinemaHallMovieID = chm.ID,
+                                              MovieID = m.ID,
+                                              CinemaName = c.Name,
+                                              Date = chm.Date,
+                                          };
+
+            DateTime date = DateTime.Now.AddMinutes(Core.BOOK_BEFORE_MINUTES);
+            cinemaHallScheduleMovie = cinemaHallScheduleMovie.Where(chsm => chsm.Date > date);
+
+            return cinemaHallScheduleMovie.ToList();
+        }
+
+        public Dictionary<string, Dictionary<string, Dictionary<string, int>>> GetMovieSchedule(int movieId)
+        {
+            Dictionary<string, Dictionary<string, Dictionary<string, int>>> movieScheduleList;
+            movieScheduleList = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
+            List<CinemaHallScheduleMovie> movieScheduleDataList = GetMovieScheduleList(movieId);
+
+            foreach (CinemaHallScheduleMovie movieScheduleData in movieScheduleDataList)
+            {
+                string time = movieScheduleData.Date.Hour.ToString() + ":" + movieScheduleData.Date.Minute.ToString();
+                string cinemaName = movieScheduleData.CinemaName;
+                string day = Core.GetFormatedDay(movieScheduleData.Date);
+
+                if (!movieScheduleList.ContainsKey(cinemaName))
+                {
+                    movieScheduleList.Add(cinemaName, new Dictionary<string, Dictionary<string, int>>());
+                }
+                if (!movieScheduleList[cinemaName].ContainsKey(day))
+                {
+                    movieScheduleList[cinemaName].Add(day, new Dictionary<string, int>());
+                }
+
+                movieScheduleList[cinemaName][day].Add(time, movieScheduleData.CinemaHallMovieID);
+            }
+
+            return movieScheduleList;
         }
     }
 }

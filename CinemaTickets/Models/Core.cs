@@ -16,7 +16,10 @@ namespace CinemaTickets.Models
     public class Core
     {
         public const int PAGE_SIZE = 10;
+        // display number of days after today to select ticket date
         const int NEXT_DAYS = 10;
+        // ticket should be booked some time before beginning
+        public const double BOOK_BEFORE_MINUTES = 30;
 
         public static int GetCinemaId()
         {
@@ -47,6 +50,10 @@ namespace CinemaTickets.Models
             {
                 Int32.TryParse(session["CityID"].ToString(), out int cityId);
                 return cityId;
+            }
+            else if (Config.DEFAULT_CITY_ID > 0)
+            {
+                return Config.DEFAULT_CITY_ID;
             }
             return 0;
         }
@@ -180,6 +187,14 @@ namespace CinemaTickets.Models
             string minute = date.Minute < 10 ? "0" + date.Minute.ToString() : date.Minute.ToString();
 
             return day + "." + month + "." + date.Year + " " + hour + ":" + minute;
+        }
+
+        public static string GetFormatedDay(DateTime date)
+        {
+            string day = date.Day < 10 ? "0" + date.Day.ToString() : date.Day.ToString();
+            string month = date.Month < 10 ? "0" + date.Month.ToString() : date.Month.ToString();
+
+            return day + "." + month + "." + date.Year;
         }
 
         public static string GetFormatedTime(DateTime date)
