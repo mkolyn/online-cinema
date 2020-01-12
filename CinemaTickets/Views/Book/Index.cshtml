@@ -4,6 +4,9 @@
     ViewBag.Title = ViewBag.Message;
 }
 
+<input type="hidden" class="cinema-hall-movie-id" value="@ViewBag.cinemaHallMovieId" />
+<input type="hidden" class="cinema-hall-movie-price" value="@ViewBag.price" />
+
 <div class="col-lg-4 book-info bg-grey">
     <div class="book-info-name grey bold">
         @ViewBag.movieName
@@ -25,13 +28,22 @@
 </div>
 
 <div class="col-lg-4 book-confirm">
-    <div class="button bg-orange violet bold">
+    <div class="button book-places hidden bg-orange violet bold">
         Забронювати
     </div>
 </div>
 
-<div class="book-places">
+<div class="cinema-hall-book-places">
     @Html.Partial("../CinemaHallPlaces/Places")
+</div>
+
+<div class="legend">
+    <div class="free"></div>
+    <div class="light-grey-2">Вільно</div>
+    <div class="active"></div>
+    <div class="light-grey-2">Ваш вибір</div>
+    <div class="booked"></div>
+    <div class="light-grey-2">Зайнято</div>
 </div>
 
 <div class="row">
@@ -61,15 +73,8 @@
         Ціна квитка: @ViewBag.price грн.
     </h6>
 
-    <div class="legend">
-        <div class="booked"></div>
-        <div>Заброньовано</div>
-        <div class="free"></div>
-        <div>Вільно</div>
-    </div>
-
     <div class="book-ticket">
-        <input type="hidden" class="cinema-hall-movie-id" value="@ViewBag.cinemaHallMovieId" />
+        <!--<input type="hidden" class="cinema-hall-movie-id" value="@ViewBag.cinemaHallMovieId" />
         <input type="hidden" class="cinema-hall-movie-price" value="@ViewBag.price" />
         <div class="form-group">
             <div class="cineme-hall-actions">
@@ -77,12 +82,12 @@
                     Забронювати
                 </button>
             </div>
-        </div>
-        <div class="total-price">
+        </div>-->
+        <!--<div class="total-price">
             Сума до сплати: <span class="total-price-value">0</span> грн.
-        </div>
-        <div class="cinema-hall-book-places">
+        </div>-->
+        <!--<div class="cinema-hall-book-places">
             @Html.Partial("../CinemaHallPlaces/Places")
-        </div>
+        </div>-->
     </div>
 </div>

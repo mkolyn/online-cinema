@@ -22,7 +22,7 @@ namespace CinemaTickets.Controllers
 
         public ActionResult Index(int id)
         {
-            ViewBag.Styles.Add("places");
+            //ViewBag.Styles.Add("places");
             ViewBag.Scripts.Add("places");
             ViewBag.Styles.Add("book");
 

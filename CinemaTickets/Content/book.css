@@ -33,21 +33,92 @@
     padding: 10px;
 }
 
-.book-places .cinema-hall-screen-left, .book-places .cinema-hall-screen-right, .book-places .cinema-hall-screen-center {
+.cinema-hall-screen-left, .cinema-hall-screen-right, .cinema-hall-screen-center {
     float: left;
-    height: 25px;
+    height: 20px;
 }
 
-.book-places .cinema-hall-screen-left, .book-places .cinema-hall-screen-right {
+.cinema-hall-screen-left, .cinema-hall-screen-right {
     background-color: #c1c1c1;
     width: calc(50% - 50px);
 }
 
-.book-places .cinema-hall-screen-center {
+.cinema-hall-screen-center {
     width: 100px;
     text-align: center;
 }
 
-.book-places .cinema-hall-screen {
+.cinema-hall-screen {
+    margin-top: 10px;
     background-color: none;
+}
+
+.cinema-hall-cell {
+    display: inline-block;
+    width: 36px;
+    height: 33px;
+    background-image: url('img/place.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.cinema-hall-cell:hover, .cinema-hall-cell.active {
+    background-image: url('img/place-active.png');
+}
+
+.cinema-hall-cell.booked {
+    background-image: url('img/place-booked.png');
+}
+
+.cinema-hall-rows, .cinema-hall-places {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 20px;
+}
+
+.cinema-hall-row-title {
+    margin-top: 10px;
+    height: 33px;
+    line-height: 33px;
+}
+
+.cinema-hall-row {
+    height: 33px;
+    margin-top: 10px;
+}
+
+.cinema-hall {
+    text-align: center;
+}
+
+.legend {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.legend > div {
+    display: inline-block;
+    line-height: 33px;
+    vertical-align: top;
+}
+
+.legend .free, .legend .active, .legend .booked {
+    display: inline-block;
+    width: 36px;
+    height: 33px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.legend .free {
+    background-image: url('img/place.png');
+}
+
+.legend .active {
+    background-image: url('img/place-active.png');
+}
+
+.legend .booked {
+    background-image: url('img/place-booked.png');
 }

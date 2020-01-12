@@ -9,66 +9,77 @@
     </div>
 }
 
-<div class="cinema-hall-rows">
-    @for (var i = 0; i < ViewBag.maxRow; i++)
-    {
-        <div class="cinema-hall-row-title">
-            Ряд @(i + 1)
-        </div>
-    }
-</div>
+<div class="cinema-hall">
 
-<div class="cinema-hall-places">
-    @for (var i = 0; i < ViewBag.maxRow; i++)
-    {
-        <div class="cinema-hall-row">
-            @for (var j = 0; j < ViewBag.maxCell; j++)
-            {
-                if (ViewBag.cinemaHallRows[i, j] == null)
+    <div class="cinema-hall-rows">
+        @for (var i = 0; i < ViewBag.maxRow; i++)
+        {
+            <div class="cinema-hall-row-title light-grey-2">
+                @(i + 1)
+            </div>
+        }
+    </div>
+
+    <div class="cinema-hall-places">
+        @for (var i = 0; i < ViewBag.maxRow; i++)
+        {
+            <div class="cinema-hall-row">
+                @for (var j = 0; j < ViewBag.maxCell; j++)
                 {
-                    <div class="cinema-hall-cell removed"></div>
+                    if (ViewBag.cinemaHallRows[i, j] == null)
+                    {
+                        <div class="cinema-hall-cell removed"></div>
+                    }
+                    else
+                    {
+                        var group = "";
+                        var data = "";
+                        var cellClass = "";
+                        var title = "";
+
+                        if (ViewBag.cinemaHallRows[i, j].GetIsJoined())
+                        {
+                            data = " data-rows=" + ViewBag.cinemaHallRows[i, j].Rows + " data-cells=" + ViewBag.cinemaHallRows[i, j].Cells;
+                            cellClass = " joined";
+                        }
+                        if (ViewBag.cinemaHallRows[i, j].GetJoinedGroupId() != "")
+                        {
+                            group = " data-group=" + ViewBag.cinemaHallRows[i, j].GetJoinedGroupId();
+                        }
+                        if (ViewBag.cinemaHallRows[i, j].GetJoinedGroupName() != "")
+                        {
+                            title = " title=" + ViewBag.cinemaHallRows[i, j].GetJoinedGroupName();
+                        }
+
+                        if (ViewBag.cinemaHallRows[i, j].GetIsBooked())
+                        {
+                            cellClass += " booked";
+                        }
+                        else if (ViewBag.cinemaHallRows[i, j].GetIsSelected())
+                        {
+                            cellClass += " active";
+                        }
+
+                        if (ViewBag.cinemaHallRows[i, j].GetPrice() > 0)
+                        {
+                            data += " data-price=" + ViewBag.cinemaHallRows[i, j].GetPrice();
+                        }
+                        <div class="cinema-hall-cell@{@cellClass}" data-id="@ViewBag.cinemaHallRows[i, j].ID" @data @group @title></div>
+                    }
                 }
-                else
-                {
-                    var group = "";
-                    var data = "";
-                    var cellClass = "";
-                    var title = "";
+            </div>
+        }
+    </div>
 
-                    if (ViewBag.cinemaHallRows[i, j].GetIsJoined())
-                    {
-                        data = " data-rows=" + ViewBag.cinemaHallRows[i, j].Rows + " data-cells=" + ViewBag.cinemaHallRows[i, j].Cells;
-                        cellClass = " joined";
-                    }
-                    if (ViewBag.cinemaHallRows[i, j].GetJoinedGroupId() != "")
-                    {
-                        group = " data-group=" + ViewBag.cinemaHallRows[i, j].GetJoinedGroupId();
-                    }
-                    if (ViewBag.cinemaHallRows[i, j].GetJoinedGroupName() != "")
-                    {
-                        title = " title=" + ViewBag.cinemaHallRows[i, j].GetJoinedGroupName();
-                    }
+    <div class="cinema-hall-rows">
+        @for (var i = 0; i < ViewBag.maxRow; i++)
+        {
+            <div class="cinema-hall-row-title light-grey-2">
+                @(i + 1)
+            </div>
+        }
+    </div>
 
-                    if (ViewBag.cinemaHallRows[i, j].GetIsBooked())
-                    {
-                        cellClass += " booked";
-                    }
-                    else if (ViewBag.cinemaHallRows[i, j].GetIsSelected())
-                    {
-                        cellClass += " active";
-                    }
-
-                    if (ViewBag.cinemaHallRows[i, j].GetPrice() > 0)
-                    {
-                        data += " data-price=" + ViewBag.cinemaHallRows[i, j].GetPrice();
-                    }
-                    <div class="cinema-hall-cell@{@cellClass}" data-id="@ViewBag.cinemaHallRows[i, j].ID" @data @group @title>
-                        @(j + 1)
-                    </div>
-                }
-            }
-        </div>
-    }
 </div>
 
 @if (!ViewBag.isPlacesFromScreen)

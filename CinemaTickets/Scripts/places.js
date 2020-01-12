@@ -24,11 +24,11 @@
             $('.cinema-hall-book-places').html(data);
             addCinemaHallPlacesEvents();
         }, true);
-    }, 5000);
+    }, 10000);
 });
 
 function addCinemaHallPlacesEvents() {
-    $('.cinema-hall-places').on('click', '.cinema-hall-cell', function () {
+    $('.cinema-hall-places').on('click', '.cinema-hall-cell', function (e) {
         if ($(this).hasClass('booked')) {
             return false;
         }
@@ -62,7 +62,7 @@ function addCinemaHallPlacesEvents() {
             }
         });
 
-        $('.total-price-value').html(totalPrice);
+        $('.total-price').html(totalPrice);
     });
 
     $('.cinema-hall-cell.joined.booked').each(function () {
