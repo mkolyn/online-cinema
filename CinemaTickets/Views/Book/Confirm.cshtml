@@ -2,6 +2,51 @@
     ViewBag.Title = ViewBag.Message;
 }
 
+<div class="book-confirm-image movie-detail-image" style="background-image: url(/images/)"></div>
+
+<div class="book-confirm-info">
+    <div class="book-confirm-movie-name bg-grey grey">
+        Одного разу в голлівуді
+    </div>
+    <div class="book-confirm-cinema grey">
+        Ефект
+    </div>
+    <div class="book-confirm-date grey">
+        <div>
+            Понеділок, 27.12.2019
+        </div>
+        <div>
+            12:00
+        </div>
+    </div>
+    <div class="book-confirm-places grey">
+        <div>
+            1 ряд, 1 місце, 50 грн.
+        </div>
+    </div>
+</div>
+
+<div class="book-confirm-user-info">
+    <div class="book-confirm-input book-confirm-user-name bg-grey">
+        <span class="glyphicon glyphicon-user grey"></span>
+        <input type="text" class="bg-grey" placeholder="Ім'я & Прізвище" />
+    </div>
+    <div class="book-confirm-input book-confirm-user-email bg-grey">
+        <input type="text" class="bg-grey" placeholder="E-mail" />
+    </div>
+    <div class="book-confirm-input book-confirm-user-phone bg-grey">
+        <input type="text" class="bg-grey" placeholder="Телефон" />
+    </div>
+</div>
+
+<div class="">
+    Сума до сплати: @ViewBag.totalPrice грн.
+</div>
+
+<div class="button liqpay-pay hidden bg-orange violet bold">
+    Оплатити
+</div>
+
 <div class="row">
     <h2>Підтвердити бронювання</h2>
 

@@ -122,3 +122,31 @@
 .legend .booked {
     background-image: url('img/place-booked.png');
 }
+
+.book-confirm-image, .book-confirm-info {
+    display: inline-block;
+}
+
+.book-confirm-movie-name {
+    padding: 10px 5px;
+    font-weight: bold;
+}
+
+.book-confirm-input {
+    height: 40px;
+    line-height: 40px;
+    margin-top: 5px;
+    padding: 0 10px;
+}
+
+.book-confirm-input .glyphicon {
+    font-size: 24px;
+    line-height: 40px;
+}
+
+.book-confirm-input input {
+    border: none;
+    height: 100%;
+    margin-left: 25px;
+    vertical-align: top;
+}
