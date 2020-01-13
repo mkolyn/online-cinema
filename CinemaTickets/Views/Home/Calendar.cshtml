@@ -3,11 +3,11 @@
         <span class="glyphicon glyphicon-menu-left"></span>
     </div>
     <div class="calendar-slider">
-        @foreach (var date in ViewBag.dates)
+        @foreach (var date in ViewBag.dates as List<DateTime>)
         {
             <div class="calendar-date active">
                 <div class="calendar-date-weekday">
-                    Сьогодні
+                    @ViewBag.dayList[date.DayOfWeek.ToString()]
                 </div>
                 <div class="calendar-date-day">
                     <div class="calendar-date-month">@ViewBag.monthList[date.Month]</div>

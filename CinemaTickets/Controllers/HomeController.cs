@@ -48,6 +48,7 @@ namespace CinemaTickets.Controllers
             ViewBag.CinemaID = cinemaDb.GetSelectList(cinemaId, Core.GetCityId());
             ViewBag.GenreID = genreDb.GetSelectList(genreId);
             ViewBag.monthList = Core.GetMonthList();
+            ViewBag.dayList = Core.GetDayList();
 
             return View();
         }
