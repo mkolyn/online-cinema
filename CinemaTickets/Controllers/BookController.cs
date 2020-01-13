@@ -159,11 +159,19 @@ namespace CinemaTickets.Controllers
             string expiredDate = order.Date.AddMinutes(Config.CONFIRM_PAYMENT_MINUTES_TIMEOUT).ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss");
 
             List<OrderItemInfo> orderItems = orderDb.GetOrderItems(id);
+            OrderItemInfo orderInfo = orderItems.First();
 
             ViewBag.orderItems = orderItems;
             ViewBag.formattedDate = Core.GetFormatedDate(order.Date);
+            ViewBag.formattedDay = Core.GetFormatedDay(order.Date);
+            ViewBag.formattedTime = Core.GetFormatedTime(order.Date);
             ViewBag.isPaid = order.IsPaid;
             ViewBag.orderId = order.ID;
+
+            ViewBag.movieName = orderInfo.MovieName;
+            ViewBag.cinemaName = orderInfo.CinemaName;
+            ViewBag.dayName = Core.GetDayList()[order.Date.DayOfWeek.ToString()];
+            ViewBag.movieImage = orderInfo.MovieImage;
 
             DateTime confirmToDate = order.Date.AddMinutes(Config.CONFIRM_PAYMENT_MINUTES_TIMEOUT);
             ViewBag.ScriptTexts.Add("var YEAR = " + confirmToDate.Year + ";");

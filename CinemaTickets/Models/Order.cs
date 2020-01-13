@@ -45,6 +45,8 @@ namespace CinemaTickets.Models
         public int Cell { get; set; }
         // movie name
         public string MovieName { get; set; }
+        // movie image
+        public string MovieImage { get; set; }
         // genre name
         public string Genre { get; set; }
         // cinema name
@@ -101,6 +103,7 @@ namespace CinemaTickets.Models
                                  Row = chp.Row,
                                  Cell = chp.Cell,
                                  MovieName = m.Name,
+                                 MovieImage = m.Image,
                                  Genre = g.Name,
                                  CinemaName = c.Name,
                                  CinemaHallName = ch.Name,

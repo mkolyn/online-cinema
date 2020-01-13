@@ -223,5 +223,19 @@ namespace CinemaTickets.Models
                 { 12, "Гру" },
             };
         }
+
+        public static Dictionary<string, string> GetDayList()
+        {
+            return new Dictionary<string, string>
+            {
+                { "Monday", "Понеділок" },
+                { "Tuesday", "Вівторок" },
+                { "Wednesday", "Середа" },
+                { "Thirsday", "Четвер" },
+                { "Friday", "П'ятниця" },
+                { "Saturday", "Субота" },
+                { "Sunday", "Неділя" },
+            };
+        }
     }
 }

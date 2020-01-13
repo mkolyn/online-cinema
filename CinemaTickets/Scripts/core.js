@@ -25,14 +25,18 @@ function isValidEmail(email) {
 }
 
 $(document).ready(function () {
-    $('.btn').click(function (e) {
+    $('.btn, .button').click(function (e) {
         var isValid = true;
+        $(this).closest('form').find('.input').removeClass('error');
         var requiredInputs = $(this).closest('form').find('.required');
         requiredInputs.removeClass('error');
 
         for (var i = 0; i < requiredInputs.length; i++) {
             if (requiredInputs.eq(i).val().trim() == '') {
                 requiredInputs.eq(i).addClass('error');
+                if (requiredInputs.eq(i).closest('.input').length > 0) {
+                    requiredInputs.eq(i).closest('.input').addClass('error');
+                }
                 isValid = false;
             }
         }

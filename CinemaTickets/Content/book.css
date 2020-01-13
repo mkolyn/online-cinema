@@ -127,26 +127,62 @@
     display: inline-block;
 }
 
+.book-confirm-info {
+    vertical-align: top;
+    width: calc(100% - 205px);
+}
+
+.book-confirm-info .glyphicon {
+    font-size: 24px;
+}
+
 .book-confirm-movie-name {
     padding: 10px 5px;
     font-weight: bold;
+    font-size: 24px;
 }
 
 .book-confirm-input {
     height: 40px;
     line-height: 40px;
     margin-top: 5px;
-    padding: 0 10px;
+}
+
+.book-confirm-input .glyphicon, .book-confirm-input input {
+    float: left;
 }
 
 .book-confirm-input .glyphicon {
+    width: 40px;
     font-size: 24px;
     line-height: 40px;
+    text-align: center;
 }
 
 .book-confirm-input input {
     border: none;
+    width: calc(100% - 40px);
+    max-width: none;
     height: 100%;
-    margin-left: 25px;
     vertical-align: top;
+}
+
+.book-confirm-input.error {
+    border: 1px solid red;
+}
+
+.book-confirm-image {
+    width: 200px;
+    height: 300px;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.book-confirm-total {
+    margin-top: 10px;
+}
+
+.liqpay-pay {
+    margin-top: 10px;
 }

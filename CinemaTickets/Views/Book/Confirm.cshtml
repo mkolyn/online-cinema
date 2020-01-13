@@ -2,49 +2,78 @@
     ViewBag.Title = ViewBag.Message;
 }
 
-<div class="book-confirm-image movie-detail-image" style="background-image: url(/images/)"></div>
+<div class="book-confirm-image" style="background-image: url(/images/@ViewBag.movieImage)"></div>
 
 <div class="book-confirm-info">
-    <div class="book-confirm-movie-name bg-grey grey">
-        Одного разу в голлівуді
+    <div class="book-confirm-movie-name text-uppercase bg-grey grey">
+        @ViewBag.movieName
     </div>
     <div class="book-confirm-cinema grey">
-        Ефект
+        <span class="glyphicon glyphicon-map-marker"></span>
+        <span class="text-uppercase">
+            @ViewBag.cinemaName
+        </span>
     </div>
     <div class="book-confirm-date grey">
         <div>
-            Понеділок, 27.12.2019
+            @ViewBag.dayName, @ViewBag.formattedDay
         </div>
         <div>
-            12:00
+            @ViewBag.formattedTime
         </div>
     </div>
     <div class="book-confirm-places grey">
-        <div>
-            1 ряд, 1 місце, 50 грн.
+        @foreach (var orderItem in ViewBag.orderItems as List<CinemaTickets.Models.OrderItemInfo>)
+        {
+            <div>
+                @orderItem.Row ряд, @orderItem.Cell місце, - @orderItem.Price грн.
+            </div>
+        }
+    </div>
+    @if (!ViewBag.isPaid && ViewBag.canConfirmBooking)
+    {
+        <div class="book-confirm-user-info">
+            @using (Html.BeginRouteForm("Default", new { Controller = "Book", Action = "Success", Id = @ViewBag.orderId }))
+            {
+                <!--<div class="form-group hidden">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Оплатити" class="btn btn-default" />
+                    </div>
+                </div>-->
+            }
+            <input type="hidden" class="order-id" value="@ViewBag.orderId" />
+            <form method="POST" class="liqpay-form" action="https://www.liqpay.ua/api/3/checkout" accept-charset="utf-8">
+                <input type="hidden" name="data" value="@ViewBag.liqpayData" />
+                <input type="hidden" name="signature" value="@ViewBag.liqpaySignature" />
+                <!--<label for="email">E-mail</label>-->
+                <!--<input type="email" class="form-control required text-box email" />-->
+                <!--<input type="image" src="//static.liqpay.ua/buttons/p1ru.radius.png" class="btn liqpay-pay" />-->
+                <div class="book-confirm-input book-confirm-user-name input bg-grey">
+                    <span class="glyphicon glyphicon-user grey"></span>
+                    <input type="text" class="required name bg-grey" placeholder="Ім'я & Прізвище" />
+                </div>
+                <div class="book-confirm-input book-confirm-user-email input bg-grey">
+                    <span class="glyphicon glyphicon-envelope grey"></span>
+                    <input type="text" class="required email bg-grey" placeholder="E-mail" />
+                </div>
+                <div class="book-confirm-input book-confirm-user-phone input bg-grey">
+                    <span class="glyphicon glyphicon-phone grey"></span>
+                    <input type="text" class="required phone bg-grey" placeholder="Телефон" />
+                </div>
+                <div class="book-confirm-total">
+                    <span class="text-uppercase grey bold">
+                        Сума до сплати:
+                    </span>
+                    <span class="violet bold">
+                        @ViewBag.totalPrice грн.
+                    </span>
+                </div>
+                <div class="button liqpay-pay text-uppercase bg-orange violet bold">
+                    Оплатити
+                </div>
+            </form>
         </div>
-    </div>
-</div>
-
-<div class="book-confirm-user-info">
-    <div class="book-confirm-input book-confirm-user-name bg-grey">
-        <span class="glyphicon glyphicon-user grey"></span>
-        <input type="text" class="bg-grey" placeholder="Ім'я & Прізвище" />
-    </div>
-    <div class="book-confirm-input book-confirm-user-email bg-grey">
-        <input type="text" class="bg-grey" placeholder="E-mail" />
-    </div>
-    <div class="book-confirm-input book-confirm-user-phone bg-grey">
-        <input type="text" class="bg-grey" placeholder="Телефон" />
-    </div>
-</div>
-
-<div class="">
-    Сума до сплати: @ViewBag.totalPrice грн.
-</div>
-
-<div class="button liqpay-pay hidden bg-orange violet bold">
-    Оплатити
+    }
 </div>
 
 <div class="row">
@@ -73,7 +102,7 @@
         </h4>
     }
 
-    <div class="order-items">
+    <!--<div class="order-items">
         @foreach (var orderItem in ViewBag.orderItems)
         {
             <div class="order-item" data-id="@orderItem.OrderItemId">
@@ -119,31 +148,8 @@
                 </div>
             </div>
         }
-    </div>
-
-    <div class="">
+    </div>-->
+    <!--<div class="">
         Разом: @ViewBag.totalPrice грн.
-    </div>
-
-    @if (!ViewBag.isPaid && ViewBag.canConfirmBooking)
-    {
-    <div class="">
-        @using (Html.BeginRouteForm("Default", new { Controller = "Book", Action = "Success", Id = @ViewBag.orderId }))
-        {
-            <div class="form-group hidden">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Оплатити" class="btn btn-default" />
-                </div>
-            </div>
-        }
-        <input type="hidden" class="order-id" value="@ViewBag.orderId" />
-        <form method="POST" class="liqpay-form" action="https://www.liqpay.ua/api/3/checkout" accept-charset="utf-8">
-            <input type="hidden" name="data" value="@ViewBag.liqpayData" />
-            <input type="hidden" name="signature" value="@ViewBag.liqpaySignature" />
-            <label for="email">E-mail</label>
-            <input type="email" class="form-control required text-box email" />
-            <input type="image" src="//static.liqpay.ua/buttons/p1ru.radius.png" class="btn liqpay-pay" />
-        </form>
-    </div>
-    }
+    </div>-->
 </div>

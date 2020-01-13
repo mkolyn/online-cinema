@@ -1,8 +1,18 @@
 ﻿$(document).ready(function () {
     $('.liqpay-pay').click(function () {
+        var name = $('.name');
         var email = $('.email');
+        var phone = $('.phone');
+
+        if (name.hasClass('error')) {
+            return false;
+        }
 
         if (email.hasClass('error')) {
+            return false;
+        }
+
+        if (phone.hasClass('error')) {
             return false;
         }
 
@@ -18,7 +28,7 @@
 
         ajax('/Book/CheckOrder/' + $('.order-id').val(), { orderItemIds: orderItemIds }, function (data) {
             if (data.success) {
-                ajax('/Book/UpdateOrder/' + $('.order-id').val(), { email: email.val() }, function () {
+                ajax('/Book/UpdateOrder/' + $('.order-id').val(), { name: name.val().trim(), email: email.val().trim(), phone: phone.val().trim() }, function () {
                     ajax('/Home/AllowShowThankyouPage', {}, function () {
                         $('.liqpay-form').submit();
                     });
