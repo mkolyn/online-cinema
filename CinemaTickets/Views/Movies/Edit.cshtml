@@ -33,6 +33,13 @@
         </div>
     }
 
+    <div class="form-group">
+        @Html.LabelFor(model => model.YoutubeUrl, "Youtube", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.YoutubeUrl, new { htmlAttributes = new { @class = "form-control", @Value = Model.YoutubeUrl } })
+        </div>
+    </div>
+
     @if (ViewBag.cinemaId > 0)
     {
         <div class="form-group">

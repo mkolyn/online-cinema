@@ -1,4 +1,7 @@
-﻿<div class="calendar">
+﻿@{
+    string dayOfWeek = "";
+}
+<div class="calendar">
     <div class="calendar-slider-prev">
         <span class="glyphicon glyphicon-menu-left"></span>
     </div>
@@ -7,7 +10,10 @@
         {
             <div class="calendar-date active">
                 <div class="calendar-date-weekday">
-                    @ViewBag.dayList[date.DayOfWeek.ToString()]
+                    @{
+                        dayOfWeek = date.DayOfWeek == ViewBag.currentDate.DayOfWeek ? "Today" : date.DayOfWeek.ToString();
+                    }
+                    @ViewBag.dayList[dayOfWeek]
                 </div>
                 <div class="calendar-date-day">
                     <div class="calendar-date-month">@ViewBag.monthList[date.Month]</div>

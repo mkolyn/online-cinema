@@ -1,5 +1,5 @@
 ﻿<div class="movies">
-    @foreach (var movie in ViewData["movies"] as List<CinemaTickets.Models.CinemaHallScheduleMovie>)
+    @foreach (var movie in ViewData["movies"] as List<CinemaTickets.Models.Movie>)
     {
         <div class="movie-item">
             <div class="movie">
@@ -12,14 +12,14 @@
                         Квитки
                     </div>
                     <div class="movie-tickets-button">
-                        <a href="@Url.RouteUrl("Default", new { controller = "Movie", action = "Details", id = movie.MovieID })">
+                        <a href="@Url.RouteUrl("Default", new { controller = "Movie", action = "Details", id = movie.ID })">
                             <span class="glyphicon glyphicon-play"></span>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="movie-name">
-                @movie.MovieName
+                @movie.Name
             </div>
         </div>
     }

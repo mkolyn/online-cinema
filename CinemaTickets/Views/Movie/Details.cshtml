@@ -11,5 +11,12 @@
     </div>
 </div>
 
+<div class="movie-video">
+    <embed src="@Model.YoutubeUrl">
+</div>
+<div class="movie-description">
+    @Model.Description
+</div>
+
 @Html.Partial("../Home/Calendar")
 @Html.Partial("Time")
