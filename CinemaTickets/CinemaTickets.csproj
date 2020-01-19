@@ -311,6 +311,10 @@
     <Compile Include="Migrations\202001021153065_MovieImage.Designer.cs">
       <DependentUpon>202001021153065_MovieImage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001191546141_MovieYoutubeUrl.cs" />
+    <Compile Include="Migrations\202001191546141_MovieYoutubeUrl.Designer.cs">
+      <DependentUpon>202001191546141_MovieYoutubeUrl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaMovieGroupPrice.cs" />
     <Compile Include="Models\CinemaPlaceGroup.cs" />
@@ -544,6 +548,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001021153065_MovieImage.resx">
       <DependentUpon>202001021153065_MovieImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001191546141_MovieYoutubeUrl.resx">
+      <DependentUpon>202001191546141_MovieYoutubeUrl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

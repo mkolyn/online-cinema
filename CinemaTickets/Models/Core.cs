@@ -228,10 +228,11 @@ namespace CinemaTickets.Models
         {
             return new Dictionary<string, string>
             {
+                { "Today", "Сьогодні" },
                 { "Monday", "Понеділок" },
                 { "Tuesday", "Вівторок" },
                 { "Wednesday", "Середа" },
-                { "Thirsday", "Четвер" },
+                { "Thursday", "Четвер" },
                 { "Friday", "П'ятниця" },
                 { "Saturday", "Субота" },
                 { "Sunday", "Неділя" },

@@ -10,7 +10,15 @@
     var calendarSlider = $('.calendar-slider').lightSlider({
         pager: false,
         //autoWidth: true,
-        slideMargin: 0
+        slideMargin: 0,
+        responsive: [
+            {
+                breakpoint: 800,
+                settings: {
+                    item: 4
+                }
+            }
+        ],
     });
 
     $('.calendar-slider-next').click(function () {

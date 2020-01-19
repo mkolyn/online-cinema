@@ -35,6 +35,8 @@ namespace CinemaTickets.Controllers
             ViewBag.dates = Core.GetNextDates(DateTime.Now);
             ViewBag.monthList = Core.GetMonthList();
             ViewBag.schedule = cinemaHallMovieDb.GetMovieSchedule(id);
+            ViewBag.dayList = Core.GetDayList();
+            ViewBag.currentDate = DateTime.Now;
 
             return View(movie);
         }

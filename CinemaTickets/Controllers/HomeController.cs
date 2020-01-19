@@ -40,7 +40,7 @@ namespace CinemaTickets.Controllers
             }
             ViewBag.date = date;
 
-            List<CinemaHallScheduleMovie> movies = cinemaHallMovieDb.GetList(date.Year, date.Month, date.Day, cinemaId, genreId, searchString);
+            List<Movie> movies = cinemaHallMovieDb.GetList(date.Year, date.Month, date.Day, cinemaId, genreId, searchString);
 
             ViewBag.movies = movies;
             ViewBag.dates = Core.GetNextDates(DateTime.Now);
@@ -49,6 +49,7 @@ namespace CinemaTickets.Controllers
             ViewBag.GenreID = genreDb.GetSelectList(genreId);
             ViewBag.monthList = Core.GetMonthList();
             ViewBag.dayList = Core.GetDayList();
+            ViewBag.currentDate = DateTime.Now;
 
             return View();
         }

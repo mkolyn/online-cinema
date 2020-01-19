@@ -69,8 +69,10 @@ namespace CinemaTickets.Models
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Genre> Genres { get; set; }
 
-        public List<CinemaHallScheduleMovie> GetList(int year, int month, int day, int cinemaId = 0, int genreId = 0, string searchString = "")
+        private List<int> GetMovieIds(int year, int month, int day, int cinemaId, int genreId, string searchString)
         {
+            List<int> movieIds = new List<int>();
+
             var movies = from chm in CinemaHallMovies
                          join cm in CinemaMovies on chm.MovieID equals cm.MovieID
                          join ch in CinemaHalls on chm.CinemaHallID equals ch.ID
@@ -78,19 +80,14 @@ namespace CinemaTickets.Models
                          join m in Movies on chm.MovieID equals m.ID
                          join g in Genres on m.GenreID equals g.ID
                          where cm.CinemaID == ch.CinemaID
-                         orderby chm.Date
                          select new CinemaHallScheduleMovie
                          {
                              Date = chm.Date,
-                             MovieName = m.Name,
-                             Duration = m.Duration,
-                             CityID = c.CityID,
-                             Image = m.Image,
-                             CinemaHallMovieID = chm.ID,
-                             CinemaID = c.ID,
-                             GenreID = m.GenreID,
-                             GenreName = g.Name,
                              MovieID = m.ID,
+                             MovieName = m.Name,
+                             GenreID = m.GenreID,
+                             CityID = c.CityID,
+                             CinemaID = c.ID,
                          };
 
             int cityId = Core.GetCityId();
@@ -115,15 +112,27 @@ namespace CinemaTickets.Models
                 movies = movies.Where(m => m.MovieName.ToString().Contains(searchString));
             }
 
-            List<CinemaHallScheduleMovie> cinemaHallScheduleMovies = movies.ToList();
-            for (var i = 0; i < cinemaHallScheduleMovies.Count; i++)
+            foreach (CinemaHallScheduleMovie movie in movies.ToList())
             {
-                CinemaHallScheduleMovie cinemaHallScheduleMovie = cinemaHallScheduleMovies.ElementAt(i);
-                cinemaHallScheduleMovies.ElementAt(i).FormattedDate = Core.GetFormatedDate(cinemaHallScheduleMovie.Date);
-                cinemaHallScheduleMovies.ElementAt(i).FormattedTime = Core.GetFormatedTime(cinemaHallScheduleMovie.Date);
+                if (!movieIds.Contains(movie.MovieID))
+                {
+                    movieIds.Add(movie.MovieID);
+                }
             }
 
-            return cinemaHallScheduleMovies;
+            return movieIds;
+        }
+
+        public List<Movie> GetList(int year, int month, int day, int cinemaId = 0, int genreId = 0, string searchString = "")
+        {
+            List<int> movieIds = GetMovieIds(year, month, day, cinemaId, genreId, searchString);
+
+            var movies = from m in Movies
+                         select m;
+
+            movies = movies.Where(m => movieIds.Contains(m.ID));
+
+            return movies.ToList();
         }
 
         public List<CinemaHallScheduleMovie> GetListByCinemaHallId(int cinemaHallId, int year, int month, int day)
