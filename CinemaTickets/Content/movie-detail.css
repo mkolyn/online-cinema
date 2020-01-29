@@ -2,6 +2,7 @@
     display: inline-block;
     height: 350px;
     vertical-align: top;
+    margin-top: 10px;
 }
 
 .movie-detail {
@@ -110,4 +111,30 @@
 
 .time-table-select {
     margin-top: 20px;
+}
+
+.choose-cinema {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.choose-cinema-arrow, .choose-cinema-clock, .choose-cinema-text {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.choose-cinema-arrow {
+    background-image: url('img/arrow.png');
+    width: 77px;
+    height: 31px;
+}
+
+.choose-cinema-clock {
+    background-image: url('img/clock.png');
+    width: 33px;
+    height: 33px;
+}
+
+.choose-cinema-text {
+    line-height: 33px;
 }
