@@ -49,6 +49,8 @@
 }
 
 .cinema-hall-screen {
+    display: inline-block;
+    width: 100%;
     margin-top: 10px;
     background-color: none;
 }
@@ -185,4 +187,43 @@
 
 .liqpay-pay {
     margin-top: 10px;
+}
+
+.book-confirm-movie-type {
+    float: right;
+}
+
+.book-confirm-cinema-info {
+    display: inline-block;
+}
+
+.book-confirm-cinema-address {
+    display: block;
+}
+
+.book-confirm-cinema, .book-confirm-date, .book-confirm-places-info {
+    border-bottom: 2px solid #cccccc;
+}
+
+.book-confirm-date-clock {
+    width: 29px;
+    height: 29px;
+    display: inline-block;
+    background-image: url('img/clock-2.png');
+}
+
+.book-confirm-date-info {
+    display: inline-block;
+}
+
+.book-confirm-places-tickets {
+    width: 29px;
+    height: 27px;
+    display: inline-block;
+    display: inline-block;
+    background-image: url('img/tickets.png');
+}
+
+.book-confirm-places {
+    display: inline-block;
 }

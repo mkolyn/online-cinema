@@ -33,13 +33,13 @@
                     else
                     {
                         var group = "";
-                        var data = "";
+                        var data = " data-row=" + (i + 1) + " data-cell=" + (j + 1);
                         var cellClass = "";
                         var title = "";
 
                         if (ViewBag.cinemaHallRows[i, j].GetIsJoined())
                         {
-                            data = " data-rows=" + ViewBag.cinemaHallRows[i, j].Rows + " data-cells=" + ViewBag.cinemaHallRows[i, j].Cells;
+                            data += " data-rows=" + ViewBag.cinemaHallRows[i, j].Rows + " data-cells=" + ViewBag.cinemaHallRows[i, j].Cells;
                             cellClass = " joined";
                         }
                         if (ViewBag.cinemaHallRows[i, j].GetJoinedGroupId() != "")

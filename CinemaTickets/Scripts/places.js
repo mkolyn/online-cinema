@@ -21,8 +21,8 @@
         };
 
         ajax('/Book/UpdatePlaces/' + $('.cinema-hall-movie-id').val(), data, function (data) {
-            $('.cinema-hall-book-places').html(data);
-            addCinemaHallPlacesEvents();
+            //$('.cinema-hall-book-places').html(data);
+            //addCinemaHallPlacesEvents();
         }, true);
     }, 10000);
 });
@@ -48,10 +48,11 @@ function addCinemaHallPlacesEvents() {
         }
 
         var totalPrice = 0;
+        var places = '';
         $('.cinema-hall-cell.active').each(function () {
             if ($(this).hasClass('joined')) {
                 if ($(this).attr('data-rows') > 0 && $(this).attr('data-cells') > 0) {
-                    if (typeof $(this).attr('data-price') != 'undefined') {
+                    if (typeof $(this).attr('data-price') !== 'undefined') {
                         totalPrice += parseInt($(this).attr('data-price'));
                     } else {
                         totalPrice += parseInt($('.cinema-hall-movie-price').val());
@@ -60,7 +61,13 @@ function addCinemaHallPlacesEvents() {
             } else {
                 totalPrice += parseInt($('.cinema-hall-movie-price').val());
             }
+
+            var placeText = 'Ряд: ' + $(this).attr('data-row') + ', Місце: ' + $(this).attr('data-cell');
+            places += '<div class="book-places-info-choise-item">' + placeText + '</div>';
+            
         });
+
+        $('.book-places-info-choise').html(places);
 
         $('.total-price').html(totalPrice);
     });

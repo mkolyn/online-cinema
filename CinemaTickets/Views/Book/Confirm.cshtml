@@ -7,28 +7,42 @@
 <div class="book-confirm-info">
     <div class="book-confirm-movie-name text-uppercase bg-grey grey">
         @ViewBag.movieName
+        <span class="book-confirm-movie-type">
+            2D
+        </span>
     </div>
     <div class="book-confirm-cinema grey">
         <span class="glyphicon glyphicon-map-marker"></span>
-        <span class="text-uppercase">
-            @ViewBag.cinemaName
+        <span class="book-confirm-cinema-info">
+            <span class="text-uppercase">
+                @ViewBag.cinemaName
+            </span>
+            <span class="book-confirm-cinema-address">
+                м. Чернівці, вул. Героїв Майдану, 77
+            </span>
         </span>
     </div>
     <div class="book-confirm-date grey">
-        <div>
-            @ViewBag.dayName, @ViewBag.formattedDay
-        </div>
-        <div>
-            @ViewBag.formattedTime
+        <span class="book-confirm-date-clock"></span>
+        <div class="book-confirm-date-info">
+            <div>
+                @ViewBag.dayName, @ViewBag.formattedDay
+            </div>
+            <div>
+                @ViewBag.formattedTime
+            </div>
         </div>
     </div>
-    <div class="book-confirm-places grey">
-        @foreach (var orderItem in ViewBag.orderItems as List<CinemaTickets.Models.OrderItemInfo>)
-        {
-            <div>
-                @orderItem.Row ряд, @orderItem.Cell місце, - @orderItem.Price грн.
-            </div>
-        }
+    <div class="book-confirm-places-info grey">
+        <span class="book-confirm-places-tickets"></span>
+        <div class="book-confirm-places">
+            @foreach (var orderItem in ViewBag.orderItems as List<CinemaTickets.Models.OrderItemInfo>)
+            {
+                <div>
+                    @orderItem.Row ряд, @orderItem.Cell місце, - @orderItem.Price грн.
+                </div>
+            }
+        </div>
     </div>
     @if (!ViewBag.isPaid && ViewBag.canConfirmBooking)
     {
