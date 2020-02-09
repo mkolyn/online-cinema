@@ -1,26 +1,34 @@
-﻿<div class="movies">
-    @foreach (var movie in ViewData["movies"] as List<CinemaTickets.Models.Movie>)
-    {
-        <div class="movie-item">
-            <div class="movie">
-                <div class="movie-image" style="background-image: url('/images/@movie.Image')"></div>
-                <div class="movie-tickets">
-                    <div class="movie-tickets-icon">
-                        <span class="glyphicon glyphicon-star"></span>
-                    </div>
-                    <div class="movie-tickets-label">
-                        Квитки
-                    </div>
-                    <div class="movie-tickets-button">
-                        <a href="@Url.RouteUrl("Default", new { controller = "Movie", action = "Details", id = movie.ID })">
-                            <span class="glyphicon glyphicon-play"></span>
-                        </a>
+﻿<div class="movies-container">
+    <div class="movies-slider-prev grey">
+        <span class="glyphicon glyphicon-menu-left"></span>
+    </div>
+    <div class="movies">
+        @foreach (var movie in ViewData["movies"] as List<CinemaTickets.Models.Movie>)
+        {
+            <div class="movie-item">
+                <div class="movie">
+                    <div class="movie-image" style="background-image: url('/images/@movie.Image')"></div>
+                    <div class="movie-tickets">
+                        <div class="movie-tickets-icon">
+                            <span class="glyphicon glyphicon-star"></span>
+                        </div>
+                        <div class="movie-tickets-label">
+                            Квитки
+                        </div>
+                        <div class="movie-tickets-button">
+                            <a href="@Url.RouteUrl("Default", new { controller = "Movie", action = "Details", id = movie.ID })">
+                                <span class="glyphicon glyphicon-play"></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
+                <div class="movie-name">
+                    @movie.Name
+                </div>
             </div>
-            <div class="movie-name">
-                @movie.Name
-            </div>
-        </div>
-    }
+        }
+    </div>
+    <div class="movies-slider-next grey">
+        <span class="glyphicon glyphicon-menu-right"></span>
+    </div>
 </div>

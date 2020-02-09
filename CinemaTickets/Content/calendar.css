@@ -70,3 +70,18 @@
 .calendar-slider-prev .glyphicon {
     left: -15px;
 }
+
+@media (max-width: 480px) {
+    .calendar-date-day {
+        height: 80px;
+        padding: 10px;
+    }
+
+    .calendar-slider-prev, .calendar-slider-next {
+        height: 110px;
+    }
+
+    .calendar-slider-prev .glyphicon, .calendar-slider-next .glyphicon {
+        top: 45px;
+    }
+}

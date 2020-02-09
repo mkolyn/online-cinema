@@ -31,4 +31,32 @@
     $('.search').click(function () {
         search();
     });
+
+    var moviesSlider = $('.movies').lightSlider({
+        pager: false,
+        autoWidth: true,
+        responsive: [
+            {
+                breakpoint: 800,
+                settings: {
+                    item: 4
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    item: 1,
+                    autoWidth: false
+                }
+            },
+        ],
+    });
+
+    $('.movies-slider-next').click(function () {
+        moviesSlider.goToNextSlide();
+    });
+
+    $('.movies-slider-prev').click(function () {
+        moviesSlider.goToPrevSlide();
+    });
 });

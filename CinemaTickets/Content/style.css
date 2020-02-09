@@ -293,7 +293,7 @@
     border: 1px solid #ebebeb;
     padding: 5px;
     position: absolute;
-    z-index: 2;
+    z-index: 3;
     background-color: #FFFFFF;
 }
 
@@ -430,6 +430,10 @@
         height: 100px;
     }
 
+    .header-logo {
+        padding: 0;
+    }
+
     .header-logo.col-sm-3 {
         width: 25%;
     }
@@ -516,5 +520,71 @@
     .footer-copyrights {
         width: 75%;
         margin: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        height: 75px;
+    }
+
+    .header-content {
+        height: 55px;
+    }
+
+    .logo {
+        height: 55px;
+        background-image: url('img/logo-no-text.png');
+    }
+
+    .header-logo.col-xs-4 {
+        width: 33%;
+    }
+
+    .header-right {
+        padding-right: 0;
+    }
+
+    .header-right.col-xs-8 {
+        width: 66%;
+    }
+
+    .header-menu-mobile {
+        float: right;
+    }
+
+    .header-search {
+        padding: 0;
+    }
+
+    .header-search, .header-menu-mobile {
+        margin-top: 15px;
+    }
+
+    .header-search .input {
+        padding: 0;
+        width: calc(100% - 30px);
+    }
+
+    .header-search .action-button-mobile {
+        width: 24px;
+        float: right;
+        padding: 0;
+    }
+
+    .body-content {
+        padding: 0;
+    }
+
+    .filter .select + .select {
+        margin-top: 10px;
+    }
+
+    .footer {
+        background-color: #720f95;
+    }
+
+    .footer-left, .footer-right, .footer-triangle-violet {
+        display: none;
     }
 }

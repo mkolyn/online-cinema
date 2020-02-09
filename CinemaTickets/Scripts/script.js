@@ -17,7 +17,13 @@
                 settings: {
                     item: 4
                 }
-            }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    item: 2
+                }
+            },
         ],
     });
 

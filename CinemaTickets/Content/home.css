@@ -15,8 +15,57 @@
     background-repeat: no-repeat;
 }
 
+.movie-item {
+    display: inline-block;
+}
+
+.movies-container {
+    position: relative;
+    margin-top: 10px;
+}
+
+.movies-slider-prev, .movies-slider-next {
+    top: calc(50% - 17px);
+    cursor: pointer;
+    font-size: 24px;
+    position: absolute;
+}
+
+.movies-slider-prev {
+    left: -20px;
+}
+
+.movies-slider-next {
+    right: -20px;
+}
+
 @media (max-width: 768px) {
     .how-to {
+        background-image: url('img/how-to-tablet.png');
+    }
+}
+
+@media (max-width: 480px) {
+    .how-to {
         background-image: url('img/how-to-mobile.png');
+        background-size: 90%;
+        background-position: center center;
+    }
+
+    .movie {
+        margin: auto;
+        display: block;
+    }
+
+    .movie-name {
+        text-align: center;
+    }
+
+    .movies-slider-prev {
+        left: 20px;
+    }
+
+    .movies-slider-next {
+        right: 20px;
     }
 }
