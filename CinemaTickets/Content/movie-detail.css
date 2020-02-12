@@ -138,3 +138,39 @@
 .choose-cinema-text {
     line-height: 33px;
 }
+
+.movie-video-mobile {
+    display: none;
+    width: 100%;
+}
+
+@media(max-width: 480px) {
+    .movie-video {
+        display: none;
+    }
+
+    .movie-video-mobile {
+        display: block;
+    }
+
+    .movie-detail {
+        width: 100%;
+    }
+
+    .movie-detail-image, .movie-detail-name {
+        display: inline-block;
+    }
+
+    .movie-detail-image {
+        width: 100px;
+    }
+
+    .movie-detail-name {
+        width: calc(100% - 105px);
+        vertical-align: top;
+    }
+
+    .choose-cinema {
+        display: none;
+    }
+}

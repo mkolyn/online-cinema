@@ -72,7 +72,8 @@ namespace CinemaTickets.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "GenreID,Name,Duration,Description,YoutubeUrl")] Movie movie = null,
+        public ActionResult Create(
+            [Bind(Include = "GenreID,Name,Duration,Description,Country,Year,Director,Cast,Budget,YoutubeUrl")] Movie movie = null,
             [Bind(Include = "Price")] int price = 0,
             [Bind(Include = "Image")] HttpPostedFileBase image = null,
             [Bind(Include = "GroupPrices")] Dictionary<int, int> GroupPrices = null
@@ -190,7 +191,8 @@ namespace CinemaTickets.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, HttpPostedFileBase image, string YoutubeUrl, Dictionary<int, int> GroupPrices, int price = 0)
+        public ActionResult Edit(int id, HttpPostedFileBase image, string Country, int Year, string Director,
+            string Cast, int Budget, string YoutubeUrl, Dictionary<int, int> GroupPrices, int price = 0)
         {
             if (ModelState.IsValid)
             {
@@ -201,6 +203,10 @@ namespace CinemaTickets.Controllers
                 }
 
                 movie.YoutubeUrl = YoutubeUrl;
+                movie.Country = Country;
+                movie.Director = Director;
+                movie.Cast = Cast;
+                movie.Budget = Budget;
 
                 string imageFileName = Core.UploadImage(image, Server.MapPath("~/Images"), movie.ID.ToString());
                 if (imageFileName != "")

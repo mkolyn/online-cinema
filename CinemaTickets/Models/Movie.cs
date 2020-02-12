@@ -22,8 +22,18 @@ namespace CinemaTickets.Models
         public string Description { get; set; }
         // image
         public string Image { get; set; }
-        // string
+        // youtube url
         public string YoutubeUrl { get; set; }
+        // country
+        public string Country { get; set; }
+        // year
+        public int Year { get; set; }
+        // director
+        public string Director { get; set; }
+        // cast
+        public string Cast { get; set; }
+        // budget
+        public int Budget { get; set; }
     }
 
     public class MovieContext : DbContext

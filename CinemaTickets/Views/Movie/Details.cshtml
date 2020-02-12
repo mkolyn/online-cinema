@@ -4,6 +4,10 @@
     ViewBag.Title = "Details";
 }
 
+<div class="movie-video-mobile">
+    <embed src="@Model.YoutubeUrl">
+</div>
+
 <div class="movie-detail">
     <div class="movie-detail-image" style="background-image: url(/images/@Html.Raw(Model.Image))"></div>
     <div class="movie-detail-name">
