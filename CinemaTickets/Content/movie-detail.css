@@ -94,6 +94,12 @@
     margin-top: 10px;
     cursor: pointer;
     display: block;
+    font-weight: bold;
+}
+
+.time-table-day-time:hover {
+    background-color: #ffc72f;
+    color: #720f95;
 }
 
 .time-table-movie-type {
@@ -144,6 +150,10 @@
     width: 100%;
 }
 
+.movie-detail-info-label {
+    font-weight: bold;
+}
+
 @media(max-width: 480px) {
     .movie-video {
         display: none;
@@ -155,19 +165,39 @@
 
     .movie-detail {
         width: 100%;
+        height: auto;
     }
 
-    .movie-detail-image, .movie-detail-name {
+    .movie-detail-image, .movie-detail-name, .movie-detail-info {
         display: inline-block;
+    }
+
+    .movie-detail-image, .movie-detail-info {
+        float: left;
+    }
+
+    .movie-detail-image {
+        background-position: top center;
+        margin-right: 5px;
+        height: 150px;
     }
 
     .movie-detail-image {
         width: 100px;
     }
 
-    .movie-detail-name {
+    .movie-detail-name, .movie-detail-info {
         width: calc(100% - 105px);
+    }
+
+    .movie-detail-name {
         vertical-align: top;
+        border-top: none;
+        border-bottom: 5px solid #720f95;
+    }
+
+    .movie-detail-info {
+        margin-top: 10px;
     }
 
     .choose-cinema {

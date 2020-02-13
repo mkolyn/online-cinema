@@ -22,6 +22,15 @@
             <div class="time-table-movie-type">
                 2D
             </div>
+            <div class="time-table-period">
+                <span class="time-table-period-start">
+                    {@ViewBag.moviePeriodStartDate.Day}.{@ViewBag.moviePeriodStartDate.Month}
+                </span>
+                -
+                <span class="time-table-period-end">
+                    {@ViewBag.moviePeriodEndDate.Day}.{@ViewBag.moviePeriodEndDate.Month}
+                </span>
+            </div>
             @foreach (string day in schedule[cinemaName].Keys)
             {
                 <div class="time-table-day">

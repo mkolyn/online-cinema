@@ -314,5 +314,11 @@ namespace CinemaTickets.Models
 
             return movieScheduleList;
         }
+
+        public DateTime GetMovieMaxDate(int movieId)
+        {
+            List<CinemaHallScheduleMovie> cinemaHallScheduleMovie = GetMovieScheduleList(movieId);
+            return cinemaHallScheduleMovie.Count > 0 ? cinemaHallScheduleMovie.Max(m => m.Date) : DateTime.Now;
+        }
     }
 }
