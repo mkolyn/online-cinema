@@ -26,6 +26,7 @@ namespace CinemaTickets.Controllers
         {
             ViewBag.Styles.Add("movie-detail");
             ViewBag.Styles.Add("calendar");
+            ViewBag.Scripts.Add("movie");
 
             Movie movie = db.Movies.Find(id);
             if (movie == null)
@@ -38,24 +39,44 @@ namespace CinemaTickets.Controllers
             DateTime moviePeriodEndDate = date.AddDays(Core.SELECT_MOVIE_TIME_DAYS);
             moviePeriodEndDate = moviePeriodEndDate > maxDate ? maxDate : moviePeriodEndDate;
 
+            ViewBag.movieId = id;
             ViewBag.dates = Core.GetNextDates(date);
             ViewBag.monthList = Core.GetMonthList();
-            ViewBag.schedule = cinemaHallMovieDb.GetMovieSchedule(id);
             ViewBag.dayList = Core.GetDayList();
             ViewBag.currentDate = date;
-            ViewBag.moviePeriodStartDate = date;
-            ViewBag.moviePeriodEndDate = moviePeriodEndDate;
+
+            ViewBag.timeHtml = GetSelectMovieTimeHtml(id, date.Day, date.Month, date.Year, 0);
 
             return View(movie);
         }
 
-        public string GetSelectMovieTimeHtml(int id, int day, int month, int year)
+        public string GetSelectMovieTimeHtml(int id, int day, int month, int year, int direction)
         {
             string html = "";
             DateTime maxDate = cinemaHallMovieDb.GetMovieMaxDate(id);
-            DateTime moviePeriodStartDate = new DateTime(year, month, day).AddDays(1);
-            DateTime moviePeriodEndDate = moviePeriodStartDate.AddDays(Core.SELECT_MOVIE_TIME_DAYS);
+            DateTime date = new DateTime(year, month, day);
+            DateTime moviePeriodStartDate;
+            DateTime moviePeriodEndDate;
+
+            switch (direction)
+            {
+                case 1:
+                    moviePeriodStartDate = date.AddDays(1);
+                    moviePeriodEndDate = moviePeriodStartDate.AddDays(Core.SELECT_MOVIE_TIME_DAYS - 1);
+                    break;
+                case -1:
+                    moviePeriodEndDate = date.AddDays(-1);
+                    moviePeriodStartDate = moviePeriodEndDate.AddDays(-Core.SELECT_MOVIE_TIME_DAYS + 1);
+                    break;
+                default:
+                    moviePeriodStartDate = date;
+                    moviePeriodEndDate = moviePeriodStartDate.AddDays(Core.SELECT_MOVIE_TIME_DAYS - 1);
+                    break;
+            }
+
             moviePeriodEndDate = moviePeriodEndDate > maxDate ? maxDate : moviePeriodEndDate;
+            moviePeriodStartDate = new DateTime(moviePeriodStartDate.Year, moviePeriodStartDate.Month, moviePeriodStartDate.Day, 0, 0, 0);
+            moviePeriodEndDate = new DateTime(moviePeriodEndDate.Year, moviePeriodEndDate.Month, moviePeriodEndDate.Day, 23, 23, 23);
 
             ControllerContext context = ControllerContext;
 
@@ -63,9 +84,15 @@ namespace CinemaTickets.Controllers
             var view = viewEngineResult.View;
             ViewDataDictionary viewData = new ViewDataDictionary
                 {
-                    { "schedule", cinemaHallMovieDb.GetMovieSchedule(id) },
-                    { "moviePeriodStartDate", moviePeriodStartDate },
-                    { "moviePeriodEndDate", moviePeriodEndDate },
+                    { "schedule", cinemaHallMovieDb.GetMovieSchedule(id, moviePeriodStartDate, moviePeriodEndDate) },
+                    { "moviePeriodStartFormattedDate", Core.GetFormatedDay(moviePeriodStartDate, false) },
+                    { "moviePeriodEndFormattedDate", Core.GetFormatedDay(moviePeriodEndDate, false) },
+                    { "moviePeriodStartDay", moviePeriodStartDate.Day },
+                    { "moviePeriodStartMonth", moviePeriodStartDate.Month },
+                    { "moviePeriodStartYear", moviePeriodStartDate.Year },
+                    { "moviePeriodEndDay", moviePeriodEndDate.Day },
+                    { "moviePeriodEndMonth", moviePeriodEndDate.Month },
+                    { "moviePeriodEndYear", moviePeriodEndDate.Year },
                 };
 
             using (var sw = new StringWriter())

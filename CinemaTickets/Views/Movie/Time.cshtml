@@ -1,6 +1,14 @@
 ﻿@{
-    Dictionary<string, Dictionary<string, Dictionary<string, int>>> schedule = ViewBag.schedule;
+    Dictionary<string, Dictionary<string, Dictionary<string, int>>> schedule = ViewData["schedule"] as Dictionary<string, Dictionary<string, Dictionary<string, int>>>;
 }
+
+<input type="hidden" class="movie-period-start-day" value="@ViewData["moviePeriodStartDay"]" />
+<input type="hidden" class="movie-period-start-month" value="@ViewData["moviePeriodStartMonth"]" />
+<input type="hidden" class="movie-period-start-year" value="@ViewData["moviePeriodStartYear"]" />
+
+<input type="hidden" class="movie-period-end-day" value="@ViewData["moviePeriodEndDay"]" />
+<input type="hidden" class="movie-period-end-month" value="@ViewData["moviePeriodEndMonth"]" />
+<input type="hidden" class="movie-period-end-year" value="@ViewData["moviePeriodEndYear"]" />
 
 <div class="time-table">
     @foreach (string cinemaName in schedule.Keys)
@@ -19,17 +27,23 @@
             </div>
         </div>
         <div class="time-table-select">
-            <div class="time-table-movie-type">
-                2D
-            </div>
-            <div class="time-table-period">
+            <div class="time-table-period grey">
+                <span class="time-table-period-prev bg-grey">
+                    <span class="glyphicon glyphicon-menu-left"></span>
+                </span>
                 <span class="time-table-period-start">
-                    {@ViewBag.moviePeriodStartDate.Day}.{@ViewBag.moviePeriodStartDate.Month}
+                    @ViewData["moviePeriodStartFormattedDate"]
                 </span>
                 -
                 <span class="time-table-period-end">
-                    {@ViewBag.moviePeriodEndDate.Day}.{@ViewBag.moviePeriodEndDate.Month}
+                    @ViewData["moviePeriodEndFormattedDate"]
                 </span>
+                <span class="time-table-period-next bg-grey">
+                    <span class="glyphicon glyphicon-menu-right"></span>
+                </span>
+            </div>
+            <div class="time-table-movie-type">
+                2D
             </div>
             @foreach (string day in schedule[cinemaName].Keys)
             {

@@ -267,7 +267,7 @@ namespace CinemaTickets.Models
             return Core.GetHtmlString("Hours", viewData, controllerContext);
         }
 
-        public List<CinemaHallScheduleMovie> GetMovieScheduleList(int movieId)
+        public List<CinemaHallScheduleMovie> GetMovieScheduleList(int movieId, DateTime startDate, DateTime endDate)
         {
             var cinemaHallScheduleMovie = from chm in CinemaHallMovies
                                           join ch in CinemaHalls on chm.CinemaHallID equals ch.ID
@@ -282,17 +282,16 @@ namespace CinemaTickets.Models
                                               Date = chm.Date,
                                           };
 
-            DateTime date = DateTime.Now.AddMinutes(Core.BOOK_BEFORE_MINUTES);
-            cinemaHallScheduleMovie = cinemaHallScheduleMovie.Where(chsm => chsm.Date > date);
+            cinemaHallScheduleMovie = cinemaHallScheduleMovie.Where(chsm => chsm.Date >= startDate).Where(chsm => chsm.Date <= endDate);
 
             return cinemaHallScheduleMovie.ToList();
         }
 
-        public Dictionary<string, Dictionary<string, Dictionary<string, int>>> GetMovieSchedule(int movieId)
+        public Dictionary<string, Dictionary<string, Dictionary<string, int>>> GetMovieSchedule(int movieId, DateTime startDate, DateTime endDate)
         {
             Dictionary<string, Dictionary<string, Dictionary<string, int>>> movieScheduleList;
             movieScheduleList = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
-            List<CinemaHallScheduleMovie> movieScheduleDataList = GetMovieScheduleList(movieId);
+            List<CinemaHallScheduleMovie> movieScheduleDataList = GetMovieScheduleList(movieId, startDate, endDate);
 
             foreach (CinemaHallScheduleMovie movieScheduleData in movieScheduleDataList)
             {
@@ -317,7 +316,8 @@ namespace CinemaTickets.Models
 
         public DateTime GetMovieMaxDate(int movieId)
         {
-            List<CinemaHallScheduleMovie> cinemaHallScheduleMovie = GetMovieScheduleList(movieId);
+            DateTime date = DateTime.Now;
+            List<CinemaHallScheduleMovie> cinemaHallScheduleMovie = GetMovieScheduleList(movieId, date.AddMinutes(Core.BOOK_BEFORE_MINUTES), date.AddDays(Core.NEXT_DAYS));
             return cinemaHallScheduleMovie.Count > 0 ? cinemaHallScheduleMovie.Max(m => m.Date) : DateTime.Now;
         }
     }

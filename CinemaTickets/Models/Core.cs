@@ -17,7 +17,7 @@ namespace CinemaTickets.Models
     {
         public const int PAGE_SIZE = 10;
         // display number of days after today to select ticket date
-        const int NEXT_DAYS = 10;
+        public const int NEXT_DAYS = 7;
         // ticket should be booked some time before beginning
         public const double BOOK_BEFORE_MINUTES = 30;
         public const int SELECT_MOVIE_TIME_DAYS = 3;
@@ -190,12 +190,12 @@ namespace CinemaTickets.Models
             return day + "." + month + "." + date.Year + " " + hour + ":" + minute;
         }
 
-        public static string GetFormatedDay(DateTime date)
+        public static string GetFormatedDay(DateTime date, bool withYear = true)
         {
             string day = date.Day < 10 ? "0" + date.Day.ToString() : date.Day.ToString();
             string month = date.Month < 10 ? "0" + date.Month.ToString() : date.Month.ToString();
 
-            return day + "." + month + "." + date.Year;
+            return day + "." + month + (withYear ? "." + date.Year : "");
         }
 
         public static string GetFormatedTime(DateTime date)
