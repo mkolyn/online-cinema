@@ -227,3 +227,22 @@
 .book-confirm-places {
     display: inline-block;
 }
+
+@media (max-width: 480px) {
+    .cinema-hall-cell {
+        float: left;
+        width: 16px;
+        height: 16px;
+        margin-left: 2px;
+        background-size: contain;
+    }
+
+    .cinema-hall-row {
+        height: 16px;
+    }
+
+    .cinema-hall-row-title {
+        height: 16px;
+        line-height: 16px;
+    }
+}

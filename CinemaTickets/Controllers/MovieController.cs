@@ -36,7 +36,8 @@ namespace CinemaTickets.Controllers
 
             DateTime date = DateTime.Now;
             DateTime maxDate = cinemaHallMovieDb.GetMovieMaxDate(id);
-            DateTime moviePeriodEndDate = date.AddDays(Core.SELECT_MOVIE_TIME_DAYS);
+            int days = Request.Browser.ScreenPixelsWidth > 480 ? Core.SELECT_MOVIE_TIME_DAYS : Core.SELECT_MOVIE_MOBILE_TIME_DAYS;
+            DateTime moviePeriodEndDate = date.AddDays(days);
             moviePeriodEndDate = moviePeriodEndDate > maxDate ? maxDate : moviePeriodEndDate;
 
             ViewBag.movieId = id;

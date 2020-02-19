@@ -20,7 +20,8 @@ namespace CinemaTickets.Models
         public const int NEXT_DAYS = 7;
         // ticket should be booked some time before beginning
         public const double BOOK_BEFORE_MINUTES = 30;
-        public const int SELECT_MOVIE_TIME_DAYS = 3;
+        public const int SELECT_MOVIE_TIME_DAYS = 7;
+        public const int SELECT_MOVIE_MOBILE_TIME_DAYS = 3;
 
         public static int GetCinemaId()
         {
