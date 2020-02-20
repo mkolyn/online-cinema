@@ -228,6 +228,10 @@
     display: inline-block;
 }
 
+.book-confirm-mobile {
+    display: none;
+}
+
 @media (max-width: 480px) {
     .cinema-hall-cell {
         float: left;
@@ -244,5 +248,42 @@
     .cinema-hall-row-title {
         height: 16px;
         line-height: 16px;
+    }
+
+    .book-confirm {
+        display: none;
+    }
+
+    .book-confirm-mobile {
+        display: block;
+    }
+
+    .book-confirm-image {
+        width: 100px;
+        height: 150px;
+    }
+
+    .book-confirm-info {
+        width: calc(100% - 105px);
+    }
+
+    .book-confirm-cinema .glyphicon {
+        display: none;
+    }
+
+    .book-confirm-date-clock {
+        display: none;
+    }
+
+    .book-confirm-cinema, .book-confirm-date {
+        border-bottom: 1px solid #cccccc;
+    }
+
+    .book-confirm-places-info {
+        border: none;
+    }
+
+    .liqpay-pay {
+        margin: auto;
     }
 }

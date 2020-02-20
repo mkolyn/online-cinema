@@ -28,7 +28,7 @@
         </div>
         <div class="time-table-select">
             <div class="time-table-period grey">
-                <span class="time-table-period-prev bg-grey">
+                <span class="time-table-period-prev bg-grey @if (ViewData["hasPrevMoviePeriod"].ToString() != "true") { @Html.Raw(" hidden"); }">
                     <span class="glyphicon glyphicon-menu-left"></span>
                 </span>
                 <span class="time-table-period-start">
@@ -38,7 +38,7 @@
                 <span class="time-table-period-end">
                     @ViewData["moviePeriodEndFormattedDate"]
                 </span>
-                <span class="time-table-period-next bg-grey">
+                <span class="time-table-period-next bg-grey @if (ViewData["hasNextMoviePeriod"].ToString() != "true") { @Html.Raw(" hidden"); }">
                     <span class="glyphicon glyphicon-menu-right"></span>
                 </span>
             </div>

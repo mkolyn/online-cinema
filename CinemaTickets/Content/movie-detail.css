@@ -240,4 +240,8 @@
     .choose-cinema {
         display: none;
     }
+
+    .time-table-day {
+        width: 80px;
+    }
 }

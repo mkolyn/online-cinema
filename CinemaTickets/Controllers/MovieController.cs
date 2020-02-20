@@ -45,13 +45,16 @@ namespace CinemaTickets.Controllers
             ViewBag.monthList = Core.GetMonthList();
             ViewBag.dayList = Core.GetDayList();
             ViewBag.currentDate = date;
+            ViewBag.periodDays = Core.SELECT_MOVIE_TIME_DAYS;
+            ViewBag.ScriptTexts.Add("var SELECT_MOVIE_TIME_DAYS = " + Core.SELECT_MOVIE_TIME_DAYS + ";");
+            ViewBag.ScriptTexts.Add("var SELECT_MOVIE_MOBILE_TIME_DAYS = " + Core.SELECT_MOVIE_MOBILE_TIME_DAYS + ";");
 
-            ViewBag.timeHtml = GetSelectMovieTimeHtml(id, date.Day, date.Month, date.Year, 0);
+            ViewBag.timeHtml = GetSelectMovieTimeHtml(id, date.Day, date.Month, date.Year, days, 0);
 
             return View(movie);
         }
 
-        public string GetSelectMovieTimeHtml(int id, int day, int month, int year, int direction)
+        public string GetSelectMovieTimeHtml(int id, int day, int month, int year, int days, int direction)
         {
             string html = "";
             DateTime maxDate = cinemaHallMovieDb.GetMovieMaxDate(id);
@@ -63,21 +66,25 @@ namespace CinemaTickets.Controllers
             {
                 case 1:
                     moviePeriodStartDate = date.AddDays(1);
-                    moviePeriodEndDate = moviePeriodStartDate.AddDays(Core.SELECT_MOVIE_TIME_DAYS - 1);
+                    moviePeriodEndDate = moviePeriodStartDate.AddDays(days - 1);
                     break;
                 case -1:
                     moviePeriodEndDate = date.AddDays(-1);
-                    moviePeriodStartDate = moviePeriodEndDate.AddDays(-Core.SELECT_MOVIE_TIME_DAYS + 1);
+                    moviePeriodStartDate = moviePeriodEndDate.AddDays(-days + 1);
                     break;
                 default:
                     moviePeriodStartDate = date;
-                    moviePeriodEndDate = moviePeriodStartDate.AddDays(Core.SELECT_MOVIE_TIME_DAYS - 1);
+                    moviePeriodEndDate = moviePeriodStartDate.AddDays(days - 1);
                     break;
             }
 
+            moviePeriodStartDate = moviePeriodStartDate < DateTime.Now ? DateTime.Now : moviePeriodStartDate;
             moviePeriodEndDate = moviePeriodEndDate > maxDate ? maxDate : moviePeriodEndDate;
             moviePeriodStartDate = new DateTime(moviePeriodStartDate.Year, moviePeriodStartDate.Month, moviePeriodStartDate.Day, 0, 0, 0);
             moviePeriodEndDate = new DateTime(moviePeriodEndDate.Year, moviePeriodEndDate.Month, moviePeriodEndDate.Day, 23, 23, 23);
+
+            bool hasPrevMoviePeriod = direction == 0 || cinemaHallMovieDb.GetMovieScheduleList(id, moviePeriodStartDate.AddDays(-days), moviePeriodStartDate.AddSeconds(-1)).Count > 0;
+            bool hasNextMoviePeriod = cinemaHallMovieDb.GetMovieScheduleList(id, moviePeriodEndDate.AddSeconds(1), moviePeriodEndDate.AddDays(days)).Count > 0;
 
             ControllerContext context = ControllerContext;
 
@@ -94,6 +101,8 @@ namespace CinemaTickets.Controllers
                     { "moviePeriodEndDay", moviePeriodEndDate.Day },
                     { "moviePeriodEndMonth", moviePeriodEndDate.Month },
                     { "moviePeriodEndYear", moviePeriodEndDate.Year },
+                    { "hasPrevMoviePeriod", hasPrevMoviePeriod },
+                    { "hasNextMoviePeriod", hasNextMoviePeriod },
                 };
 
             using (var sw = new StringWriter())

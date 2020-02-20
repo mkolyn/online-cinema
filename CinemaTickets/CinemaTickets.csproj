@@ -455,6 +455,9 @@
     <Content Include="Views\Movie\Details.cshtml" />
     <Content Include="Views\Movie\Time.cshtml" />
     <Content Include="Views\Movie\Info.cshtml" />
+    <Content Include="Views\Book\Cinema.cshtml" />
+    <Content Include="Views\Book\Places.cshtml" />
+    <Content Include="Views\Book\User.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

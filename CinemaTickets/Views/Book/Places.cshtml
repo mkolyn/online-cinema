@@ -1,0 +1,11 @@
+﻿<div class="book-confirm-places-info grey">
+    <span class="book-confirm-places-tickets"></span>
+    <div class="book-confirm-places">
+        @foreach (var orderItem in ViewBag.orderItems as List<CinemaTickets.Models.OrderItemInfo>)
+        {
+            <div>
+                @orderItem.Row ряд, @orderItem.Cell місце, - @orderItem.Price грн.
+            </div>
+        }
+    </div>
+</div>
