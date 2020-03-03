@@ -458,6 +458,13 @@
     <Content Include="Views\Book\Cinema.cshtml" />
     <Content Include="Views\Book\Places.cshtml" />
     <Content Include="Views\Book\User.cshtml" />
+    <Content Include="Views\Movies\Form.cshtml" />
+    <Content Include="Views\CinemaHalls\Form.cshtml" />
+    <Content Include="Views\CinemaPlaceGroups\Form.cshtml" />
+    <Content Include="Views\Cinemas\Form.cshtml" />
+    <Content Include="Views\Cities\Form.cshtml" />
+    <Content Include="Views\Genres\Form.cshtml" />
+    <Content Include="Views\Users\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -40,9 +40,7 @@ namespace CinemaTickets.Controllers
             }
             ViewBag.date = date;
 
-            List<Movie> movies = cinemaHallMovieDb.GetList(date.Year, date.Month, date.Day, cinemaId, genreId, searchString);
-
-            ViewBag.movies = movies;
+            ViewBag.moviesHtml = GetMoviesHtml(date.Year, date.Month, date.Day, cinemaId, genreId, searchString);
             ViewBag.dates = Core.GetNextDates(DateTime.Now);
             ViewBag.cityId = Core.GetCityId();
             ViewBag.CinemaID = cinemaDb.GetSelectList(cinemaId, Core.GetCityId());
@@ -89,6 +87,18 @@ namespace CinemaTickets.Controllers
 
             Session["showThankyouPage"] = null;
             return View();
+        }
+
+        public string GetMoviesHtml(int year, int month, int day, int cinemaId, int genreId, string searchString)
+        {
+            List<Movie> movies = cinemaHallMovieDb.GetList(year, month, day, cinemaId, genreId, searchString);
+
+            ViewDataDictionary viewData = new ViewDataDictionary()
+            {
+                { "movies", movies },
+            };
+
+            return Core.GetHtmlString("Movies", viewData, ControllerContext);
         }
     }
 }

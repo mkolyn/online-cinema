@@ -9,6 +9,7 @@
     width: 155px;
     display: inline-block;
     background-color: #FFFFFF;
+    cursor: pointer;
 }
 
 .calendar-date-weekday {

@@ -5,19 +5,19 @@
         var genreId = $('#GenreID').val();
         var movieName = $('.cinema-movie-name').val();
 
-        cinemaId = genreId != '' && cinemaId == '' ? 0 : cinemaId;
-        if (cinemaId != '') {
+        cinemaId = genreId !== '' && cinemaId === '' ? 0 : cinemaId;
+        if (cinemaId !== '') {
             url += '/' + cinemaId;
         }
 
-        if (genreId != '') {
-            if (cinemaId == '') {
+        if (genreId !== '') {
+            if (cinemaId === '') {
                 url += '/0';
             }
             url += '/' + genreId;
         }
 
-        if (movieName != "") {
+        if (movieName !== "") {
             url += '?searchString=' + movieName;
         }
 
@@ -32,24 +32,59 @@
         search();
     });
 
+    $('.calendar-date').click(function () {
+        location.href = "/date/" + $(this).data('year') + "/" + $(this).data('month') + "/" + $(this).data('day');
+    });
+
+    addCalendarSliderEvents(function () {
+        var calendarDate = $('.calendar-date.active');
+        var params = {
+            year: calendarDate.data('year'),
+            month: calendarDate.data('month'),
+            day: calendarDate.data('day'),
+            cinemaId: 0,
+            genreId: 0,
+            searchString: ""
+        };
+        ajax('/Home/GetMoviesHtml', params, function (data) {
+            $('.movies-container').html(data);
+            addMovieSliderEvents();
+        });
+    });
+});
+
+function addMovieSliderEvents() {
     var moviesSlider = $('.movies').lightSlider({
         pager: false,
-        autoWidth: true,
+        //autoWidth: true,
+        item: 5,
         responsive: [
             {
-                breakpoint: 800,
+                breakpoint: 1280,
                 settings: {
                     item: 4
+                }
+            },
+            {
+                breakpoint: 900,
+                settings: {
+                    item: 3
+                }
+            },
+            {
+                breakpoint: 700,
+                settings: {
+                    item: 2
                 }
             },
             {
                 breakpoint: 480,
                 settings: {
                     item: 1,
-                    autoWidth: false
+                    //autoWidth: false
                 }
-            },
-        ],
+            }
+        ]
     });
 
     $('.movies-slider-next').click(function () {
@@ -59,4 +94,4 @@
     $('.movies-slider-prev').click(function () {
         moviesSlider.goToPrevSlide();
     });
-});
+}

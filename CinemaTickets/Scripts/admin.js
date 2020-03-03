@@ -246,7 +246,8 @@ $(document).ready(function () {
 
     $('.create-user').click(function () {
         var userPassword = $('.user-password');
-        if (userPassword.val().trim().length < 6) {
+        var password = userPassword.val().trim();
+        if (IS_NEW_USER && password.length < 6 || password !== '' && password.length < 6) {
             userPassword.addClass('error');
             return false;
         }

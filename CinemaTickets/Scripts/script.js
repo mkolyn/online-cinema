@@ -7,34 +7,6 @@
         cities.removeClass('active');
     });
 
-    var calendarSlider = $('.calendar-slider').lightSlider({
-        pager: false,
-        //autoWidth: true,
-        slideMargin: 0,
-        responsive: [
-            {
-                breakpoint: 800,
-                settings: {
-                    item: 4
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    item: 2
-                }
-            },
-        ],
-    });
-
-    $('.calendar-slider-next').click(function () {
-        calendarSlider.goToNextSlide();
-    });
-
-    $('.calendar-slider-prev').click(function () {
-        calendarSlider.goToPrevSlide();
-    });
-
     $('body').click(function (e) {
         if ($(e.target).closest('.select').length === 0) {
             $('.select-options').addClass('hidden');

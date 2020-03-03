@@ -41,6 +41,7 @@ namespace CinemaTickets.Controllers
         public ActionResult Create()
         {
             ViewBag.CinemaID = cinemaDb.GetSelectList();
+            ViewBag.ScriptTexts.Add("var IS_NEW_USER = true;");
             return View();
         }
 
@@ -79,6 +80,8 @@ namespace CinemaTickets.Controllers
                 return HttpNotFound();
             }
             ViewBag.CinemaID = cinemaDb.GetSelectList(user.CinemaID != null ? user.CinemaID.Value : 0);
+
+            ViewBag.ScriptTexts.Add("var IS_NEW_USER = false;");
 
             return View(user);
         }

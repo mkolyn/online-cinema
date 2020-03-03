@@ -13,6 +13,7 @@ namespace CinemaTickets.Controllers
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            base.OnActionExecuting(filterContext);
             LoginIfNotAuthorized();
             CheckRights();
             SetViewBagData();
@@ -58,6 +59,7 @@ namespace CinemaTickets.Controllers
         {
             ViewBag.Styles = new List<string>() { "admin" };
             ViewBag.Scripts = new List<string>() { "core", "admin" };
+            ViewBag.ScriptTexts = new List<string>();
             ViewBag.messages = new List<string>();
             ViewBag.SiteDisabled = Config.SITE_DISABLED;
         }

@@ -18,10 +18,15 @@ namespace CinemaTickets.Controllers
         private CinemaMovieGroupPriceContext cinemaMovieGroupPriceDb = new CinemaMovieGroupPriceContext();
         private List<CinemaPlaceGroup> cinemaPlaceGroups = new List<CinemaPlaceGroup>();
 
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+        }
+
         // GET: Movies
         public ActionResult Index(int? page, string searchString = "")
         {
-            LoginIfNotAuthorized();
+            //LoginIfNotAuthorized();
 
             int pageNumber = page ?? 1;
             var cinemaMovies = cinemaMovieDb.GetList(Core.GetCinemaId(), searchString);
@@ -58,6 +63,7 @@ namespace CinemaTickets.Controllers
             ViewBag.GenreID = genreDb.GetSelectList();
             ViewBag.cinemaId = Core.GetCinemaId();
             ViewBag.cinemaPlaceGroups = cinemaPlaceGroups;
+            ViewBag.movieID = 0;
         }
 
         // GET: Movies/Create
@@ -135,6 +141,10 @@ namespace CinemaTickets.Controllers
 
                 return RedirectToAction("Index");
             }
+            else
+            {
+                AddModelStateErrors(ModelState.Values);
+            }
 
             PopulateCreateMovieData();
             return View("Create", movie);
@@ -182,6 +192,7 @@ namespace CinemaTickets.Controllers
             ViewBag.price = moviePrice;
             ViewBag.cinemaPlaceGroups = cinemaPlaceGroups;
             ViewBag.groupPrices = groupPrices;
+            ViewBag.movieID = movie.ID;
 
             return View(movie);
         }
