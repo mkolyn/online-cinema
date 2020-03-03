@@ -8,7 +8,8 @@
     <div class="calendar-slider">
         @foreach (var date in ViewBag.dates as List<DateTime>)
         {
-            <div class="calendar-date active">
+            var active = ViewBag.date.Year == date.Year && ViewBag.date.Month == date.Month && ViewBag.date.Day == date.Day;
+            <div class="calendar-date @if (active) { @Html.Raw(" slider-active"); } " data-year="@date.Year" data-month="@date.Month" data-day="@date.Day">
                 <div class="calendar-date-weekday">
                     @{
                         dayOfWeek = date.DayOfWeek == ViewBag.currentDate.DayOfWeek ? "Today" : date.DayOfWeek.ToString();

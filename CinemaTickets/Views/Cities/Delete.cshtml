@@ -2,9 +2,10 @@
 
 @{
     ViewBag.Title = "Delete";
+    var token = Session["UserID"] != null && Session["UserID"].ToString() != "" ? Html.AntiForgeryToken().ToHtmlString() : "";
 }
 
-<h2>Delete</h2>
+<h2>Вилучення міста</h2>
 
 <h3>Вилучити місто?</h3>
 <div>
@@ -22,7 +23,7 @@
     </dl>
 
     @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+        @Html.Raw(token)
 
         <div class="form-actions no-color">
             <input type="submit" value="Вилучити" class="btn btn-default" /> |

@@ -26,7 +26,7 @@
     }
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -89,6 +89,18 @@
                 }
             </div>
             Session["Messages"] = null;
+        }
+
+        @if (ViewBag.messages != null && (ViewBag.messages as List<string>).Count > 0)
+        {
+            <div class="messages">
+                @foreach (string message in ViewBag.messages as List<string>)
+                {
+                    <div class="message">
+                        @message
+                    </div>
+                }
+            </div>
         }
 
         @if (!ViewBag.SiteDisabled)

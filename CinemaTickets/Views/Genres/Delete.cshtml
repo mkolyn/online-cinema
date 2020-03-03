@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Вилучити жанр";
+    var token = Session["UserID"] != null && Session["UserID"].ToString() != "" ? Html.AntiForgeryToken().ToHtmlString() : "";
 }
 
 <h2>Вилучення жанру</h2>
@@ -22,7 +23,7 @@
     </dl>
 
     @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+        @Html.Raw(token)
 
         <div class="form-actions no-color">
             <input type="submit" value="Вилучити" class="btn btn-default" /> |

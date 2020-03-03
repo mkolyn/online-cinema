@@ -11,7 +11,9 @@
 
 @Html.Partial("Calendar")
 
-@Html.Partial("Movies", new ViewDataDictionary { { "movies", ViewBag.movies } })
+<div class="movies-container">
+    @Html.Raw(ViewBag.moviesHtml)
+</div>
 
 <div class="how-to"></div>
 

@@ -1,117 +1,12 @@
 ﻿@model CinemaTickets.Models.Movie
 
 @{
-    ViewBag.Title = "Редагування фільму";
-    var i = 0;
+    ViewBag.Title = "Редагування фільму " + Model.Name;
 }
 
 <h2>Редагування фільму</h2>
 
-
-@using (Html.BeginForm("Edit", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>Фільм</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.ID)
-
-    @if (ViewBag.Image != null && ViewBag.Image != "")
-    {
-        <img src="/images/@ViewBag.Image" class="movie-image" />
-    }
-
-    @if (ViewBag.cinemaId == 0)
-    {
-        <div class="form-group">
-            @Html.Label("Зображення", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="image" id="image" accept="image/jpeg,image/png" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Country, "Country", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", @Value = Model.Country } })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Year, "Year", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control", @Value = Model.Year } })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Director, "Director", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Director, new { htmlAttributes = new { @class = "form-control", @Value = Model.Director } })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Cast, "Cast", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Cast, new { htmlAttributes = new { @class = "form-control", @Value = Model.Cast } })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Budget, "Budget", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Budget, new { htmlAttributes = new { @class = "form-control", @Value = Model.Budget } })
-            </div>
-        </div>
-    }
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.YoutubeUrl, "Youtube", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.YoutubeUrl, new { htmlAttributes = new { @class = "form-control", @Value = Model.YoutubeUrl } })
-        </div>
-    </div>
-
-    @if (ViewBag.cinemaId > 0)
-    {
-        <div class="form-group">
-            @Html.Label("Ціна", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.Editor("Ціна", new { htmlAttributes = new { @Name = "price", @Value = ViewBag.price, @class = "form-control required", @type = "number" } })
-                @Html.ValidationMessage("Ціна", "", new { @class = "text-danger" })
-            </div>
-        </div>
-    }
-
-    @foreach (CinemaTickets.Models.CinemaPlaceGroup cinemaPlaceGroup in ViewBag.cinemaPlaceGroups)
-    {
-        <div class="form-group">
-            @Html.Label("Ціна (" + cinemaPlaceGroup.Name + ")", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.Hidden("GroupPrices[" + i + "][key]", cinemaPlaceGroup.ID)
-                @Html.Editor("Ціна", new { htmlAttributes = new { @Name = "GroupPrices[" + i + "][value]", @Value = ViewBag.groupPrices[cinemaPlaceGroup.ID], @class = "form-control", @type = "number" } })
-                @Html.ValidationMessage("Ціна", "", new { @class = "text-danger" })
-            </div>
-        </div>
-        i++;
-    }
-
-    @if (i == 0)
-    {
-        @Html.Hidden("GroupPrices[" + @i + "][key]", "0")
-        @Html.Hidden("GroupPrices[" + @i + "][value]", "0")
-    }
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Зберегти" class="btn btn-default" />
-        </div>
-    </div>
-</div>
-}
+@Html.Partial("Form")
 
 <div>
     @Html.ActionLink("До списку", "Index")

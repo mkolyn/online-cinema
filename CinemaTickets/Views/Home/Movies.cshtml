@@ -1,9 +1,14 @@
-﻿<div class="movies-container">
+﻿@{
+    var movies = ViewData["movies"] as List<CinemaTickets.Models.Movie>;
+}
+
+@if (movies.Count > 0)
+{
     <div class="movies-slider-prev grey">
         <span class="glyphicon glyphicon-menu-left"></span>
     </div>
     <div class="movies">
-        @foreach (var movie in ViewData["movies"] as List<CinemaTickets.Models.Movie>)
+        @foreach (var movie in movies)
         {
             <div class="movie-item">
                 <div class="movie">
@@ -31,4 +36,4 @@
     <div class="movies-slider-next grey">
         <span class="glyphicon glyphicon-menu-right"></span>
     </div>
-</div>
+}
