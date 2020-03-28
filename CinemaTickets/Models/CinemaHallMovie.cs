@@ -54,6 +54,8 @@ namespace CinemaTickets.Models
         public string FormattedDate { get; set; }
         // movie formatted time
         public string FormattedTime { get; set; }
+        // is 3D
+        public bool? Is3D { get; set; }
     }
 
     public class CinemaHallMovieContext : DbContext
@@ -271,15 +273,17 @@ namespace CinemaTickets.Models
         {
             var cinemaHallScheduleMovie = from chm in CinemaHallMovies
                                           join ch in CinemaHalls on chm.CinemaHallID equals ch.ID
+                                          join cm in CinemaMovies on ch.CinemaID equals cm.CinemaID
                                           join c in Cinemas on ch.CinemaID equals c.ID
                                           join m in Movies on chm.MovieID equals m.ID
-                                          where chm.MovieID == movieId
+                                          where chm.MovieID == movieId && cm.MovieID == movieId
                                           select new CinemaHallScheduleMovie
                                           {
                                               CinemaHallMovieID = chm.ID,
                                               MovieID = m.ID,
                                               CinemaName = c.Name,
                                               Date = chm.Date,
+                                              Is3D = cm.Is3D,
                                           };
 
             cinemaHallScheduleMovie = cinemaHallScheduleMovie.Where(chsm => chsm.Date >= startDate).Where(chsm => chsm.Date <= endDate);
@@ -287,28 +291,47 @@ namespace CinemaTickets.Models
             return cinemaHallScheduleMovie.ToList();
         }
 
-        public Dictionary<string, Dictionary<string, Dictionary<string, int>>> GetMovieSchedule(int movieId, DateTime startDate, DateTime endDate)
+        public Dictionary<CinemaMovieSelect, Dictionary<string, Dictionary<string, int>>> GetMovieSchedule(int movieId, DateTime startDate, DateTime endDate)
         {
-            Dictionary<string, Dictionary<string, Dictionary<string, int>>> movieScheduleList;
-            movieScheduleList = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
+            // e.g. [Ефект][14.03.2020][19:20] = [1, 2, 3]
+            Dictionary<CinemaMovieSelect, Dictionary<string, Dictionary<string, int>>> movieScheduleList;
+            movieScheduleList = new Dictionary<CinemaMovieSelect, Dictionary<string, Dictionary<string, int>>>();
             List<CinemaHallScheduleMovie> movieScheduleDataList = GetMovieScheduleList(movieId, startDate, endDate);
+            Dictionary<int, CinemaMovieSelect> cinemaMovies = new Dictionary<int, CinemaMovieSelect>();
 
             foreach (CinemaHallScheduleMovie movieScheduleData in movieScheduleDataList)
             {
                 string time = Core.GetFormatedTime(movieScheduleData.Date);
                 string cinemaName = movieScheduleData.CinemaName;
                 string day = Core.GetFormatedDay(movieScheduleData.Date);
+                int cinemaHallID = movieScheduleData.CinemaHallID;
+                CinemaMovieSelect cinemaMovie;
 
-                if (!movieScheduleList.ContainsKey(cinemaName))
+                if (!cinemaMovies.ContainsKey(cinemaHallID))
                 {
-                    movieScheduleList.Add(cinemaName, new Dictionary<string, Dictionary<string, int>>());
+                    cinemaMovie = new CinemaMovieSelect()
+                    {
+                        CinemaName = cinemaName,
+                        Is3D = movieScheduleData.Is3D,
+                    };
+                    cinemaMovies.Add(cinemaHallID, cinemaMovie);
                 }
-                if (!movieScheduleList[cinemaName].ContainsKey(day))
+                else
                 {
-                    movieScheduleList[cinemaName].Add(day, new Dictionary<string, int>());
+                    cinemaMovie = cinemaMovies[cinemaHallID];
                 }
 
-                movieScheduleList[cinemaName][day].Add(time, movieScheduleData.CinemaHallMovieID);
+
+                if (!movieScheduleList.ContainsKey(cinemaMovie))
+                {
+                    movieScheduleList.Add(cinemaMovie, new Dictionary<string, Dictionary<string, int>>());
+                }
+                if (!movieScheduleList[cinemaMovie].ContainsKey(day))
+                {
+                    movieScheduleList[cinemaMovie].Add(day, new Dictionary<string, int>());
+                }
+
+                movieScheduleList[cinemaMovie][day].Add(time, movieScheduleData.CinemaHallMovieID);
             }
 
             return movieScheduleList;

@@ -76,5 +76,15 @@ namespace CinemaTickets.Models
 
             return prices;
         }
+
+        public bool HasMovies(int cinemaPlaceGroupID)
+        {
+            var cinemaMovieGroupPrice = from cmgp in CinemaMovieGroupPrices
+                                        select cmgp;
+
+            cinemaMovieGroupPrice = cinemaMovieGroupPrice.Where(s => s.CinemaPlaceGroupID == cinemaPlaceGroupID);
+
+            return cinemaMovieGroupPrice.ToList().Count > 0;
+        }
     }
 }

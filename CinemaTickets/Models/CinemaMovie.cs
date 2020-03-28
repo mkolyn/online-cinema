@@ -14,6 +14,8 @@ namespace CinemaTickets.Models
         public int MovieID { get; set; }
         // movie price
         public int Price { get; set; }
+        // is 3d
+        public bool? Is3D { get; set; }
     }
 
     public class CinemaMovieSelect
@@ -24,6 +26,10 @@ namespace CinemaTickets.Models
         public int? CinemaID { get; set; }
         // movie name
         public string Name { get; set; }
+        // cinema name
+        public string CinemaName { get; set; }
+        // is 3d
+        public bool? Is3D { get; set; }
     }
 
     public class CinemaMovieContext : DbContext

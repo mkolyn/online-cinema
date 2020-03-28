@@ -27,13 +27,13 @@ namespace CinemaTickets.Models
         // country
         public string Country { get; set; }
         // year
-        public int Year { get; set; }
+        public int? Year { get; set; }
         // director
         public string Director { get; set; }
         // cast
         public string Cast { get; set; }
         // budget
-        public int Budget { get; set; }
+        public int? Budget { get; set; }
     }
 
     public class MovieContext : DbContext

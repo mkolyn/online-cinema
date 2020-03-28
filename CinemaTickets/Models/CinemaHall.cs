@@ -25,6 +25,7 @@ namespace CinemaTickets.Models
         }
 
         public DbSet<CinemaHall> CinemaHalls { get; set; }
+        public DbSet<CinemaHallMovie> CinemaHallMovies { get; set; }
 
         public IEnumerable<CinemaHall> GetList(int cinemaId, string searchString = "")
         {
@@ -39,6 +40,16 @@ namespace CinemaTickets.Models
             }
 
             return cinemaHalls;
+        }
+
+        public bool HasMovies(int cinemaHallID)
+        {
+            var cinemaHallMovies = from chm in CinemaHallMovies
+                                   select chm;
+
+            cinemaHallMovies = cinemaHallMovies.Where(c => c.CinemaHallID == cinemaHallID);
+
+            return cinemaHallMovies.ToList().Count > 0;
         }
     }
 }

@@ -65,7 +65,7 @@ namespace CinemaTickets.Models
             List<DateTime> dates = new List<DateTime>();
             dates.Add(date);
 
-            for (var i = 0; i < NEXT_DAYS; i++)
+            for (var i = 0; i < NEXT_DAYS - 1; i++)
             {
                 date = date.AddDays(1);
                 dates.Add(date);
@@ -199,6 +199,14 @@ namespace CinemaTickets.Models
             return day + "." + month + (withYear ? "." + date.Year : "");
         }
 
+        public static string GetRawFormatedDay(DateTime date)
+        {
+            string day = date.Day < 10 ? "0" + date.Day.ToString() : date.Day.ToString();
+            string month = date.Month < 10 ? "0" + date.Month.ToString() : date.Month.ToString();
+
+            return date.Year + "-" + month + "-" + day;
+        }
+
         public static string GetFormatedTime(DateTime date)
         {
             string hour = date.Hour < 10 ? "0" + date.Hour.ToString() : date.Hour.ToString();
@@ -238,6 +246,20 @@ namespace CinemaTickets.Models
                 { "Friday", "П'ятниця" },
                 { "Saturday", "Субота" },
                 { "Sunday", "Неділя" },
+            };
+        }
+
+        public static Dictionary<string, string> GetShortDayList()
+        {
+            return new Dictionary<string, string>
+            {
+                { "Monday", "Пн" },
+                { "Tuesday", "Вт" },
+                { "Wednesday", "Ср" },
+                { "Thursday", "Чт" },
+                { "Friday", "Пт" },
+                { "Saturday", "Сб" },
+                { "Sunday", "Нд" },
             };
         }
     }
