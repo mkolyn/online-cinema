@@ -1,6 +1,6 @@
 ﻿.calendar {
     margin-top: 10px;
-    padding: 10px 60px;
+    padding: 10px 70px;
     background-color: #ebebeb;
     position: relative;
 }
@@ -27,7 +27,7 @@
 }
 
 .calendar-date-day {
-    height: 120px;
+    height: 100px;
     text-align: center;
     font-weight: bold;
     font-size: 24px;
@@ -35,9 +35,15 @@
     color: #929292;
 }
 
+
 .calendar-date.active .calendar-date-day {
     background-color: #ffc72f;
     color: #720f95;
+}
+
+.calendar-date-number {
+    transform: scaleY(1.8);
+    margin-top: 10px;
 }
 
 .calendar-slider-prev, .calendar-slider-next {
@@ -45,8 +51,8 @@
     top: 10px;
     z-index: 2;
     background-color: #FFFFFF;
-    width: 40px;
-    height: 150px;
+    width: 50px;
+    height: 130px;
 }
 
 .calendar-slider-prev {
@@ -61,8 +67,8 @@
     color: #929292;
     font-size: 20px;
     cursor: pointer;
-    top: 65px;
-    right: -22px;
+    top: 55px;
+    right: -34px;
     background-color: #ebebeb;
     border-radius: 50px;
     padding: 5px;
@@ -84,5 +90,17 @@
 
     .calendar-slider-prev .glyphicon, .calendar-slider-next .glyphicon {
         top: 45px;
+    }
+
+    .calendar-date-weekday {
+        font-size: 13px;
+    }
+
+    .calendar-date-day {
+        font-size: 20px;
+    }
+
+    .calendar-date-number {
+        margin-top: 5px;
     }
 }

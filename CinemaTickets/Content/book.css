@@ -33,6 +33,15 @@
     padding: 10px;
 }
 
+.book-info-name {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.book-info-detail {
+    text-align: center;
+}
+
 .cinema-hall-screen-left, .cinema-hall-screen-right, .cinema-hall-screen-center {
     float: left;
     height: 20px;
@@ -230,6 +239,23 @@
 
 .book-confirm-mobile {
     display: none;
+}
+
+@media (max-width: 720px) {
+    .cinema-hall-cell {
+        width: 20px;
+        height: 19px;
+        background-size: contain;
+    }
+
+    .cinema-hall-row {
+        height: 19px;
+    }
+
+    .cinema-hall-row-title {
+        height: 19px;
+        line-height: 19px;
+    }
 }
 
 @media (max-width: 480px) {

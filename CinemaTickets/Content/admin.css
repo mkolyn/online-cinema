@@ -39,7 +39,7 @@
 
 .schedule-movie {
     display: inline-block;
-    width: 100px;
+    width: 200px;
     height: 100px;
     border: 1px solid #ccc;
     padding: 5px;
@@ -60,7 +60,7 @@
 }
 
 .schedule-movie-remove {
-    right: 12px;
+    right: 18px;
 }
 
 .schedule {

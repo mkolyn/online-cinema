@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -53,17 +54,17 @@ namespace CinemaTickets.Controllers
             return View(movie);
         }
 
-        private void PopulateCreateMovieData()
+        private void PopulateCreateMovieData(int movieID = 0, int genreID = 0)
         {
             if (Core.GetCinemaId() > 0)
             {
                 cinemaPlaceGroups = cinemaPlaceGroupDb.GetList(Core.GetCinemaId());
             }
 
-            ViewBag.GenreID = genreDb.GetSelectList();
+            ViewBag.GenreID = genreDb.GetSelectList(genreID);
             ViewBag.cinemaId = Core.GetCinemaId();
             ViewBag.cinemaPlaceGroups = cinemaPlaceGroups;
-            ViewBag.movieID = 0;
+            ViewBag.movieID = movieID;
         }
 
         // GET: Movies/Create
@@ -80,6 +81,7 @@ namespace CinemaTickets.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(
             [Bind(Include = "GenreID,Name,Duration,Description,Country,Year,Director,Cast,Budget,YoutubeUrl")] Movie movie = null,
+            [Bind(Include = "Is3D")] bool is3D = false,
             [Bind(Include = "Price")] int price = 0,
             [Bind(Include = "Image")] HttpPostedFileBase image = null,
             [Bind(Include = "GroupPrices")] Dictionary<int, int> GroupPrices = null
@@ -121,6 +123,7 @@ namespace CinemaTickets.Controllers
                             CinemaID = cinemaId,
                             MovieID = movieId,
                             Price = price,
+                            Is3D = is3D,
                         };
 
                         cinemaMovieDb.CinemaMovies.Add(cinemaMovie);
@@ -128,6 +131,7 @@ namespace CinemaTickets.Controllers
                     }
                     else
                     {
+                        cinemaMovie.Is3D = is3D;
                         cinemaMovie.Price = price;
                     }
 
@@ -163,6 +167,8 @@ namespace CinemaTickets.Controllers
             Dictionary<int, int> groupPrices = new Dictionary<int, int>();
             int cinemaId = Core.GetCinemaId();
             int moviePrice = 0;
+            bool? is3D = false;
+
             if (cinemaId > 0)
             {
                 cinemaMovie = cinemaMovieDb.Get(cinemaId, id);
@@ -172,6 +178,8 @@ namespace CinemaTickets.Controllers
                 }
 
                 moviePrice = cinemaMovie.Price;
+                is3D = cinemaMovie.Is3D;
+
                 List<CinemaPlaceGroup> cinemaPlaceGroups = new List<CinemaPlaceGroup>();
                 cinemaPlaceGroups = cinemaPlaceGroupDb.GetList(cinemaId);
                 foreach (CinemaPlaceGroup cinemaPlaceGroup in cinemaPlaceGroups)
@@ -193,6 +201,7 @@ namespace CinemaTickets.Controllers
             ViewBag.cinemaPlaceGroups = cinemaPlaceGroups;
             ViewBag.groupPrices = groupPrices;
             ViewBag.movieID = movie.ID;
+            ViewBag.is3D = is3D;
 
             return View(movie);
         }
@@ -202,44 +211,59 @@ namespace CinemaTickets.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, HttpPostedFileBase image, string Country, int Year, string Director,
-            string Cast, int Budget, string YoutubeUrl, Dictionary<int, int> GroupPrices, int price = 0)
+        public ActionResult Edit([Bind(Include = "ID,GenreID,Name,Duration,Description,Country,Year,Director,Cast,Budget,YoutubeUrl")] Movie movie,
+            HttpPostedFileBase image, Dictionary<int, int> GroupPrices, int price = 0, bool Is3D = false)
         {
+            Movie existedMovie = db.Movies.Find(movie.ID);
+            if (existedMovie == null)
+            {
+                return HttpNotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                Movie movie = db.Movies.Find(id);
-                if (movie == null)
+                if (image != null)
                 {
-                    return HttpNotFound();
+                    string imageFileName = Core.UploadImage(image, Server.MapPath("~/Images"), movie.ID.ToString());
+                    if (imageFileName != "")
+                    {
+                        if (existedMovie.Image != "")
+                        {
+                            Core.RemoveImage(Server.MapPath("~/Images"), existedMovie.Image);
+                        }
+                        movie.Image = imageFileName;
+                    }
+                }
+                else
+                {
+                    movie.Image = existedMovie.Image;
                 }
 
-                movie.YoutubeUrl = YoutubeUrl;
-                movie.Country = Country;
-                movie.Director = Director;
-                movie.Cast = Cast;
-                movie.Budget = Budget;
-
-                string imageFileName = Core.UploadImage(image, Server.MapPath("~/Images"), movie.ID.ToString());
-                if (imageFileName != "")
-                {
-                    Core.RemoveImage(Server.MapPath("~/Images"), movie.Image);
-                    movie.Image = imageFileName;
-                }
-
+                //existedMovie = null;
+                db.Entry(existedMovie).State = EntityState.Detached;
+                db.Entry(movie).State = EntityState.Modified;
                 db.SaveChanges();
 
-                CinemaMovie cinemaMovie = cinemaMovieDb.Get(Core.GetCinemaId(), id);
+                CinemaMovie cinemaMovie = cinemaMovieDb.Get(Core.GetCinemaId(), movie.ID);
 
                 if (cinemaMovie != null)
                 {
                     cinemaMovie.Price = price;
+                    cinemaMovie.Is3D = Is3D != null;
                     cinemaMovieDb.SaveChanges();
 
                     UpdateCinemaMovieGroupPrices(cinemaMovie.ID, GroupPrices);
                 }
+
+                return RedirectToRoute("Administrator", new { Action = "Index", Controller = "Movies" });
+            }
+            else
+            {
+                AddModelStateErrors(ModelState.Values);
             }
 
-            return RedirectToRoute("Administrator", new { Action = "Index", Controller = "Movies" });
+            PopulateCreateMovieData(movie.ID, movie.GenreID);
+            return View("Edit", movie);
         }
 
         // GET: Movies/Delete/5

@@ -62,7 +62,7 @@ namespace CinemaTickets.Controllers
                 return HttpNotFound();
             }
             CheckCinemaRights(cinemaHall.CinemaID);
-            ViewBag.CinemaId = id;
+            ViewBag.CinemaId = cinemaHall.CinemaID;
 
             return View(cinemaHall);
         }
@@ -110,9 +110,18 @@ namespace CinemaTickets.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             CinemaHall cinemaHall = db.CinemaHalls.Find(id);
-            CheckCinemaRights(cinemaHall.CinemaID);
-            db.CinemaHalls.Remove(cinemaHall);
-            db.SaveChanges();
+
+            if (db.HasMovies(id))
+            {
+                AddMessage(Messages.CINEMA_HALL_HAS_MOVIES);
+            }
+            else
+            {
+                CheckCinemaRights(cinemaHall.CinemaID);
+                db.CinemaHalls.Remove(cinemaHall);
+                db.SaveChanges();
+            }
+            
             return RedirectToAction("Halls", "Cinemas", new { id = cinemaHall.CinemaID });
         }
 

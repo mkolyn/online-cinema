@@ -13,6 +13,7 @@ namespace CinemaTickets.Controllers
     public class CinemaPlaceGroupsController : AdminController
     {
         private CinemaPlaceGroupContext db = new CinemaPlaceGroupContext();
+        private CinemaMovieGroupPriceContext cinemaMovieGroupPriceDb = new CinemaMovieGroupPriceContext();
 
         // GET: CinemaPlaceGroups/Create
         public ActionResult Create(int id)
@@ -44,6 +45,10 @@ namespace CinemaTickets.Controllers
                 db.SaveChanges();
                 return RedirectToAction("PlaceGroups", "Cinemas", new { id = cinemaPlaceGroup.CinemaID });
             }
+            else
+            {
+                AddModelStateErrors(ModelState.Values);
+            }
 
             return View(cinemaPlaceGroup);
         }
@@ -58,6 +63,7 @@ namespace CinemaTickets.Controllers
             }
             CheckCinemaRights(cinemaPlaceGroup.CinemaID);
 
+            ViewBag.CinemaId = cinemaPlaceGroup.CinemaID;
             return View(cinemaPlaceGroup);
         }
 
@@ -74,6 +80,10 @@ namespace CinemaTickets.Controllers
                 db.Entry(cinemaPlaceGroup).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("PlaceGroups", "Cinemas", new { id = cinemaPlaceGroup.CinemaID });
+            }
+            else
+            {
+                AddModelStateErrors(ModelState.Values);
             }
 
             return View(cinemaPlaceGroup);
@@ -98,9 +108,18 @@ namespace CinemaTickets.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             CinemaPlaceGroup cinemaPlaceGroup = db.CinemaPlaceGroups.Find(id);
-            CheckCinemaRights(cinemaPlaceGroup.CinemaID);
-            db.CinemaPlaceGroups.Remove(cinemaPlaceGroup);
-            db.SaveChanges();
+
+            if (cinemaMovieGroupPriceDb.HasMovies(id))
+            {
+                AddMessage(Messages.CINEMA_PLACE_GROUP_HAS_MOVIES);
+            }
+            else
+            {
+                CheckCinemaRights(cinemaPlaceGroup.CinemaID);
+                db.CinemaPlaceGroups.Remove(cinemaPlaceGroup);
+                db.SaveChanges();
+            }
+            
             return RedirectToAction("PlaceGroups", "Cinemas", new { id = cinemaPlaceGroup.CinemaID });
         }
 

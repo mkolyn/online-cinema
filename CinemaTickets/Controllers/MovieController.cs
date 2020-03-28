@@ -22,7 +22,7 @@ namespace CinemaTickets.Controllers
         private List<CinemaPlaceGroup> cinemaPlaceGroups = new List<CinemaPlaceGroup>();
 
         // GET: Movie/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, string day)
         {
             ViewBag.Styles.Add("movie-detail");
             ViewBag.Styles.Add("calendar");
@@ -46,6 +46,7 @@ namespace CinemaTickets.Controllers
             ViewBag.dayList = Core.GetDayList();
             ViewBag.currentDate = date;
             ViewBag.periodDays = Core.SELECT_MOVIE_TIME_DAYS;
+
             ViewBag.ScriptTexts.Add("var SELECT_MOVIE_TIME_DAYS = " + Core.SELECT_MOVIE_TIME_DAYS + ";");
             ViewBag.ScriptTexts.Add("var SELECT_MOVIE_MOBILE_TIME_DAYS = " + Core.SELECT_MOVIE_MOBILE_TIME_DAYS + ";");
 

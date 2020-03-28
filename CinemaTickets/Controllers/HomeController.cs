@@ -48,6 +48,7 @@ namespace CinemaTickets.Controllers
             ViewBag.monthList = Core.GetMonthList();
             ViewBag.dayList = Core.GetDayList();
             ViewBag.currentDate = DateTime.Now;
+            ViewBag.genres = genreDb.Genres.ToList();
 
             return View();
         }

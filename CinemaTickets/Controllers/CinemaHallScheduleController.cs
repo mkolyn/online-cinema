@@ -67,6 +67,11 @@ namespace CinemaTickets.Controllers
             }
             CheckCinemaRights(cinemaHall.CinemaID);
 
+            if (movies == null)
+            {
+                movies = new List<CinemaHallScheduleMovie>();
+            }
+
             foreach (CinemaHallScheduleMovie scheduleMovie in movies)
             {
                 Movie movie = movieDb.Movies.Find(scheduleMovie.MovieID);

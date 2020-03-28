@@ -12,6 +12,7 @@ namespace CinemaTickets.Controllers
     {
         private UserContext userDb = new UserContext();
         private GenreContext genreDb = new GenreContext();
+        private CityContext cityDb = new CityContext();
         private CinemaMovieContext cinemaMovieDb = new CinemaMovieContext();
         private CinemaHallMovieContext cinemaHallMovieDb = new CinemaHallMovieContext();
         private CinemaHallPlaceContext cinemaHallPlaceDb = new CinemaHallPlaceContext();
@@ -36,15 +37,21 @@ namespace CinemaTickets.Controllers
             Cinema cinema = cinemaHallMovieDb.Cinemas.Find(cinemaHall.CinemaID);
             Movie movie = cinemaHallMovieDb.Movies.Find(cinemaHallMovie.MovieID);
             Genre genre = genreDb.Genres.Find(movie.GenreID);
+            CinemaMovie cinemaMovie = cinemaMovieDb.Get(cinema.ID, movie.ID);
+            City city = cityDb.Cities.Find(Core.GetCityId());
 
             DateTime date = cinemaHallMovie.Date;
 
+            ViewBag.cityName = city.Name;
             ViewBag.cinemaName = cinema.Name;
             ViewBag.cinemaHallName = cinemaHall.Name;
             ViewBag.movieName = movie.Name;
             ViewBag.genreName = genre.Name;
+            ViewBag.dayName = Core.GetShortDayList()[date.DayOfWeek.ToString()];
             ViewBag.formattedDate = Core.GetFormatedDate(new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0));
+            ViewBag.formattedTime = Core.GetFormatedTime(new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0));
             ViewBag.Duration = movie.Duration;
+            ViewBag.is3D = cinemaMovie.Is3D;
 
             CinemaHallPlaceData cinemaHallPlaceData = cinemaHallPlaceDb.GetCinemaHallPlacesData(cinemaHall.ID, cinemaHallMovie.ID);
 
