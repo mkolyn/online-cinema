@@ -7,12 +7,23 @@
     {
         priceClass += " required";
     }
+
     var token = Session["UserID"] != null && Session["UserID"].ToString() != "" ? Html.AntiForgeryToken().ToHtmlString() : "";
+    object is3DAttributes;
+    if (ViewBag.is3D == true)
+    {
+        is3DAttributes = new { @Name = "Is3D", @class = "form-control", @type = "checkbox", @Value = true, @Checked = "" };
+    }
+    else
+    {
+        is3DAttributes = new { @Name = "Is3D", @class = "form-control", @type = "checkbox", @Value = true };
+    }
 }
 
-@using (Html.BeginForm("Create", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm(ViewBag.movieID > 0 ? "Edit" : "Create", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.Raw(token)
+    @Html.HiddenFor(model => model.ID);
 
     <div class="form-horizontal">
         <h4>Фільм</h4>
@@ -91,6 +102,11 @@
                 </div>
             </div>
 
+            if (Model.Image != "")
+            {
+                <img src="~/Images/@Model.Image" width="100" />
+            }
+
             <div class="form-group">
                 @Html.Label("Зображення", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -98,19 +114,25 @@
                 </div>
             </div>
         }
-
-        @if (ViewBag.movieID == 0)
+        else
         {
-            <div class="form-group @if (ViewBag.cinemaId == 0) { @Html.Raw(" hidden"); }">
+            <div class="form-group">
+                @Html.Label("3D?", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.Editor("3D?", new { htmlAttributes = is3DAttributes })
+                </div>
+            </div>
+
+            <div class="form-group">
                 @Html.Label("Ціна", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.Editor("Ціна", new { htmlAttributes = new { @Name = "Price", @class = priceClass, @type = "number" } })
+                    @Html.Editor("Ціна", new { htmlAttributes = new { @Name = "Price", @class = priceClass, @type = "number", @Value = ViewBag.price } })
                 </div>
             </div>
 
             foreach (CinemaTickets.Models.CinemaPlaceGroup cinemaPlaceGroup in ViewBag.cinemaPlaceGroups)
             {
-                <div class="form-group @if (ViewBag.cinemaId == 0) { @Html.Raw(" hidden"); }">
+                <div class="form-group">
                     @Html.Label("Ціна (" + cinemaPlaceGroup.Name + ")", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.Hidden("GroupPrices[" + @i + "][key]", cinemaPlaceGroup.ID)

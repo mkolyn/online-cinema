@@ -32,26 +32,30 @@
         search();
     });
 
-    $('.calendar-date').click(function () {
+    /*$('.calendar-date').click(function () {
         location.href = "/date/" + $(this).data('year') + "/" + $(this).data('month') + "/" + $(this).data('day');
-    });
+    });*/
 
-    addCalendarSliderEvents(function () {
-        var calendarDate = $('.calendar-date.active');
-        var params = {
-            year: calendarDate.data('year'),
-            month: calendarDate.data('month'),
-            day: calendarDate.data('day'),
-            cinemaId: 0,
-            genreId: 0,
-            searchString: ""
-        };
-        ajax('/Home/GetMoviesHtml', params, function (data) {
-            $('.movies-container').html(data);
-            addMovieSliderEvents();
-        });
-    });
+    $('.genre-select .select-option').click(loadMoviesHtml);
+
+    addCalendarSliderEvents(loadMoviesHtml);
 });
+
+function loadMoviesHtml() {
+    var calendarDate = $('.calendar-date.active');
+    var params = {
+        year: calendarDate.data('year'),
+        month: calendarDate.data('month'),
+        day: calendarDate.data('day'),
+        cinemaId: 0,
+        genreId: $('.genre').val(),
+        searchString: ""
+    };
+    ajax('/Home/GetMoviesHtml', params, function (data) {
+        $('.movies-container').html(data);
+        addMovieSliderEvents();
+    });
+}
 
 function addMovieSliderEvents() {
     var moviesSlider = $('.movies').lightSlider({

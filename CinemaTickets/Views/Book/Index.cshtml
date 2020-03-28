@@ -2,21 +2,22 @@
 
 @{
     ViewBag.Title = ViewBag.Message;
+    var is3DLabel = ViewBag.is3D == true ? "3D" : "2D";
 }
 
 <input type="hidden" class="cinema-hall-movie-id" value="@ViewBag.cinemaHallMovieId" />
 <input type="hidden" class="cinema-hall-movie-price" value="@ViewBag.price" />
 
-<div class="book-info bg-grey col-lg-4">
+<div class="book-info bg-grey col-lg-4 col-md-4 col-sm-4">
     <div class="book-info-name grey bold">
         @ViewBag.movieName
     </div>
     <div class="book-info-detail light-grey">
-        @ViewBag.cinemaName | @ViewBag.formattedDate
+        @ViewBag.cityName | @is3DLabel | @ViewBag.cinemaName | @ViewBag.dayName @ViewBag.formattedTime
     </div>
 </div>
 
-<div class="book-places-info col-lg-4 col-xs-6">
+<div class="book-places-info col-lg-4 col-md-4 col-sm-4 col-xs-6">
     <div class="book-places-info-total grey">
         <span class="bold">
             Сума до сплати:
@@ -28,7 +29,7 @@
     <div class="book-places-info-choise grey"></div>
 </div>
 
-<div class="book-confirm col-lg-4 col-xs-6">
+<div class="book-confirm col-lg-4 col-md-4 col-sm-4 col-xs-6">
     <div class="button book-places hidden bg-orange violet bold">
         Забронювати
     </div>

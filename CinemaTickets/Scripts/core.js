@@ -50,17 +50,35 @@ $(document).ready(function () {
 function addCalendarSliderEvents(afterSlideFunc) {
     var calendarSlider = $('.calendar-slider').lightSlider({
         pager: false,
-        slideMargin: 0,
+        slideMargin: 1,
         item: 7,
         responsive: [
-            {
+            /*{
                 breakpoint: 800,
+                settings: {
+                    item: 4
+                }
+            },*/
+            {
+                breakpoint: 1280,
+                settings: {
+                    item: 5
+                }
+            },
+            {
+                breakpoint: 640,
                 settings: {
                     item: 4
                 }
             },
             {
                 breakpoint: 480,
+                settings: {
+                    item: 3
+                }
+            },
+            {
+                breakpoint: 360,
                 settings: {
                     item: 2
                 }
@@ -82,5 +100,11 @@ function addCalendarSliderEvents(afterSlideFunc) {
 
     $('.calendar-slider-prev').click(function () {
         calendarSlider.goToPrevSlide();
+    });
+
+    $('.calendar-date').click(function () {
+        $('.calendar-date').removeClass('slider-active').removeClass('active');
+        $(this).addClass('slider-active').addClass('active');
+        calendarSlider.goToSlide($(this).index());
     });
 }

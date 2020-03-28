@@ -19,4 +19,23 @@
         $('.select-options').addClass('hidden');
         isHidden ? selectOptions.removeClass('hidden') : selectOptions.addClass('hidden');
     });
+
+    $('.select-option').click(function () {
+        var select = $(this).closest('.select');
+        select.find('.select-value').val($(this).data('value'));
+        select.find('.select-title').html($(this).html());
+        select.find('.select-option').removeClass('selected');
+        $(this).addClass('selected');
+        select.find('.select-options').addClass('hidden');
+    });
+
+    $('.glyphicon-menu-hamburger').click(function () {
+        $('.mobile-menu').removeClass('hidden');
+        $('body').addClass('mobile-menu-opened');
+    });
+
+    $('.mobile-menu-close').click(function () {
+        $('.mobile-menu').addClass('hidden');
+        $('body').removeClass('mobile-menu-opened');
+    });
 });

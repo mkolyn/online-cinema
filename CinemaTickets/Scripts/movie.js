@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     addTimeTableEvents();
+    /*addCalendarSliderEvents();*/
 });
 
 function addTimeTableEvents() {

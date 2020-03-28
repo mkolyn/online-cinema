@@ -1,5 +1,6 @@
 ﻿@{
-    Dictionary<string, Dictionary<string, Dictionary<string, int>>> schedule = ViewData["schedule"] as Dictionary<string, Dictionary<string, Dictionary<string, int>>>;
+    Dictionary<CinemaTickets.Models.CinemaMovieSelect, Dictionary<string, Dictionary<string, int>>> schedule =
+        ViewData["schedule"] as Dictionary<CinemaTickets.Models.CinemaMovieSelect, Dictionary<string, Dictionary<string, int>>>;
 }
 
 <input type="hidden" class="movie-period-start-day" value="@ViewData["moviePeriodStartDay"]" />
@@ -11,7 +12,7 @@
 <input type="hidden" class="movie-period-end-year" value="@ViewData["moviePeriodEndYear"]" />
 
 <div class="time-table">
-    @foreach (string cinemaName in schedule.Keys)
+    @foreach (CinemaTickets.Models.CinemaMovieSelect cinemaMovie in schedule.Keys)
     {
         <div class="time-table-cinema">
             <div class="time-table-cinema-icon">
@@ -19,7 +20,7 @@
             </div>
             <div class="time-table-cinema-detail">
                 <div class="time-table-cinema-name">
-                    @cinemaName
+                    @cinemaMovie.CinemaName
                 </div>
                 <div class="time-table-cinema-address">
                     вул. Героїв Майдану, 176
@@ -43,15 +44,15 @@
                 </span>
             </div>
             <div class="time-table-movie-type">
-                2D
+                @Html.Raw(@cinemaMovie.Is3D == true ? "3D" : "2D")
             </div>
-            @foreach (string day in schedule[cinemaName].Keys)
+            @foreach (string day in schedule[cinemaMovie].Keys)
             {
                 <div class="time-table-day">
                     <div class="time-table-day-name">
                         @day
                     </div>
-                    @foreach (KeyValuePair<string, int> time in schedule[cinemaName][day])
+                    @foreach (KeyValuePair<string, int> time in schedule[cinemaMovie][day])
                     {
                         <a class="time-table-day-time" href="@Url.RouteUrl("Default", new { controller = "Book", action = "Index", id = @time.Value })">
                             @time.Key
