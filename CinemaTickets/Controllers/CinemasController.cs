@@ -39,7 +39,7 @@ namespace CinemaTickets.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,CityID,Name")] Cinema cinema)
+        public ActionResult Create([Bind(Include = "ID,CityID,Name,LiqpayPublicKey,LiqpayPrivateKey,IsTestPayment")] Cinema cinema)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace CinemaTickets.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,CityID,Name")] Cinema cinema)
+        public ActionResult Edit([Bind(Include = "ID,CityID,Name,LiqpayPublicKey,LiqpayPrivateKey,IsTestPayment")] Cinema cinema)
         {
             if (ModelState.IsValid)
             {

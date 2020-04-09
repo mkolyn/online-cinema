@@ -323,6 +323,10 @@
     <Compile Include="Migrations\202003141646048_CinemaMovieIs3D.Designer.cs">
       <DependentUpon>202003141646048_CinemaMovieIs3D.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004051856083_CinemaPayFields.cs" />
+    <Compile Include="Migrations\202004051856083_CinemaPayFields.Designer.cs">
+      <DependentUpon>202004051856083_CinemaPayFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaMovieGroupPrice.cs" />
     <Compile Include="Models\CinemaPlaceGroup.cs" />
@@ -577,6 +581,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003141646048_CinemaMovieIs3D.resx">
       <DependentUpon>202003141646048_CinemaMovieIs3D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004051856083_CinemaPayFields.resx">
+      <DependentUpon>202004051856083_CinemaPayFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

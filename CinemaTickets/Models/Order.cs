@@ -43,12 +43,16 @@ namespace CinemaTickets.Models
         public int Row { get; set; }
         // cinema hall place cell
         public int Cell { get; set; }
+        // movie id
+        public int MovieID { get; set; }
         // movie name
         public string MovieName { get; set; }
         // movie image
         public string MovieImage { get; set; }
         // genre name
         public string Genre { get; set; }
+        // cinema id
+        public int CinemaID { get; set; }
         // cinema name
         public string CinemaName { get; set; }
         // cinema hall name
@@ -102,9 +106,11 @@ namespace CinemaTickets.Models
                                  OrderItemId = oi.ID,
                                  Row = chp.Row,
                                  Cell = chp.Cell,
+                                 MovieID = m.ID,
                                  MovieName = m.Name,
                                  MovieImage = m.Image,
                                  Genre = g.Name,
+                                 CinemaID = c.ID,
                                  CinemaName = c.Name,
                                  CinemaHallName = ch.Name,
                                  CinemaHallMovieID = chm.ID,

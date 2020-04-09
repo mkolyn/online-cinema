@@ -25,6 +25,13 @@ namespace CinemaTickets.Models
         public string expired_date;
     }
 
+    public class ApiData
+    {
+        public string publicKey;
+        public string privateKey;
+        public bool isTestPayment;
+    }
+
     public class Liqpay
     {
         public const int API_VERSION = 3;
@@ -60,11 +67,11 @@ namespace CinemaTickets.Models
         // liqpay expired date
         public string expired_date { get; set; }
 
-        public Liqpay(int amount, string orderId, string description, string serverUrl, string resultUrl, string expiredDate, int sandbox = 0)
+        public Liqpay(int amount, string orderId, string description, string serverUrl, string resultUrl, string expiredDate, ApiData apiData)
         {
             version = API_VERSION;
-            public_key = API_PUBLIC_KEY;
-            private_key = API_PRIVATE_KEY;
+            public_key = apiData.publicKey;
+            private_key = apiData.privateKey;
             action = API_ACTION;
             currency = API_CURRENCY;
             this.amount = amount;
@@ -74,7 +81,7 @@ namespace CinemaTickets.Models
             result_url = resultUrl;
             expired_date = expiredDate;
 
-            if (sandbox == 1)
+            if (apiData.isTestPayment)
             {
                 this.sandbox = sandbox;
             }
@@ -83,7 +90,7 @@ namespace CinemaTickets.Models
         public static string GetSignature(string liqpayData)
         {
             SHA1 sha = new SHA1CryptoServiceProvider();
-            byte[] encodedData = sha.ComputeHash(Encoding.UTF8.GetBytes(API_PRIVATE_KEY + liqpayData + API_PRIVATE_KEY));
+            byte[] encodedData = sha.ComputeHash(Encoding.UTF8.GetBytes(liqpayData));
             return Convert.ToBase64String(encodedData);
         }
 

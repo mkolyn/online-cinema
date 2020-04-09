@@ -11,6 +11,22 @@
         <span class="glyphicon glyphicon-phone grey"></span>
         <input type="text" class="required phone bg-grey" placeholder="Телефон" />
     </div>
+    <div class="book-confirm-warning text-right text-uppercase grey">* Будь-ласка заповніть всі поля</div>
+    <div class="grey">
+        @if (ViewBag.canConfirmBooking)
+        {
+            <span>У Вас залишилося <span class="time-left"></span> хв. щоб забронювати квиток</span>
+        }
+        else
+        {
+            @Html.Raw("Час для бронювання вичерпано");
+        }
+
+        @if (ViewBag.isPaid)
+        {
+            <span>Бронювання успішно підтверджено</span>
+        }
+    </div>
     <div class="book-confirm-total">
         <span class="text-uppercase grey bold">
             Сума до сплати:

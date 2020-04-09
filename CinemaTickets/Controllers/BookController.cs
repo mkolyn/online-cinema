@@ -167,6 +167,8 @@ namespace CinemaTickets.Controllers
 
             List<OrderItemInfo> orderItems = orderDb.GetOrderItems(id);
             OrderItemInfo orderInfo = orderItems.First();
+            CinemaMovie cinemaMovie = cinemaMovieDb.Get(orderInfo.CinemaID, orderInfo.MovieID);
+            Cinema cinema = cinemaHallMovieDb.Cinemas.Find(orderInfo.CinemaID);
 
             ViewBag.orderItems = orderItems;
             ViewBag.formattedDate = Core.GetFormatedDate(order.Date);
@@ -179,6 +181,7 @@ namespace CinemaTickets.Controllers
             ViewBag.cinemaName = orderInfo.CinemaName;
             ViewBag.dayName = Core.GetDayList()[order.Date.DayOfWeek.ToString()];
             ViewBag.movieImage = orderInfo.MovieImage;
+            ViewBag.is3D = cinemaMovie.Is3D;
 
             DateTime confirmToDate = order.Date.AddMinutes(Config.CONFIRM_PAYMENT_MINUTES_TIMEOUT);
             ViewBag.ScriptTexts.Add("var YEAR = " + confirmToDate.Year + ";");
@@ -198,9 +201,15 @@ namespace CinemaTickets.Controllers
             string description = "Оплата квитка (квитків) на фільм." + "\n";
             description += orderDb.GetOrderItemDetailsGrouped(orderItems);
 
-            Liqpay liqpay = new Liqpay(totalPrice, id.ToString(), description, GetUrl("Liqpay/Result"), GetUrl("Home/Thankyou"), expiredDate);
+            ApiData apiData = new ApiData
+            {
+                publicKey = cinema.LiqpayPublicKey,
+                privateKey = cinema.LiqpayPrivateKey,
+                isTestPayment = cinema.IsTestPayment,
+            };
+            Liqpay liqpay = new Liqpay(totalPrice, id.ToString(), description, GetUrl("Liqpay/Result"), GetUrl("Home/Thankyou"), expiredDate, apiData);
             string liqpayData = Core.Base64Encode(Core.ToJson(liqpay.GetData()));
-            string liqpaySignature = Liqpay.GetSignature(liqpayData);
+            string liqpaySignature = Liqpay.GetSignature(cinema.LiqpayPrivateKey + liqpayData + cinema.LiqpayPrivateKey);
 
             ViewBag.totalPrice = totalPrice;
             ViewBag.liqpayData = liqpayData;

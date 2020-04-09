@@ -15,6 +15,12 @@ namespace CinemaTickets.Models
         public int CityID { get; set; }
         // cinema name
         public string Name { get; set; }
+        // public key
+        public string LiqpayPublicKey { get; set; }
+        // private key
+        public string LiqpayPrivateKey { get; set; }
+        // is test payment
+        public bool IsTestPayment { get; set; }
     }
 
     public class CinemaContext : DbContext

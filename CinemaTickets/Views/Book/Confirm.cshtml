@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = ViewBag.Message;
+    var is3DLabel = ViewBag.is3D == true ? "3D" : "2D";
 }
 
 <div class="book-confirm">
@@ -24,7 +25,7 @@
     <div class="book-confirm-movie-name text-uppercase bg-grey grey">
         @ViewBag.movieName
         <span class="book-confirm-movie-type">
-            2D
+            @is3DLabel
         </span>
     </div>
     <div class="book-confirm-image" style="background-image: url(/images/@ViewBag.movieImage)"></div>
@@ -48,30 +49,12 @@
 }
 
 <div class="row">
-    <h2>Підтвердити бронювання</h2>
+    <!--h2>Підтвердити бронювання</h2>
 
     Дата бронювання:
     <h3>
         @ViewBag.formattedDate
-    </h3>
-
-    @if (ViewBag.canConfirmBooking)
-    {
-        <div>
-            У Вас залишилося <span class="time-left"></span> хв. щоб забронювати квиток
-        </div>
-    }
-    else
-    {
-        @Html.Raw("Час для бронювання вичерпано");
-    }
-
-    @if (ViewBag.isPaid)
-    {
-        <h4>
-            Бронювання успішно підтверджено
-        </h4>
-    }
+    </h3>-->
 
     <!--<div class="order-items">
         @foreach (var orderItem in ViewBag.orderItems)

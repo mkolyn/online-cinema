@@ -202,7 +202,11 @@
     float: right;
 }
 
-.book-confirm-cinema-info {
+.book-confirm-cinema-info, .book-confirm-date-info, .book-confirm-places {
+    margin-left: 10px;
+}
+
+.book-confirm-cinema-info, .book-confirm-date-info {
     display: inline-block;
 }
 
@@ -211,6 +215,10 @@
 }
 
 .book-confirm-cinema, .book-confirm-date, .book-confirm-places-info {
+    padding: 5px 0;
+}
+
+.book-confirm-cinema, .book-confirm-date {
     border-bottom: 2px solid #cccccc;
 }
 
