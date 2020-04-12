@@ -34,6 +34,8 @@ namespace CinemaTickets.Models
         public string Cast { get; set; }
         // budget
         public int? Budget { get; set; }
+        // age limit
+        public int? AgeLimit { get; set; }
     }
 
     public class MovieContext : DbContext

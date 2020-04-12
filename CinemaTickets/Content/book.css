@@ -285,7 +285,7 @@
     }
 
     .book-confirm {
-        display: none;
+        /*display: none;*/
     }
 
     .book-confirm-mobile {
@@ -319,5 +319,25 @@
 
     .liqpay-pay {
         margin: auto;
+    }
+
+    .book-places {
+        width: 100%;
+    }
+
+    .cinema-hall-rows, .cinema-hall-places {
+        float: left;
+    }
+
+    .cinema-hall-rows {
+        margin-top: 0;
+    }
+
+    .cinema-hall-places {
+        margin: 0 2px;
+    }
+
+    .legend {
+        display: inline-block;
     }
 }

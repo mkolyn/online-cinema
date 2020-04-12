@@ -1,6 +1,8 @@
 ﻿@{
     Dictionary<CinemaTickets.Models.CinemaMovieSelect, Dictionary<string, Dictionary<string, int>>> schedule =
         ViewData["schedule"] as Dictionary<CinemaTickets.Models.CinemaMovieSelect, Dictionary<string, Dictionary<string, int>>>;
+
+    Dictionary<string, string> dayList = ViewData["dayList"] as Dictionary<string, string>;
 }
 
 <input type="hidden" class="movie-period-start-day" value="@ViewData["moviePeriodStartDay"]" />
@@ -44,13 +46,16 @@
                 </span>
             </div>
             <div class="time-table-movie-type">
-                @Html.Raw(@cinemaMovie.Is3D == true ? "3D" : "2D")
+                <span>
+                    @Html.Raw(@cinemaMovie.Is3D == true ? "3D" : "2D")
+                </span>
             </div>
             @foreach (string day in schedule[cinemaMovie].Keys)
             {
+                DateTime.TryParse(day, out DateTime date);
                 <div class="time-table-day">
                     <div class="time-table-day-name">
-                        @day
+                        @dayList[date.DayOfWeek.ToString()]
                     </div>
                     @foreach (KeyValuePair<string, int> time in schedule[cinemaMovie][day])
                     {

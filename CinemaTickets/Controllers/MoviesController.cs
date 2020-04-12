@@ -80,7 +80,7 @@ namespace CinemaTickets.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "GenreID,Name,Duration,Description,Country,Year,Director,Cast,Budget,YoutubeUrl")] Movie movie = null,
+            [Bind(Include = "GenreID,Name,Duration,Description,Country,Year,Director,Cast,Budget,YoutubeUrl,AgeLimit")] Movie movie = null,
             [Bind(Include = "Is3D")] bool is3D = false,
             [Bind(Include = "Price")] int price = 0,
             [Bind(Include = "Image")] HttpPostedFileBase image = null,
@@ -211,7 +211,7 @@ namespace CinemaTickets.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,GenreID,Name,Duration,Description,Country,Year,Director,Cast,Budget,YoutubeUrl")] Movie movie,
+        public ActionResult Edit([Bind(Include = "ID,GenreID,Name,Duration,Description,Country,Year,Director,Cast,Budget,YoutubeUrl,AgeLimit")] Movie movie,
             HttpPostedFileBase image, Dictionary<int, int> GroupPrices, int price = 0, bool Is3D = false)
         {
             Movie existedMovie = db.Movies.Find(movie.ID);

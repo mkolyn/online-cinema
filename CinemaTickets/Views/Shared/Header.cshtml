@@ -1,7 +1,7 @@
 ﻿<div class="header">
     <div class="container header-content">
         <div class="header-section header-logo col-sm-3 col-xs-4">
-            <div class="logo"></div>
+            <a class="logo" href="@Url.RouteUrl("Default", new { controller = "Home" })"></a>
         </div>
         <div class="header-section header-right col-sm-9 col-xs-8">
             <ul class="header-menu">
@@ -33,7 +33,7 @@
             <div class="header-search col-sm-9 col-xs-9">
                 <div class="input grey col-sm-9 col-xs-8">
                     <span class="glyphicon glyphicon-facetime-video"></span>
-                    <input type="text" placeholder="Пошук по фільму" />
+                    <input type="text" placeholder="Пошук по фільму" value="@ViewBag.searchString" />
                 </div>
                 <div class="action-button">
                     <span class="glyphicon glyphicon-chevron-right"></span>

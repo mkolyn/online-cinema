@@ -45,6 +45,10 @@ $(document).ready(function () {
             return false;
         }
     });
+
+    $('.glyphicon-search').click(function () {
+        typeof IS_HOME_PAGE !== 'undefined' && IS_HOME_PAGE ? loadMoviesHtml() : search();
+    });
 });
 
 function addCalendarSliderEvents(afterSlideFunc) {
@@ -107,4 +111,30 @@ function addCalendarSliderEvents(afterSlideFunc) {
         $(this).addClass('slider-active').addClass('active');
         calendarSlider.goToSlide($(this).index());
     });
+}
+
+function search() {
+    //var url = '/date/' + $('.cinema-year').val() + '/' + $('.cinema-month').val() + '/' + $('.cinema-day').val();
+    var url = '/date/';
+    //var cinemaId = $('#CinemaID').val();
+    //var genreId = $('#GenreID').val();
+    var movieName = $('.header-search input').val().trim();
+
+    /*cinemaId = genreId !== '' && cinemaId === '' ? 0 : cinemaId;
+    if (cinemaId !== '') {
+        url += '/' + cinemaId;
+    }*/
+
+    /*if (genreId !== '') {
+        if (cinemaId === '') {
+            url += '/0';
+        }
+        url += '/' + genreId;
+    }*/
+
+    if (movieName !== "") {
+        url += '?searchString=' + movieName;
+    }
+
+    window.location.href = url;
 }

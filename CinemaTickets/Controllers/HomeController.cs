@@ -28,6 +28,7 @@ namespace CinemaTickets.Controllers
             ViewBag.Styles.Add("home");
             ViewBag.Styles.Add("calendar");
             ViewBag.Scripts.Add("home");
+            ViewBag.ScriptTexts.Add("var IS_HOME_PAGE = true;");
 
             DateTime date;
             if (year > 0 && month > 0 && day > 0)
@@ -49,6 +50,7 @@ namespace CinemaTickets.Controllers
             ViewBag.dayList = Core.GetDayList();
             ViewBag.currentDate = DateTime.Now;
             ViewBag.genres = genreDb.Genres.ToList();
+            ViewBag.searchString = searchString;
 
             return View();
         }

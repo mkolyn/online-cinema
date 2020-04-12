@@ -23,27 +23,58 @@
     @Html.Partial("Info")
 
     <div class="movie-description grey">
-        @Model.Description
+        <div class="movie-description-text">
+            @Model.Description
+        </div>
+        <div class="choose-cinema">
+            @if (@Model.AgeLimit > 0)
+            {
+                <div class="movie-age-limit grey">
+                    <span class="movie-age-limit-icon">+</span>
+                    <span class="movie-age-limit-text">@Model.AgeLimit</span>
+                </div>
+            }
+            <div class="choose-cinema-arrow"></div>
+            <div class="choose-cinema-text grey">
+                Обирай свій улюблений кінотеатр
+            </div>
+            <div class="choose-cinema-clock"></div>
+        </div>
     </div>
 </div>
 
 <div class="movie-detail-container-mobile">
-    <div class="movie-detail-image" style="background-image: url(/images/@Html.Raw(Model.Image))"></div>
+    <div class="movie-detail-image-container">
+        <div class="movie-detail-image" style="background-image: url(/images/@Html.Raw(Model.Image))"></div>
+        @if (@Model.AgeLimit > 0)
+        {
+            <div class="movie-age-limit grey">
+                <span class="movie-age-limit-icon">+</span>
+                <span class="movie-age-limit-text">@Model.AgeLimit</span>
+            </div>
+        }
+    </div>
     <div class="movie-detail-name">
         @Model.Name
     </div>
     @Html.Partial("Info")
     <div class="movie-description grey">
         @Model.Description
+        <div class="choose-cinema">
+            @if (@Model.AgeLimit > 0)
+            {
+                <div class="movie-age-limit grey">
+                    <span class="movie-age-limit-icon">+</span>
+                    <span class="movie-age-limit-text">@Model.AgeLimit</span>
+                </div>
+            }
+            <div class="choose-cinema-arrow"></div>
+            <div class="choose-cinema-text grey">
+                Обирай свій улюблений кінотеатр
+            </div>
+            <div class="choose-cinema-clock"></div>
+        </div>
     </div>
-</div>
-
-<div class="choose-cinema">
-    <div class="choose-cinema-arrow"></div>
-    <div class="choose-cinema-text grey">
-        Обирай свій улюблений кінотеатр
-    </div>
-    <div class="choose-cinema-clock"></div>
 </div>
 
 <input type="hidden" class="movie-id" value="@ViewBag.movieId" />

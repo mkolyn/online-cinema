@@ -39,4 +39,11 @@
             @Model.Budget
         </span>
     </div>
+    @if (@Model.AgeLimit > 0)
+    {
+        <div class="movie-age-limit grey">
+            <span class="movie-age-limit-icon">+</span>
+            <span class="movie-age-limit-text">@Model.AgeLimit</span>
+        </div>
+    }
 </div>

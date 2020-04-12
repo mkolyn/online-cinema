@@ -1,6 +1,6 @@
 ﻿.movie-detail, .movie-video {
     display: inline-block;
-    height: 350px;
+    height: 315px;
     vertical-align: top;
     margin-top: 10px;
 }
@@ -23,7 +23,7 @@
     vertical-align: top;
 }
 
-.movie-description {
+.movie-description-text {
     border-bottom: 2px solid #b8b8b8;
 }
 
@@ -36,12 +36,13 @@
     font-size: 16px;
     padding: 10px 0;
     border-top: 5px solid #720f95;
+    height: 45px;
 }
 
 .movie-detail-image {
     background-size: contain;
     background-position: center center;
-    height: 300px;
+    height: 270px;
     background-repeat: no-repeat;
 }
 
@@ -93,6 +94,8 @@
 
 .time-table-day-name {
     color: #929292;
+    text-transform: uppercase;
+    /*font-weight: bold;*/
 }
 
 .time-table-day-time {
@@ -104,6 +107,10 @@
     cursor: pointer;
     display: block;
     font-weight: bold;
+}
+
+.time-table-day-time:hover {
+    text-decoration: none;
 }
 
 .time-table-day-time:hover {
@@ -183,6 +190,50 @@
     text-align: center;
 }
 
+.movie-age-limit {
+    width: 50px;
+    height: 50px;
+    float: left;
+    border-radius: 50px;
+    border: 3px solid #858585;
+    position: relative;
+    text-align: center;
+    font-size: 24px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.movie-age-limit-icon {
+    position: absolute;
+    top: -12px;
+    right: -10px;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    background-color: #FFFFFF;
+    z-index: 1;
+}
+
+.movie-age-limit-text {
+    line-height: 45px;
+    font-weight: bold;
+}
+
+.movie-detail-info .movie-age-limit {
+    display: none;
+    float: right;
+}
+
+@media (max-width: 768px) {
+    .movie-detail-info .movie-age-limit {
+        display: block;
+    }
+
+    .movie-description .movie-age-limit {
+        display: none;
+    }
+}
+
 @media(max-width: 480px) {
     .movie-detail-container {
         display: none;
@@ -200,16 +251,20 @@
         display: block;
     }
 
+    .movie-video-mobile embed {
+        width: 100%;
+    }
+
     .movie-detail {
         width: 100%;
         height: auto;
     }
 
-    .movie-detail-image, .movie-detail-name, .movie-detail-info {
+    .movie-detail-image-container, .movie-detail-name, .movie-detail-info {
         display: inline-block;
     }
 
-    .movie-detail-image, .movie-detail-info {
+    .movie-detail-image-container, .movie-detail-info {
         float: left;
     }
 
@@ -233,6 +288,10 @@
         border-bottom: 5px solid #720f95;
     }
 
+    .movie-description {
+        border: none;
+    }
+
     .movie-detail-info {
         margin-top: 10px;
     }
@@ -243,5 +302,27 @@
 
     .time-table-day {
         width: 80px;
+    }
+
+    .movie-detail-info .movie-age-limit {
+        display: none;
+    }
+
+    .movie-detail-image-container .movie-age-limit {
+        float: none;
+        margin: auto;
+    }
+
+    .time-table-movie-type {
+        width: 25px;
+    }
+
+    .time-table-movie-type span {
+        transform: rotate(-90deg);
+        display: block;
+    }
+
+    .time-table-period {
+        text-align: center;
     }
 }

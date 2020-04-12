@@ -104,6 +104,7 @@ namespace CinemaTickets.Controllers
                     { "moviePeriodEndYear", moviePeriodEndDate.Year },
                     { "hasPrevMoviePeriod", hasPrevMoviePeriod },
                     { "hasNextMoviePeriod", hasNextMoviePeriod },
+                    { "dayList", Core.GetDayList() },
                 };
 
             using (var sw = new StringWriter())

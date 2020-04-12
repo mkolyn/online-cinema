@@ -512,6 +512,10 @@
     color: #ffc72f;
 }
 
+.body-content {
+    margin-top: 10px;
+}
+
 @media (max-width: 1280px) {
     .header-menu {
         font-size: 13px;
@@ -621,7 +625,13 @@
 }
 
 @media (max-width: 640px) {
+    .footer-left, .footer-right, .footer-triangle-violet {
+        display: none;
+    }
 
+    .footer {
+        background-color: #720f95;
+    }
 }
 
 @media (max-width: 480px) {
@@ -674,19 +684,11 @@
     }
 
     .body-content {
-        padding: 0;
+        padding: 10px;
     }
 
     .filter .select + .select {
         margin-top: 10px;
-    }
-
-    .footer {
-        background-color: #720f95;
-    }
-
-    .footer-left, .footer-right, .footer-triangle-violet {
-        display: none;
     }
 
     .mobile-menu-footer-left {

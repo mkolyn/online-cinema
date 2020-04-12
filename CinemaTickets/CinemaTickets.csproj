@@ -327,6 +327,10 @@
     <Compile Include="Migrations\202004051856083_CinemaPayFields.Designer.cs">
       <DependentUpon>202004051856083_CinemaPayFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004111653498_MovieAgeLimit.cs" />
+    <Compile Include="Migrations\202004111653498_MovieAgeLimit.Designer.cs">
+      <DependentUpon>202004111653498_MovieAgeLimit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaMovieGroupPrice.cs" />
     <Compile Include="Models\CinemaPlaceGroup.cs" />
@@ -584,6 +588,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004051856083_CinemaPayFields.resx">
       <DependentUpon>202004051856083_CinemaPayFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004111653498_MovieAgeLimit.resx">
+      <DependentUpon>202004111653498_MovieAgeLimit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

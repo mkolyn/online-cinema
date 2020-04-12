@@ -70,6 +70,7 @@ function addCinemaHallPlacesEvents() {
         $('.book-places-info-choise').html(places);
 
         $('.total-price').html(totalPrice);
+        totalPrice > 0 ? $('.book-places-info-total').removeClass('hidden') : $('.book-places-info-total').addClass('hidden');
     });
 
     $('.cinema-hall-cell.joined.booked').each(function () {
