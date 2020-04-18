@@ -51,6 +51,7 @@ namespace CinemaTickets.Controllers
             ViewBag.currentDate = DateTime.Now;
             ViewBag.genres = genreDb.Genres.ToList();
             ViewBag.searchString = searchString;
+            ViewBag.comingSoonMovies = cinemaHallMovieDb.GetComingSoonList();
 
             return View();
         }

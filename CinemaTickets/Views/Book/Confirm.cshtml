@@ -19,11 +19,25 @@
             @Html.Partial("User")
         }
     </div>
+    @if (@ViewBag.movieAgeLimit > 0)
+    {
+        <div class="movie-age-limit grey">
+            <span class="movie-age-limit-icon">+</span>
+            <span class="movie-age-limit-text">@ViewBag.movieAgeLimit</span>
+        </div>
+    }
 </div>
 
 <div class="book-confirm-mobile">
     <div class="book-confirm-movie-name text-uppercase bg-grey grey">
         @ViewBag.movieName
+        @if (@ViewBag.movieAgeLimit > 0)
+        {
+            <div class="movie-age-limit grey">
+                <span class="movie-age-limit-icon">+</span>
+                <span class="movie-age-limit-text">@ViewBag.movieAgeLimit</span>
+            </div>
+        }
         <span class="book-confirm-movie-type">
             @is3DLabel
         </span>
@@ -55,7 +69,6 @@
     <h3>
         @ViewBag.formattedDate
     </h3>-->
-
     <!--<div class="order-items">
         @foreach (var orderItem in ViewBag.orderItems)
         {

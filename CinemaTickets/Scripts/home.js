@@ -12,8 +12,8 @@
     });*/
 
     $('.genre-select .select-option').click(loadMoviesHtml);
-
     addCalendarSliderEvents(loadMoviesHtml);
+    addMovieSliderEvents($('.coming-soon-movies-container'));
 });
 
 function loadMoviesHtml() {
@@ -28,12 +28,12 @@ function loadMoviesHtml() {
     };
     ajax('/Home/GetMoviesHtml', params, function (data) {
         $('.movies-container').html(data);
-        addMovieSliderEvents();
+        addMovieSliderEvents($('.movies-container'));
     });
 }
 
-function addMovieSliderEvents() {
-    var moviesSlider = $('.movies').lightSlider({
+function addMovieSliderEvents(container) {
+    var moviesSlider = container.find('.movies').lightSlider({
         pager: false,
         //autoWidth: true,
         item: 5,
@@ -66,11 +66,11 @@ function addMovieSliderEvents() {
         ]
     });
 
-    $('.movies-slider-next').click(function () {
+    container.find('.movies-slider-next').click(function () {
         moviesSlider.goToNextSlide();
     });
 
-    $('.movies-slider-prev').click(function () {
+    container.find('.movies-slider-prev').click(function () {
         moviesSlider.goToPrevSlide();
     });
 }

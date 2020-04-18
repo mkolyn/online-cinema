@@ -7,9 +7,99 @@
     margin-top: 10px;
 }
 
+.movies {
+    margin-top: 10px;
+}
+
+.movie {
+    padding-top: 10px;
+    width: 200px;
+    height: 340px;
+    display: block;
+    background-color: #ffc72f;
+    position: relative;
+    margin: auto;
+}
+
+.movie-tickets, .movie-trailer {
+    width: 100%;
+    position: absolute;
+    bottom: 20px;
+}
+
+.movie-tickets-icon, .movie-tickets-label, .movie-tickets-button {
+    display: inline-block;
+}
+
+.movie-trailer-label, .movie-trailer-button {
+    display: inline-block;
+}
+
+.movie-tickets-label, .movie-trailer-label {
+    color: #720f95;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 40px;
+    margin-left: 5px;
+}
+
+.movie-trailer-label {
+    background-color: #720f95;
+    color: #ffc72f;
+    width: calc(100% - 55px);
+    padding-left: 10px;
+}
+
+.movie-tickets-button, .movie-trailer-button {
+    background-color: #720f95;
+    width: 50px;
+    height: 40px;
+    float: right;
+}
+
+.movie-trailer-button {
+    background-color: #ffc72f;
+    float: left;
+}
+
+.movie-tickets-button .glyphicon, .movie-trailer-button .glyphicon {
+    color: #FFFFFF;
+    top: calc(50% - 12px);
+    left: calc(50% - 12px);
+    font-size: 24px;
+}
+
+.movie-trailer-button .glyphicon {
+    color: #720f95;
+}
+
+.movie-tickets-icon, .movie-trailer-icon {
+    width: 25px;
+    height: 20px;
+    background-color: #720f95;
+    margin-left: 10px;
+    vertical-align: top;
+    margin-top: 10px;
+    border-radius: 3px;
+}
+
+.movie-tickets-icon .glyphicon, .movie-trailer-icon .glyphicon {
+    top: 2px;
+    left: 6px;
+    color: #ffc72f;
+}
+
+.movie-name {
+    color: #929292;
+    position: absolute;
+    bottom: 0;
+    background-color: #FFFFFF;
+    width: 100%;
+}
+
 .movie-image {
     width: 100%;
-    height: calc(100% - 40px);
+    height: calc(100% - 60px);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -19,7 +109,7 @@
     display: inline-block;
 }
 
-.movies-container {
+.movies-container, .coming-soon-movies-container {
     position: relative;
     margin-top: 10px;
 }
@@ -27,8 +117,12 @@
 .movies-slider-prev, .movies-slider-next {
     top: calc(50% - 17px);
     cursor: pointer;
-    font-size: 24px;
+    font-size: 30px;
     position: absolute;
+}
+
+.movies-slider-prev .glyphicon, .movies-slider-next .glyphicon {
+    top: 7px;
 }
 
 .movies-slider-prev {
@@ -50,11 +144,6 @@
         background-image: url('img/how-to-mobile.png');
         background-size: contain;
         background-position: center center;
-    }
-
-    .movie {
-        margin: auto;
-        display: block;
     }
 
     .movie-name {

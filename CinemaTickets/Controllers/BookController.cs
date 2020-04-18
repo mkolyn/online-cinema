@@ -181,6 +181,7 @@ namespace CinemaTickets.Controllers
             ViewBag.cinemaName = orderInfo.CinemaName;
             ViewBag.dayName = Core.GetDayList()[order.Date.DayOfWeek.ToString()];
             ViewBag.movieImage = orderInfo.MovieImage;
+            ViewBag.movieAgeLimit = orderInfo.MovieAgeLimit;
             ViewBag.is3D = cinemaMovie.Is3D;
 
             DateTime confirmToDate = order.Date.AddMinutes(Config.CONFIRM_PAYMENT_MINUTES_TIMEOUT);

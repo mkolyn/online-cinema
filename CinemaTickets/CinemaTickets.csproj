@@ -477,6 +477,7 @@
     <Content Include="Views\Cities\Form.cshtml" />
     <Content Include="Views\Genres\Form.cshtml" />
     <Content Include="Views\Users\Form.cshtml" />
+    <Content Include="Views\Home\ComingSoon.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -25,7 +25,7 @@
     border-bottom: 1px dotted #808080;
 }
 
-.book-info, .book-places-info, .book-confirm {
+.book-info, .book-places-info, .book-places-confirm {
     margin-top: 10px;
 }
 
@@ -140,7 +140,7 @@
 
 .book-confirm-info {
     vertical-align: top;
-    width: calc(100% - 205px);
+    width: calc(100% - 265px);
 }
 
 .book-confirm-info .glyphicon {
@@ -184,7 +184,7 @@
 
 .book-confirm-image {
     width: 200px;
-    height: 300px;
+    height: 270px;
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
@@ -249,6 +249,33 @@
     display: none;
 }
 
+.movie-age-limit {
+    width: 50px;
+    height: 50px;
+    float: right;
+    border-radius: 50px;
+    border: 3px solid #858585;
+    position: relative;
+    text-align: center;
+    font-size: 24px;
+}
+
+.movie-age-limit-icon {
+    position: absolute;
+    top: -12px;
+    right: -10px;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    background-color: #FFFFFF;
+    z-index: 1;
+}
+
+.movie-age-limit-text {
+    line-height: 45px;
+    font-weight: bold;
+}
+
 @media (max-width: 720px) {
     .cinema-hall-cell {
         width: 20px;
@@ -285,7 +312,7 @@
     }
 
     .book-confirm {
-        /*display: none;*/
+        display: none;
     }
 
     .book-confirm-mobile {
@@ -319,6 +346,7 @@
 
     .liqpay-pay {
         margin: auto;
+        margin-top: 10px;
     }
 
     .book-places {
@@ -339,5 +367,25 @@
 
     .legend {
         display: inline-block;
+    }
+
+    .movie-age-limit {
+        width: 40px;
+        height: 40px;
+        margin: 0 10px;
+    }
+
+    .movie-age-limit-text {
+        line-height: 35px;
+        font-size: 20px;
+        display: block;
+    }
+
+    .movie-age-limit-icon {
+        width: 20px;
+        height: 20px;
+        background-color: #ebebeb;
+        left: 20px;
+        top: -13px;
     }
 }

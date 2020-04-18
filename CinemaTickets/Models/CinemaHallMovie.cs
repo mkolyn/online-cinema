@@ -125,9 +125,58 @@ namespace CinemaTickets.Models
             return movieIds;
         }
 
+        private List<int> GetComingSoonMovieIds()
+        {
+            List<int> movieIds = new List<int>();
+            DateTime date = DateTime.Now;
+            DateTime nextWeek = date.AddDays(Core.NEXT_DAYS);
+            DateTime inTwoWeeks = nextWeek.AddDays(Core.NEXT_DAYS);
+
+            var movies = from chm in CinemaHallMovies
+                         join cm in CinemaMovies on chm.MovieID equals cm.MovieID
+                         join ch in CinemaHalls on chm.CinemaHallID equals ch.ID
+                         join c in Cinemas on ch.CinemaID equals c.ID
+                         join m in Movies on chm.MovieID equals m.ID
+                         where cm.CinemaID == ch.CinemaID
+                         select new CinemaHallScheduleMovie
+                         {
+                             Date = chm.Date,
+                             MovieID = m.ID,
+                             CityID = c.CityID,
+                         };
+
+            int cityId = Core.GetCityId();
+
+            movies = movies.Where(m => m.CityID == cityId)
+                .Where(m => m.Date > nextWeek)
+                .Where(m => m.Date < inTwoWeeks);
+
+            foreach (CinemaHallScheduleMovie movie in movies.ToList())
+            {
+                if (!movieIds.Contains(movie.MovieID))
+                {
+                    movieIds.Add(movie.MovieID);
+                }
+            }
+
+            return movieIds;
+        }
+
         public List<Movie> GetList(int year, int month, int day, int cinemaId = 0, int genreId = 0, string searchString = "")
         {
             List<int> movieIds = GetMovieIds(year, month, day, cinemaId, genreId, searchString);
+
+            var movies = from m in Movies
+                         select m;
+
+            movies = movies.Where(m => movieIds.Contains(m.ID));
+
+            return movies.ToList();
+        }
+
+        public List<Movie> GetComingSoonList()
+        {
+            List<int> movieIds = GetComingSoonMovieIds();
 
             var movies = from m in Movies
                          select m;

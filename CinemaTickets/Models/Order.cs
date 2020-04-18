@@ -49,6 +49,8 @@ namespace CinemaTickets.Models
         public string MovieName { get; set; }
         // movie image
         public string MovieImage { get; set; }
+        // movie age limit
+        public int? MovieAgeLimit { get; set; }
         // genre name
         public string Genre { get; set; }
         // cinema id
@@ -109,6 +111,7 @@ namespace CinemaTickets.Models
                                  MovieID = m.ID,
                                  MovieName = m.Name,
                                  MovieImage = m.Image,
+                                 MovieAgeLimit = m.AgeLimit,
                                  Genre = g.Name,
                                  CinemaID = c.ID,
                                  CinemaName = c.Name,
