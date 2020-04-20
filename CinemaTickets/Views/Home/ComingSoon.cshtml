@@ -11,10 +11,10 @@
     <div class="movies">
         @foreach (var movie in movies)
         {
-            <div class="movie-item">
+            <div class="movie-item" data-youtube-url="@movie.YoutubeUrl">
                 <div class="movie">
                     <div class="movie-image" style="background-image: url('/images/@movie.Image')"></div>
-                    <div class="movie-trailer">
+                    <div class="movie-trailer pointer">
                         <div class="movie-trailer-button">
                             <span>
                                 <span class="glyphicon glyphicon-play"></span>
@@ -33,5 +33,9 @@
     </div>
     <div class="movies-slider-next slider-next grey">
         <span class="glyphicon glyphicon-menu-right"></span>
+    </div>
+    <div class="movie-trailer-popup hidden">
+        <span class="glyphicon glyphicon-remove-circle movie-trailer-popup-close violet pointer"></span>
+        <iframe></iframe>
     </div>
 }

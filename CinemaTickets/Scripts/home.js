@@ -14,6 +14,16 @@
     $('.genre-select .select-option').click(loadMoviesHtml);
     addCalendarSliderEvents(loadMoviesHtml);
     addMovieSliderEvents($('.coming-soon-movies-container'));
+
+    $('.movie-trailer').click(function () {
+        var movieTrailerPopup = $('.movie-trailer-popup').removeClass('hidden');
+        movieTrailerPopup.removeClass('hidden');
+        movieTrailerPopup.find('iframe').attr('src', $(this).closest('.movie-item').data('youtube-url'));
+    });
+
+    $('.movie-trailer-popup-close').click(function () {
+        $('.movie-trailer-popup').addClass('hidden');
+    });
 });
 
 function loadMoviesHtml() {
