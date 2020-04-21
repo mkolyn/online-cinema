@@ -29,57 +29,6 @@
 <body>
     @Html.Partial("Header")
 
-    <!--<div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.RouteLink("Cinema Tickets", "Default", new { controller = "Home", action = "Index" }, new { @class = "navbar-brand" })
-                @Html.RouteLink("Контакти", "Default", new { controller = "Home", action = "Contact" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @if (Session["UserID"] != null && Session["UserID"].ToString() != "")
-                    {
-                        if (Session["CinemaID"] == null || Session["CinemaID"].ToString() == "")
-                        {
-                            <li>@Html.ActionLink("Міста", "Index", "Cities")</li>
-                            <li>@Html.ActionLink("Кінотеатри", "Index", "Cinemas")</li>
-                            <li>@Html.ActionLink("Жанри", "Index", "Genres")</li>
-                            <li>@Html.ActionLink("Користувачі", "Index", "Users")</li>
-                        }
-                        else
-                        {
-                            <li>@Html.RouteLink("Зали", new { controller = "Cinemas", action = "Halls", id = Session["CinemaID"].ToString() })</li>
-                            <li>@Html.RouteLink("Групи місць", new { controller = "Cinemas", action = "PlaceGroups", id = Session["CinemaID"].ToString() })</li>
-                        }
-                        <li>@Html.ActionLink("Фільми", "Index", "Movies")</li>
-                        <li>@Html.ActionLink("Вийти", "Logout", "Administrator")</li>
-                    }
-                </ul>
-                @if (ViewBag.Cities != null)
-                {
-                    <div class="choose-city">
-                        <div class="choose-city-title">
-                            @Html.Raw(ViewBag.City != "" ? ViewBag.City : "Вибрати місто")
-                        </div>
-                        <div class="cities">
-                            @foreach (var city in ViewBag.Cities)
-                            {
-                                string cityName = city.Name.ToString();
-                                <div class="city">
-                                    @Html.RouteLink(cityName, "Default", new { controller = "Home", action = "City", id = city.ID })
-                                </div>
-                            }
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </div>-->
     <div class="container body-content">
         @if (Session["Messages"] != null && (Session["Messages"] as List<string>).Count > 0)
         {
@@ -94,18 +43,15 @@
             Session["Messages"] = null;
         }
 
-        @if (!ViewBag.SiteDisabled)
+        @if (!ViewBag.SiteDisabled && (ViewBag.AllowFromIPOnly == "" || ViewBag.AllowFromIPOnly == ViewBag.IPAddress))
         {
             @RenderBody()
         }
         else
         {
+            @Html.Raw("Сайт тимчасово недоступний. Просимо вибачення за незручності.");
             RenderBody();
         }
-        <!--<hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Cinema Tickets</p>
-        </footer>-->
     </div>
 
     @Scripts.Render("~/bundles/jquery")

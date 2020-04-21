@@ -355,7 +355,23 @@
   <ItemGroup>
     <Content Include="Content\book.css" />
     <Content Include="Content\calendar.css" />
+    <Content Include="Content\img\arrow.png" />
+    <Content Include="Content\img\clock-2.png" />
+    <Content Include="Content\img\clock.png" />
+    <Content Include="Content\img\footer-left.png" />
+    <Content Include="Content\img\footer-right.png" />
+    <Content Include="Content\img\how-to-mobile.png" />
+    <Content Include="Content\img\how-to-tablet.png" />
+    <Content Include="Content\img\how-to.png" />
     <Content Include="Content\img\loading.gif" />
+    <Content Include="Content\img\logo-no-text.png" />
+    <Content Include="Content\img\logo-small.png" />
+    <Content Include="Content\img\logo.png" />
+    <Content Include="Content\img\place-active.png" />
+    <Content Include="Content\img\place-booked.png" />
+    <Content Include="Content\img\place.png" />
+    <Content Include="Content\img\tickets.png" />
+    <Content Include="Content\lightslider.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\places.css" />
     <Content Include="Content\home.css" />
@@ -373,6 +389,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\lightslider.js" />
     <Content Include="Scripts\movie.js" />
     <Content Include="Scripts\core.js" />
     <Content Include="Scripts\bootstrap.js" />

@@ -29,6 +29,16 @@ namespace CinemaTickets.Controllers
             ViewBag.ScriptTexts = new List<string>();
             ViewBag.messages = new List<string>();
             ViewBag.SiteDisabled = Config.SITE_DISABLED;
+            ViewBag.AllowFromIPOnly = Config.ALLOW_FROM_IP_ONLY;
+
+            string IPAddress = "";
+            if (ViewBag.AllowFromIPOnly != "")
+            {
+                IPAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                IPAddress = string.IsNullOrEmpty(IPAddress) ? Request.ServerVariables["REMOTE_ADDR"] : IPAddress;
+            }
+
+            ViewBag.IPAddress = IPAddress;
         }
     }
 }
