@@ -7,6 +7,7 @@
 
         public const int CONFIRM_PAYMENT_MINUTES_TIMEOUT = 15;
         public const int QR_CODE_SIZE = 10;
+        public const int DEFAULT_CITY_ID = 1;
 
         public const string SMTP_HOST = "scp.realhost.pro";
         public const string SMTP_USER = "info@cinematickets.com.ua";
