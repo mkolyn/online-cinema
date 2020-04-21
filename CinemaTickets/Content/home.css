@@ -37,7 +37,7 @@
 
 .movie-tickets-label, .movie-trailer-label {
     color: #720f95;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     line-height: 40px;
     margin-left: 5px;
@@ -95,6 +95,7 @@
     bottom: 0;
     background-color: #FFFFFF;
     width: 100%;
+    font-size: 16px;
 }
 
 .movie-image {
@@ -156,6 +157,11 @@
     width: 100%;
     height: 100%;
     border: none;
+}
+
+.coming-soon-title {
+    font-size: 20px;
+    margin-bottom: 10px;
 }
 
 @media (max-width: 768px) {

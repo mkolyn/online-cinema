@@ -10,14 +10,14 @@
         {
             var active = ViewBag.date.Year == date.Year && ViewBag.date.Month == date.Month && ViewBag.date.Day == date.Day;
             <div class="calendar-date pointer @if (active) { @Html.Raw(" slider-active"); } " data-year="@date.Year" data-month="@date.Month" data-day="@date.Day">
-                <div class="calendar-date-weekday">
+                <div class="calendar-date-weekday text-uppercase">
                     @{
                         dayOfWeek = date.DayOfWeek == ViewBag.currentDate.DayOfWeek ? "Today" : date.DayOfWeek.ToString();
                     }
                     @ViewBag.dayList[dayOfWeek]
                 </div>
                 <div class="calendar-date-day">
-                    <div class="calendar-date-month">@ViewBag.monthList[date.Month]</div>
+                    <div class="calendar-date-month text-uppercase">@ViewBag.monthList[date.Month]</div>
                     <div class="calendar-date-number">@date.Day</div>
                 </div>
             </div>

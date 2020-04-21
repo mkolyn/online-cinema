@@ -18,6 +18,7 @@
     color: #929292;
     height: 30px;
     padding: 5px;
+    font-size: 11px;
 }
 
 .calendar-date.active .calendar-date-weekday {

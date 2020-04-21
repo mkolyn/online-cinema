@@ -1,4 +1,8 @@
-﻿.ajax-loading {
+﻿body {
+    font-family: Geometria;
+}
+
+.ajax-loading {
     position: absolute;
     top: 0;
     left: 0;
@@ -105,10 +109,15 @@
     list-style-type: disc;
 }
 
+.header-menu {
+    font-size: 18px;
+}
+
 .footer-menu {
     width: 100%;
     text-align: center;
     margin-left: 30px;
+    margin-top: 10px;
 }
 
 .header-menu li, .footer-menu li {
@@ -128,6 +137,10 @@
 
 .header-menu-item:hover, .footer-menu-item:hover {
     color: #ffc82f;
+}
+
+.footer-menu-item {
+    color: #ad87c0;
 }
 
 .choose-city {
@@ -255,6 +268,8 @@
 
 .footer-copyrights {
     text-align: center;
+    font-size: 12px;
+    color: #ad87c0;
 }
 
 .footer-triangle-violet {
