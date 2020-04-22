@@ -4,20 +4,29 @@
         var email = $('.email');
         var phone = $('.phone');
 
-        if (name.hasClass('error')) {
-            return false;
-        }
+        $('.book-confirm-user-info').find('.error').removeClass('error');
 
-        if (email.hasClass('error')) {
-            return false;
-        }
-
-        if (phone.hasClass('error')) {
-            return false;
+        if (name.val().trim() === '') {
+            name.closest('.input').addClass('error');
         }
 
         if (!isValidEmail(email.val())) {
-            email.addClass('error');
+            email.closest('.input').addClass('error');
+        }
+
+        if (phone.val().trim() === '') {
+            phone.closest('.input').addClass('error');
+        }
+
+        if (name.closest('.input').hasClass('error')) {
+            return false;
+        }
+
+        if (email.closest('.input').hasClass('error')) {
+            return false;
+        }
+
+        if (phone.closest('.input').hasClass('error')) {
             return false;
         }
 

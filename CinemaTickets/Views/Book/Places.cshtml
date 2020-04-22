@@ -3,7 +3,8 @@
     <div class="book-confirm-places">
         @foreach (var orderItem in ViewBag.orderItems as List<CinemaTickets.Models.OrderItemInfo>)
         {
-            <div>
+            Html.RouteLink("Вилучити", "Default", new { Controller = "Book", Action = "RemovePlace", Id = orderItem.OrderItemId });
+            <div class="order-item" data-id="@orderItem.OrderItemId">
                 @orderItem.Row ряд, @orderItem.Cell місце, - @orderItem.Price грн.
             </div>
         }

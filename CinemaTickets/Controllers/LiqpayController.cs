@@ -168,12 +168,14 @@ namespace CinemaTickets.Controllers
         {
             Order order = orderDb.Orders.Find(orderId);
 
+            var logoUrl = GetUrl("Content/img/logo.png");
             var imageSrc = GetUrl("Book/GetQRCode/" + orderId);
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplates", "SuccessfulOrder.html");
             StreamReader sr = System.IO.File.OpenText(filePath);
             string emailTemplate = sr.ReadToEnd();
             sr.Close();
 
+            emailTemplate = emailTemplate.Replace("{LOGO_URL}", logoUrl);
             emailTemplate = emailTemplate.Replace("{IMG_SRC}", imageSrc);
             string emailMessage = orderDb.GetOrderItemDetails(orderId).Replace("\n", "<br/>");
             emailTemplate = emailTemplate.Replace("{DETAILS}", emailMessage);

@@ -249,6 +249,7 @@ namespace CinemaTickets.Controllers
             bool success = true;
 
             // if order item was removed
+            orderItemIds = orderItemIds.Distinct().ToArray();
             if (orderDb.GetOrderItemsByIds(orderItemIds).Count != orderItemIds.Length)
             {
                 success = false;

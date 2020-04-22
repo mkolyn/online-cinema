@@ -157,6 +157,7 @@
     height: 40px;
     line-height: 40px;
     margin-top: 5px;
+    border: 1px solid transparent;
 }
 
 .book-confirm-input .glyphicon, .book-confirm-input input {
@@ -273,6 +274,10 @@
 
 .movie-age-limit-text {
     line-height: 45px;
+    font-weight: bold;
+}
+
+.time-left {
     font-weight: bold;
 }
 
