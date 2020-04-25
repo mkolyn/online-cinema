@@ -331,6 +331,10 @@
     <Compile Include="Migrations\202004111653498_MovieAgeLimit.Designer.cs">
       <DependentUpon>202004111653498_MovieAgeLimit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004241913101_OrderNamePhone.cs" />
+    <Compile Include="Migrations\202004241913101_OrderNamePhone.Designer.cs">
+      <DependentUpon>202004241913101_OrderNamePhone.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CinemaMovieGroupPrice.cs" />
     <Compile Include="Models\CinemaPlaceGroup.cs" />
@@ -609,6 +613,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004111653498_MovieAgeLimit.resx">
       <DependentUpon>202004111653498_MovieAgeLimit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004241913101_OrderNamePhone.resx">
+      <DependentUpon>202004241913101_OrderNamePhone.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

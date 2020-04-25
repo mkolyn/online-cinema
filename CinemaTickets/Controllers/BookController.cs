@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace CinemaTickets.Controllers
@@ -216,6 +217,23 @@ namespace CinemaTickets.Controllers
             ViewBag.liqpayData = liqpayData;
             ViewBag.liqpaySignature = liqpaySignature;
 
+            ViewBag.name = "";
+            ViewBag.email = "";
+            ViewBag.phone = "";
+
+            if (HttpContext.Request.Cookies["name"] != null)
+            {
+                ViewBag.name = HttpContext.Request.Cookies["name"].Value;
+            }
+            if (HttpContext.Request.Cookies["email"] != null)
+            {
+                ViewBag.email = HttpContext.Request.Cookies["email"].Value;
+            }
+            if (HttpContext.Request.Cookies["phone"] != null)
+            {
+                ViewBag.phone = HttpContext.Request.Cookies["phone"].Value;
+            }
+
             if (Config.DEBUG)
             {
                 AddDebugInfo("liqpay json data: " + Core.ToJson(liqpay.GetData()) + ", liqpay data: " + liqpayData + ", liqpay signature: " + liqpaySignature);
@@ -294,12 +312,18 @@ namespace CinemaTickets.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateOrder(int id, string email)
+        public ActionResult UpdateOrder(int id, string name, string email, string phone)
         {
             Order order = orderDb.Orders.Find(id);
+            order.Name = name;
             order.Email = email;
+            order.Phone = phone;
             order.IsProcessing = true;
             orderDb.SaveChanges();
+
+            HttpContext.Response.Cookies.Add(new HttpCookie("name", name));
+            HttpContext.Response.Cookies.Add(new HttpCookie("email", email));
+            HttpContext.Response.Cookies.Add(new HttpCookie("phone", phone));
 
             return Json("ok");
         }

@@ -51,6 +51,17 @@
     {
         @Html.Partial("User")
     }
+    else
+    {
+        if (ViewBag.isPaid)
+        {
+            @Html.Raw("Ви вже підтвердили бронювання")
+        }
+        else if (!ViewBag.canConfirmBooking)
+        {
+            @Html.Raw("Час для підтвердження бронювання вичерпано")
+        }
+    }
 </div>
 
 @if (!ViewBag.isPaid && ViewBag.canConfirmBooking)

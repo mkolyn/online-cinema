@@ -1,7 +1,16 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Про сервіс";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h2>@ViewBag.Title</h2>
+<!--<h3>@ViewBag.Message</h3>-->
 
-<p>Use this area to provide additional information.</p>
+<p>Любите ходити до кінотеатру та завжди бути одним із перших, хто побачить світові новинки?</p>
+<p>Тепер це стало простіше! Вам більше не потрібно чекати у чергах на касі для придбання квитка.</p>
+<p>
+    Ви можете прибдати квиток на сеанс, не виходячи із дому.
+    Для цього слід лише обрати фільм, кінотеатр та зручний час для відвідування сеансу.
+    Якщо у Вас виникли труднощі при бронюванні квитка, будь-ласка, ознайомтеся з інструкцією
+    <a href="@Url.RouteUrl("Default", new { controller = "Home", Action = "HowToPay" })" target="_blank">Як оплатити?</a>
+    або пишіть нам на пошту <a href="mailto:info@cinematickets.com.ua">info@cinematickets.com.ua</a>.
+    Приємного перегляду!
+</p>

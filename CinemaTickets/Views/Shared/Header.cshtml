@@ -1,18 +1,18 @@
 ﻿<div class="header">
     <div class="container header-content">
         <div class="header-section header-logo col-sm-3 col-xs-4">
-            <a class="logo" href="@Url.RouteUrl("Default", new { controller = "Home" })"></a>
+            <a class="logo" href="@Url.RouteUrl("Default", new { controller = "Home", Action = "index" })"></a>
         </div>
         <div class="header-section header-right col-sm-9 col-xs-8">
             <ul class="header-menu">
                 <li>
-                    <a href="@Url.RouteUrl("Default", new { controller = "Home" })" class="header-menu-item">
+                    <a href="@Url.RouteUrl("Default", new { controller = "Home", Action = "index" })" class="header-menu-item">
                         Головна
                     </a>
                 </li>
                 <li>
                     <a href="@Url.RouteUrl("Default", new { controller = "Home", Action = "About" })" class="header-menu-item">
-                        Про нас
+                        Про сервіс
                     </a>
                 </li>
                 <li>

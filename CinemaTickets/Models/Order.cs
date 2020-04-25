@@ -15,8 +15,12 @@ namespace CinemaTickets.Models
         public DateTime Date { get; set; }
         // is paid
         public bool IsPaid { get; set; }
+        // name
+        public string Name { get; set; }
         // email
         public string Email { get; set; }
+        // phone
+        public string Phone { get; set; }
         // is processing
         public bool IsProcessing { get; set; }
     }

@@ -87,6 +87,12 @@ namespace CinemaTickets.Controllers
             bool hasPrevMoviePeriod = direction == 0 || cinemaHallMovieDb.GetMovieScheduleList(id, moviePeriodStartDate.AddDays(-days), moviePeriodStartDate.AddSeconds(-1)).Count > 0;
             bool hasNextMoviePeriod = cinemaHallMovieDb.GetMovieScheduleList(id, moviePeriodEndDate.AddSeconds(1), moviePeriodEndDate.AddDays(days)).Count > 0;
 
+            DateTime currentDate = DateTime.Now;
+            if (moviePeriodStartDate.Year == currentDate.Year && moviePeriodStartDate.Month == currentDate.Month && moviePeriodStartDate.Day == currentDate.Day)
+            {
+                moviePeriodStartDate = currentDate;
+            }
+
             ControllerContext context = ControllerContext;
 
             ViewEngineResult viewEngineResult = ViewEngines.Engines.FindPartialView(context, "Time");

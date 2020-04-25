@@ -75,7 +75,9 @@
 
             confirmTimeLeft.html(minutesLeft + ":" + secondsLeft);
         } else {
-            $('.liqpay-form').addClass('hidden');
+            $('.liqpay-form').remove();
+            $('.liqpay-pay').addClass('hidden');
+            $('.book-confirm-total').addClass('hidden');
         }
     }
 });
