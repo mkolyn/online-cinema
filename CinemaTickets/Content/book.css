@@ -61,6 +61,7 @@
     display: inline-block;
     width: 100%;
     margin-top: 10px;
+    margin-bottom: 10px;
     background-color: none;
 }
 
@@ -281,6 +282,17 @@
     font-weight: bold;
 }
 
+.cinema-hall {
+    display: inline-block;
+    margin: auto;
+    width: 100%;
+}
+
+.cinema-hall-book-places {
+    width: 100%;
+    text-align: center;
+}
+
 @media (max-width: 720px) {
     .cinema-hall-cell {
         width: 20px;
@@ -305,6 +317,10 @@
         height: 16px;
         margin-left: 2px;
         background-size: contain;
+    }
+
+    .cinema-hall {
+        width: auto;
     }
 
     .cinema-hall-row {
