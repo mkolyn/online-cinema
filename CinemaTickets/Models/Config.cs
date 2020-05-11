@@ -4,6 +4,7 @@
     {
         public const bool SITE_DISABLED = false;
         public const bool DEBUG = true;
+        public const string ALLOW_FROM_IP_ONLY = "";
 
         public const int CONFIRM_PAYMENT_MINUTES_TIMEOUT = 15;
         public const int QR_CODE_SIZE = 10;
