@@ -20,5 +20,6 @@ namespace CinemaTickets.Models
         public const string ORDER_HAS_BEEN_BOOKED = "Місця вже були заброньовані";
         public const string CINEMA_PLACE_GROUP_HAS_MOVIES = "Існують фільми, які використовують дану групу";
         public const string CINEMA_HALL_HAS_MOVIES = "Існують фільми, які були додані в даний зал";
+        public const string CINEMA_HALL_MOVIE_HAS_MOVIES = "Даний фільм був доданий в кінотеатр(и)";
     }
 }

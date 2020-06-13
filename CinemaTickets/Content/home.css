@@ -164,9 +164,66 @@
     margin-bottom: 10px;
 }
 
+.how-to-pay .img {
+    width: 100%;
+    display: inline-block;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin: auto;
+}
+
+.how-to-step1 {
+    background-image: url('img/how-to-pay/home.png');
+    height: 450px;
+}
+
+.how-to-step2 {
+    background-image: url('img/how-to-pay/movie.png');
+    height: 700px;
+}
+
+.how-to-step3 {
+    background-image: url('img/how-to-pay/place.png');
+    height: 500px;
+}
+
+.how-to-step4 {
+    background-image: url('img/how-to-pay/choose-place.png');
+    height: 500px;
+}
+
+.how-to-step5 {
+    background-image: url('img/how-to-pay/confirm.png');
+    height: 500px;
+}
+
+.how-to-step6 {
+    background-image: url('img/how-to-pay/pay.png');
+    height: 500px;
+}
+
 @media (max-width: 768px) {
     .how-to {
         background-image: url('img/how-to-tablet.png');
+    }
+
+    .how-to-step1 {
+        background-image: url('img/how-to-pay/home-tablet.png');
+    }
+
+    .how-to-step3 {
+        background-image: url('img/how-to-pay/place-tablet.png');
+        height: 600px;
+    }
+
+    .how-to-step4 {
+        background-image: url('img/how-to-pay/choose-place-tablet.png');
+        height: 600px;
+    }
+
+    .how-to-step5 {
+        background-image: url('img/how-to-pay/confirm-tablet.png');
     }
 }
 
@@ -187,6 +244,29 @@
 
     .movies-slider-next {
         right: 20px;
+    }
+
+    .how-to-step1 {
+        background-image: url('img/how-to-pay/home-mobile.png');
+    }
+
+    .how-to-step2 {
+        background-image: url('img/how-to-pay/movie-mobile.png');
+        height: 450px;
+    }
+
+    .how-to-step3 {
+        background-image: url('img/how-to-pay/place-mobile.png');
+        height: 400px;
+    }
+
+    .how-to-step4 {
+        background-image: url('img/how-to-pay/choose-place-mobile.png');
+        height: 400px;
+    }
+
+    .how-to-step5 {
+        background-image: url('img/how-to-pay/confirm-mobile.png');
     }
 }
 

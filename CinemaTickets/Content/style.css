@@ -510,6 +510,59 @@ body {
     }
 }
 
+@media (max-width: 1000px) {
+    .footer {
+        height: 100px;
+    }
+
+    .footer-menu {
+        display: none;
+    }
+
+    .footer-left {
+        width: 200px;
+        height: 120px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        left: -145px;
+    }
+
+    .footer-right {
+        width: 190px;
+        height: 108px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        right: -172px;
+    }
+
+    .footer-section {
+        width: 300px;
+        height: 100px;
+    }
+
+    .footer-triangle-violet {
+        border-left: 66px solid transparent;
+        border-right: 33px solid transparent;
+        border-bottom: 50px solid #720f95;
+        transform: rotate(-56deg);
+        right: -56px;
+        top: 3px;
+    }
+
+    .footer-copyrights {
+        width: 75%;
+        margin: auto;
+    }
+
+    .logo-small {
+        margin: auto;
+        width: 120px;
+        height: 53px;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+}
+
 @media (max-width: 768px) {
     .header {
         height: 100px;
@@ -558,57 +611,6 @@ body {
 
     .body-content {
         min-height: calc(100% - 260px);
-    }
-
-    .footer {
-        height: 100px;
-    }
-
-    .footer-menu {
-        display: none;
-    }
-
-    .footer-left {
-        width: 200px;
-        height: 120px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        left: -145px;
-    }
-
-    .footer-right {
-        width: 190px;
-        height: 108px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        right: -172px;
-    }
-
-    .logo-small {
-        margin: auto;
-        width: 120px;
-        height: 53px;
-        background-size: contain;
-        background-repeat: no-repeat;
-    }
-
-    .footer-section {
-        width: 300px;
-        height: 100px;
-    }
-
-    .footer-triangle-violet {
-        border-left: 66px solid transparent;
-        border-right: 33px solid transparent;
-        border-bottom: 50px solid #720f95;
-        transform: rotate(-56deg);
-        right: -56px;
-        top: 3px;
-    }
-
-    .footer-copyrights {
-        width: 75%;
-        margin: auto;
     }
 }
 

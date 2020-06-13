@@ -44,15 +44,29 @@ namespace CinemaTickets.Models
 
         public List<CinemaMovieSelect> GetList(int cinemaId, string term = "")
         {
-            var cinemaMovies = from m in Movies
-                   join cm in CinemaMovies on m.ID equals cm.MovieID into mcm
-                   from movies in mcm.DefaultIfEmpty()
-                   select new CinemaMovieSelect
-                   {
-                       ID = m.ID,
-                       CinemaID = movies.CinemaID,
-                       Name = m.Name,
-                   };
+            IQueryable<CinemaMovieSelect> cinemaMovies = null;
+
+            if (cinemaId > 0)
+            {
+                cinemaMovies = from m in Movies
+                               join cm in CinemaMovies on m.ID equals cm.MovieID into mcm
+                               from movies in mcm.DefaultIfEmpty()
+                               select new CinemaMovieSelect
+                               {
+                                   ID = m.ID,
+                                   CinemaID = movies.CinemaID,
+                                   Name = m.Name,
+                               };
+            }
+            else
+            {
+                cinemaMovies = from m in Movies
+                               select new CinemaMovieSelect
+                               {
+                                   ID = m.ID,
+                                   Name = m.Name,
+                               };
+            }
 
             if (cinemaId > 0)
             {

@@ -18,6 +18,7 @@ namespace CinemaTickets.Controllers
         private CinemaPlaceGroupContext cinemaPlaceGroupDb = new CinemaPlaceGroupContext();
         private CinemaMovieGroupPriceContext cinemaMovieGroupPriceDb = new CinemaMovieGroupPriceContext();
         private List<CinemaPlaceGroup> cinemaPlaceGroups = new List<CinemaPlaceGroup>();
+        private CinemaHallMovieContext cinemaHallMovieDb = new CinemaHallMovieContext();
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -294,19 +295,26 @@ namespace CinemaTickets.Controllers
                 return HttpNotFound();
             }
 
-            CinemaMovie cinemaMovie = cinemaMovieDb.Get(Core.GetCinemaId(), id);
-
-            if (cinemaMovie != null)
+            if (cinemaHallMovieDb.HasMovie(id))
             {
-                cinemaMovieDb.CinemaMovies.Remove(cinemaMovie);
-                cinemaMovieDb.SaveChanges();
+                AddMessage(Messages.CINEMA_HALL_MOVIE_HAS_MOVIES);
             }
-
-            if (Core.GetCinemaId() == 0)
+            else
             {
-                Core.RemoveImage(Server.MapPath("~/Images"), movie.Image);
-                db.Movies.Remove(movie);
-                db.SaveChanges();
+                CinemaMovie cinemaMovie = cinemaMovieDb.Get(Core.GetCinemaId(), id);
+
+                if (cinemaMovie != null)
+                {
+                    cinemaMovieDb.CinemaMovies.Remove(cinemaMovie);
+                    cinemaMovieDb.SaveChanges();
+                }
+
+                if (Core.GetCinemaId() == 0)
+                {
+                    Core.RemoveImage(Server.MapPath("~/Images"), movie.Image);
+                    db.Movies.Remove(movie);
+                    db.SaveChanges();
+                }
             }
 
             return RedirectToAction("Index");

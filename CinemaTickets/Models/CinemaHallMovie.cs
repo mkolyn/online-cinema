@@ -392,5 +392,10 @@ namespace CinemaTickets.Models
             List<CinemaHallScheduleMovie> cinemaHallScheduleMovie = GetMovieScheduleList(movieId, date.AddMinutes(Core.BOOK_BEFORE_MINUTES), date.AddDays(Core.NEXT_DAYS));
             return cinemaHallScheduleMovie.Count > 0 ? cinemaHallScheduleMovie.Max(m => m.Date) : DateTime.Now;
         }
+
+        public bool HasMovie(int movieId)
+        {
+            return CinemaHallMovies.Where(chm => chm.MovieID == movieId).ToList().Count > 0;
+        }
     }
 }

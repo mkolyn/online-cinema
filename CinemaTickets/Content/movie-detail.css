@@ -284,6 +284,10 @@
         width: calc(100% - 105px);
     }
 
+    .movie-description {
+        width: calc(100% - 105px);
+    }
+
     .movie-detail-name {
         vertical-align: top;
         border-top: none;

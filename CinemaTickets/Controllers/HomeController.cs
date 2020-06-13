@@ -70,6 +70,14 @@ namespace CinemaTickets.Controllers
             return View();
         }
 
+        public ActionResult HowToPay()
+        {
+            ViewBag.Styles.Add("home");
+            ViewBag.Message = "How to pay.";
+
+            return View();
+        }
+
         public ActionResult City(int id)
         {
             Session["CityID"] = id;

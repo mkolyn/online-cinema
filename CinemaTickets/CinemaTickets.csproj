@@ -499,6 +499,7 @@
     <Content Include="Views\Genres\Form.cshtml" />
     <Content Include="Views\Users\Form.cshtml" />
     <Content Include="Views\Home\ComingSoon.cshtml" />
+    <Content Include="Views\Home\HowToPay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
