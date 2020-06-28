@@ -352,7 +352,7 @@ namespace CinemaTickets.Models
             {
                 string time = Core.GetFormatedTime(movieScheduleData.Date);
                 string cinemaName = movieScheduleData.CinemaName;
-                string day = Core.GetFormatedDay(movieScheduleData.Date);
+                string day = Core.GetRawFormatedDay(movieScheduleData.Date);
                 int cinemaHallID = movieScheduleData.CinemaHallID;
                 CinemaMovieSelect cinemaMovie;
 
